@@ -1,0 +1,12 @@
+.idea/*
+*.xml
+*.iml
+.idea/workspace.xml
+node_modules/**/*
+lua/lib/*.so
+*.in
+*.out
+*.test
+*.DS_Store
+**/*/integral
+**/*/integral

@@ -1,0 +1,9 @@
+{
+  "version": "1.0.0",
+  "env": "pro",
+  "project": "integral",
+  "loglevel": "error",
+
+  "serverPort": 80,
+  "usePreAbsPath": 0
+}

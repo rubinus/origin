@@ -1,0 +1,13 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: integral
+  labels:
+    app: integral
+spec:
+  selector:
+    app: integral
+  ports:
+    - name: http
+      port: 80
+---

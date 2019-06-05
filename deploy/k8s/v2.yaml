@@ -1,0 +1,27 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: integral-v2
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: integral
+        version: v2
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: integral
+          image: registry.cn-beijing.aliyuncs.com/zhuge/integral:v1.0.1
+          ports:
+            - containerPort: 80
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: ENV
+              value: "dev"
+            - name: PROJECT
+              value: ""
+            - name: ETCDHOSTS
+              value: ""
+---

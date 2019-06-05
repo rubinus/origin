@@ -1,0 +1,8 @@
+{
+  "version": "1.0.0",
+  "env": "local",
+  "project": "integral",
+  "loglevel": "info",
+  "serverPort": 8081,
+  "usePreAbsPath": 0
+}

@@ -1,0 +1,8 @@
+{
+  "version": "1.0.0",
+  "env": "dev",
+  "project": "1559732002",
+  "loglevel": "info",
+  "serverPort": 80,
+  "usePreAbsPath": 0
+}
