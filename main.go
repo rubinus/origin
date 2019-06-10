@@ -6,6 +6,7 @@ import (
 	"git.zhugefang.com/goymd/visource/config"
 	"git.zhugefang.com/goymd/visource/engine"
 	"git.zhugefang.com/goymd/visource/routes"
+	"git.zhugefang.com/goymd/visource/server"
 	"github.com/kataras/iris"
 	"os"
 	"os/signal"
@@ -76,6 +77,10 @@ func main() {
 	//demo_nsq.Consumer()
 	//测试消费kafka
 	//demo_kafka.Consumer()
+
+	go func() { //start grpc server on the default port 50051
+		server.Start()
+	}()
 
 	app.Run(iris.Addr(":" + strconv.Itoa(config.Conf.ServerPort)))
 

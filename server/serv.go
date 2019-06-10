@@ -1,0 +1,34 @@
+package server
+
+import (
+	"context"
+	"fmt"
+	"git.zhugefang.com/gocore/zgo"
+	"git.zhugefang.com/goymd/visource/grpchandlers"
+	"git.zhugefang.com/goymd/visource/pb"
+)
+
+/*
+@Time : 2019-06-10 18:47
+@Author : rubinus.chu
+@File : serv
+@project: account
+*/
+
+func Start() {
+	server, err := zgo.Grpc.Server(context.TODO())
+	if err != nil {
+		fmt.Println("-----grpc server is error :", err)
+		return
+	}
+
+	pb.RegisterGreeterServer(server, &grpchandlers.Server{})
+
+	msg, err := zgo.Grpc.Run(context.TODO(), server)
+	if err != nil {
+		fmt.Println("=====grpc server is error :", err)
+		return
+	}
+
+	fmt.Println(msg)
+}
