@@ -8,7 +8,7 @@ package routes
 */
 
 import (
-	"git.zhugefang.com/gobase/integral/handlers"
+	"git.zhugefang.com/goymd/visource/handlers"
 	"github.com/kataras/iris"
 )
 

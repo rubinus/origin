@@ -3,9 +3,9 @@ package main
 import (
 	"flag"
 	"fmt"
-	"git.zhugefang.com/gobase/integral/config"
-	"git.zhugefang.com/gobase/integral/engine"
-	"git.zhugefang.com/gobase/integral/routes"
+	"git.zhugefang.com/goymd/visource/config"
+	"git.zhugefang.com/goymd/visource/engine"
+	"git.zhugefang.com/goymd/visource/routes"
 	"github.com/kataras/iris"
 	"os"
 	"os/signal"

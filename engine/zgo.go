@@ -1,8 +1,8 @@
 package engine
 
 import (
-	"git.zhugefang.com/gobase/integral/config"
 	"git.zhugefang.com/gocore/zgo"
+	"git.zhugefang.com/goymd/visource/config"
 	"time"
 )
 

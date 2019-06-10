@@ -9,7 +9,7 @@ package services
 import (
 	"context"
 	"errors"
-	"git.zhugefang.com/gobase/integral/models/mysql_models"
+	"git.zhugefang.com/goymd/visource/models/mysql_models"
 )
 
 type HouseService struct {

@@ -3,10 +3,10 @@ package handlers
 import (
 	"context"
 	"fmt"
-	"git.zhugefang.com/gobase/integral/config"
-	"git.zhugefang.com/gobase/integral/models/mysql_models"
-	"git.zhugefang.com/gobase/integral/services"
 	"git.zhugefang.com/gocore/zgo"
+	"git.zhugefang.com/goymd/visource/config"
+	"git.zhugefang.com/goymd/visource/models/mysql_models"
+	"git.zhugefang.com/goymd/visource/services"
 	"github.com/kataras/iris"
 	"os"
 	"time"
