@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"git.zhugefang.com/gocore/zgo"
+	"git.zhugefang.com/goymd/visource/config"
 	"git.zhugefang.com/goymd/visource/grpchandlers"
 	"git.zhugefang.com/goymd/visource/pb"
 )
@@ -24,7 +25,7 @@ func Start() {
 
 	pb.RegisterGreeterServer(server, &grpchandlers.Server{})
 
-	msg, err := zgo.Grpc.Run(context.TODO(), server)
+	msg, err := zgo.Grpc.Run(context.TODO(), server, config.Conf.RpcPort)
 	if err != nil {
 		fmt.Println("=====grpc server is error :", err)
 		return

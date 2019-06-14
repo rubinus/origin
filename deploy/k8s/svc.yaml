@@ -1,12 +1,12 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: integral
+  name: visource
   labels:
-    app: integral
+    app: visource
 spec:
   selector:
-    app: integral
+    app: visource
   ports:
     - name: http
       port: 80

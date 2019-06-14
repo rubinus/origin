@@ -21,6 +21,7 @@ type allConfig struct {
 	Project       string `json:"project"`
 	EtcdHosts     string `json:"etcdHosts"`
 	Loglevel      string `json:"loglevel"`
+	RpcPort       string `json:"RpcPort"`
 	ServerPort    int    `json:"serverPort"`
 	UsePreAbsPath int    `json:"usePreAbsPath"`
 }
@@ -71,7 +72,7 @@ func initConfig(e, project, etcdHosts, port string) {
 
 	}
 
-	fmt.Printf("integral %s is started on the ... %s\n", Conf.Version, Conf.Env)
+	fmt.Printf("visource %s is started on the ... %s\n", Conf.Version, Conf.Env)
 }
 
 // LoadConfigByFile暂时不用

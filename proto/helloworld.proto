@@ -1,24 +1,19 @@
-// Copyright 2015 gRPC authors.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
 
 syntax = "proto3";
 
-option java_multiple_files = true;
-option java_package = "io.grpc.examples.helloworld";
-option java_outer_classname = "HelloWorldProto";
-
 package pb;
+option go_package = "pb"; //指定go中使用的包，pb_signin
+
+import "gogo.proto"; //导入gogo protobuf
+
+option (gogoproto.gostring_all) = true;
+option (gogoproto.equal_all) = true;
+option (gogoproto.verbose_equal_all) = true;
+option (gogoproto.marshaler_all) = true;
+option (gogoproto.unmarshaler_all) = true;
+option (gogoproto.sizer_all) = true;
+option (gogoproto.populate_all) = true;
+option (gogoproto.goproto_getters_all) = false;
 
 // The greeting service definition.
 service Greeter {
@@ -29,9 +24,30 @@ service Greeter {
 // The request message containing the user's name.
 message HelloRequest {
   string name = 1;
+  uint32 age = 2;
+
+  message Request {  //请求参数，内嵌类型
+                     string url = 1;
+                     string title = 2;
+                     repeated string ins = 3;
+  }
+  repeated Request requests = 3;
 }
 
-// The response message containing the greetings
+message Info {
+  string email = 1;
+  double money = 2;
+}
+
+// gogoproto.jsontag 当序列化为json时，如果是默认的值，同时返回这个字段
 message HelloReply {
-  string message = 1;
+  string message = 1  [(gogoproto.jsontag) = "message"];
+  repeated Info Infos = 2; //自定义数组[]
+  repeated string ans = 3; //string类型数组
+
+  map<string, int32> projects = 4; //map，也就是hash，KV
+  map<string, Info> myMap = 5; //自定义k=string , v = Info类型
+
+  int32 code = 6 [(gogoproto.jsontag) = "code"];
+
 }

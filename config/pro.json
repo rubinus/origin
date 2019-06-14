@@ -1,9 +1,9 @@
 {
   "version": "1.0.0",
   "env": "pro",
-  "project": "integral",
+  "project": "visource",
   "loglevel": "error",
-
+  "rpcPort": "50051",
   "serverPort": 80,
   "usePreAbsPath": 0
 }

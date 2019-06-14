@@ -8,5 +8,4 @@ lua/lib/*.so
 *.out
 *.test
 *.DS_Store
-**/*/integral
-**/*/integral
+./visource

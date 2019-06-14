@@ -1,19 +1,19 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: integral-v2
+  name: visource-v2
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        app: integral
+        app: visource
         version: v2
     spec:
       restartPolicy: Always
       containers:
-        - name: integral
-          image: registry.cn-beijing.aliyuncs.com/zhuge/integral:v1.0.1
+        - name: visource
+          image: registry.cn-beijing.aliyuncs.com/zhuge/visource:v1.0.1
           ports:
             - containerPort: 80
           imagePullPolicy: IfNotPresent

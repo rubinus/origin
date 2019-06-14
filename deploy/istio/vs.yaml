@@ -1,19 +1,19 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
-  name: integral
+  name: visource
 spec:
   hosts:
     - "*"
   gateways:
-    - integral-gateway
+    - visource-gateway
   http:
     - route:
         - destination:
-            host: integral
+            host: visource
             subset: v2
           weight: 50
         - destination:
-            host: integral
+            host: visource
             subset: v1
           weight: 50

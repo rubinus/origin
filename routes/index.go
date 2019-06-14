@@ -4,7 +4,7 @@ package routes
 @Time : 2019-03-05 18:27
 @Author : rubinus.chu
 @File : index
-@project: integral
+@project: visource
 */
 
 import (

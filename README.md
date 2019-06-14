@@ -1,4 +1,4 @@
-# integral
+# visource
 
 
 ##how to use the zgo engine
@@ -52,23 +52,23 @@ docker-compose up
 docker-compose up -d
 
 选项一：在当前目录下编译mac运行的二进制文件，仅适用于本机运行
-go build -o integral
+go build -o visource
 
 选项二：在当前目录下编译linux运行的二进制文件，适用于服务器linux环境
-CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o integral
+CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o visource
 
-用docker制作image(dck.zhuge.test是任意一个标识，如果愿意你可以改为integral，每一次v1.0.0需要递增)
+用docker制作image(dck.zhuge.test是任意一个标识，如果愿意你可以改为visource，每一次v1.0.0需要递增)
 本机build
-docker build -t dck.zhuge.test/integral:v1.0.8 .
+docker build -t dck.zhuge.test/visource:v1.0.8 .
 
 服务器build
-docker build -t registry.cn-beijing.aliyuncs.com/zhuge/integral:v1.1.6 .
+docker build -t registry.cn-beijing.aliyuncs.com/zhuge/visource:v1.1.6 .
 
 push到阿里云的私有镜像仓库
-docker push registry.cn-beijing.aliyuncs.com/zhuge/integral:v1.1.6
+docker push registry.cn-beijing.aliyuncs.com/zhuge/visource:v1.1.6
 
 
-##integral 本机使用local时测试环境
+##visource 本机使用local时测试环境
 阿里云内网
 10.45.146.41
 阿里云公网

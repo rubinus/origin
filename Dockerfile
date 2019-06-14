@@ -16,18 +16,18 @@ RUN apk add --no-cache tzdata && ln -sf /usr/share/zoneinfo/$TZ /etc/localtime &
 
 
 #设置工作目录
-WORKDIR $GOPATH/src/integral/
-#ADD ./ $GOPATH/src/integral/
-ADD integral $GOPATH/src/integral/
+WORKDIR $GOPATH/src/visource/
+#ADD ./ $GOPATH/src/visource/
+ADD visource $GOPATH/src/visource/
 
-ADD config $GOPATH/src/integral/config
-ADD views $GOPATH/src/integral/views
-ADD public $GOPATH/src/integral/public
-ADD deploy $GOPATH/src/integral/deploy
+ADD config $GOPATH/src/visource/config
+ADD views $GOPATH/src/visource/views
+ADD public $GOPATH/src/visource/public
+ADD deploy $GOPATH/src/visource/deploy
 
 
-RUN ["chmod", "+x", "integral"]
+RUN ["chmod", "+x", "visource"]
 
 EXPOSE 80
 
-ENTRYPOINT ["./integral","--env","dev"]
+ENTRYPOINT ["./visource","--env","dev"]

@@ -3,6 +3,7 @@
   "env": "dev",
   "project": "1559734620",
   "loglevel": "info",
+  "rpcPort": "50051",
   "serverPort": 80,
   "usePreAbsPath": 0
 }
