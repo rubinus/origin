@@ -2,6 +2,7 @@ package backend
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"git.zhugefang.com/gocore/zgo"
 	"git.zhugefang.com/goymd/visource/pb"
@@ -14,7 +15,7 @@ import (
 @project: visource
 */
 
-func RpcHelloWorld(ctx context.Context, address, port string, request *pb.HelloRequest) *pb.HelloReply {
+func RpcHelloWorld(ctx context.Context, address, port string, request *pb.HelloRequest) (*pb.HelloReply, error) {
 	out := make(chan *pb.HelloReply)
 	go func() {
 		conn, err := zgo.Grpc.Client(ctx, address, port, zgo.Grpc.WithInsecure())
@@ -36,9 +37,9 @@ func RpcHelloWorld(ctx context.Context, address, port string, request *pb.HelloR
 	case <-ctx.Done():
 		errStr := fmt.Sprintf("RpcHelloWorld timeout, Host: %s, Port: %s", address, port)
 		zgo.Log.Error(errStr)
-		return nil
+		return nil, errors.New(errStr)
 	case r := <-out:
-		return r
+		return r, nil
 	}
 
 }
