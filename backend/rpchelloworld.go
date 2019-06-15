@@ -2,6 +2,7 @@ package backend
 
 import (
 	"context"
+	"fmt"
 	"git.zhugefang.com/gocore/zgo"
 	"git.zhugefang.com/goymd/visource/pb"
 )
@@ -13,38 +14,31 @@ import (
 @project: visource
 */
 
-func RpcHelloWorld(ctx context.Context, address, port string, request *pb.HelloRequest) chan *pb.HelloReply {
+func RpcHelloWorld(ctx context.Context, address, port string, request *pb.HelloRequest) *pb.HelloReply {
 	out := make(chan *pb.HelloReply)
 	go func() {
-
 		conn, err := zgo.Grpc.Client(ctx, address, port, zgo.Grpc.WithInsecure())
 		if err != nil {
-			zgo.Log.Errorf("did not connect: %v", err)
-			out <- nil
+			zgo.Log.Error(err)
 			return
 		}
 		defer conn.Close()
-
 		client := pb.NewGreeterClient(conn)
-
-		//--------SignRequest-------发起签到rpc调用
 		response, err := client.SayHello(ctx, request)
-
 		if err != nil {
 			zgo.Log.Error(err)
-			out <- nil
 			return
 		}
-
-		select {
-		case <-ctx.Done():
-			zgo.Log.Errorf("timeout call GRPC server %s, port %s", address, port)
-			out <- nil
-			return
-		default:
-			out <- response
-		}
-
+		out <- response
 	}()
-	return out
+
+	select {
+	case <-ctx.Done():
+		errStr := fmt.Sprintf("RpcHelloWorld timeout, Host: %s, Port: %s", address, port)
+		zgo.Log.Error(errStr)
+		return nil
+	case r := <-out:
+		return r
+	}
+
 }
