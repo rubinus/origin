@@ -3,6 +3,7 @@
   "env": "qa",
   "project": "visource",
   "loglevel": "info",
+  "rpcHost": "localhost",
   "rpcPort": "50051",
   "serverPort": 80,
   "usePreAbsPath": 0

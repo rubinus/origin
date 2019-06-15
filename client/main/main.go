@@ -4,15 +4,10 @@ import (
 	"context"
 	"fmt"
 	"git.zhugefang.com/gocore/zgo"
+	"git.zhugefang.com/goymd/visource/backend"
 	"git.zhugefang.com/goymd/visource/config"
 	"git.zhugefang.com/goymd/visource/pb"
-	"log"
 	"time"
-)
-
-const (
-	address     = "localhost"
-	defaultName = "world"
 )
 
 func main() {
@@ -23,15 +18,12 @@ func main() {
 		Loglevel: config.Conf.Loglevel,
 		Project:  config.Conf.Project,
 	})
-	conn, err := zgo.Grpc.Client(context.TODO(), address, config.Conf.RpcPort, zgo.Grpc.WithInsecure())
 	if err != nil {
-		log.Fatalf("did not connect: %v", err)
+		zgo.Log.Error(err)
+		return
 	}
-	defer conn.Close()
 
-	c := pb.NewGreeterClient(conn)
-
-	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
 	//组织请求参数
@@ -49,12 +41,10 @@ func main() {
 	requests = append(requests, request1)
 	requests = append(requests, request2)
 
-	r, err := c.SayHello(ctx, &pb.HelloRequest{Name: defaultName, Age: 30, Requests: requests})
-	if err != nil {
-		log.Fatalf("could not greet: %v", err)
+	hReq := &pb.HelloRequest{Name: "hello", Age: 30, Requests: requests}
+	if response, ok := <-backend.RpcHelloWorld(ctx, config.Conf.RpcHost, config.Conf.RpcPort, hReq); ok && response != nil {
+		bytes, _ := zgo.Utils.Marshal(response)
+		fmt.Printf("RpcHelloWorld: %s \n\n", string(bytes))
 	}
-	b, _ := zgo.Utils.Marshal(r)
-
-	fmt.Println(string(b))
 
 }

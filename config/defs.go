@@ -21,6 +21,7 @@ type allConfig struct {
 	Project       string `json:"project"`
 	EtcdHosts     string `json:"etcdHosts"`
 	Loglevel      string `json:"loglevel"`
+	RpcHost       string `json:"rpcHost"`
 	RpcPort       string `json:"RpcPort"`
 	ServerPort    int    `json:"serverPort"`
 	UsePreAbsPath int    `json:"usePreAbsPath"`
