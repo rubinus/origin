@@ -29,5 +29,6 @@ ADD deploy $GOPATH/src/visource/deploy
 RUN ["chmod", "+x", "visource"]
 
 EXPOSE 80
+EXPOSE 50051
 
 ENTRYPOINT ["./visource","--env","dev"]

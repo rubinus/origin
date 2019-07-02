@@ -6,7 +6,7 @@ import (
 	"git.zhugefang.com/gocore/zgo"
 	"git.zhugefang.com/goymd/visource/config"
 	"git.zhugefang.com/goymd/visource/grpchandlers"
-	"git.zhugefang.com/goymd/visource/pb"
+	"git.zhugefang.com/goymd/visource/pb/helloworld"
 )
 
 /*
@@ -23,7 +23,7 @@ func Start() {
 		return
 	}
 
-	pb.RegisterGreeterServer(server, &grpchandlers.Server{})
+	pb_helloworld.RegisterHelloWorldServiceServer(server, &grpchandlers.HelloWorldServer{})
 
 	msg, err := zgo.Grpc.Run(context.TODO(), server, config.Conf.RpcPort)
 	if err != nil {

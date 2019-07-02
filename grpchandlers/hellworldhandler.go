@@ -9,25 +9,25 @@ package grpchandlers
 import (
 	"context"
 	"fmt"
-	"git.zhugefang.com/goymd/visource/pb"
+	"git.zhugefang.com/goymd/visource/pb/helloworld"
 	"log"
 )
 
 // server is used to implement helloworld.GreeterServer.
-type Server struct{}
+type HelloWorldServer struct{}
 
 // SayHello implements helloworld.GreeterServer
-func (s *Server) SayHello(ctx context.Context, in *pb.HelloRequest) (*pb.HelloReply, error) {
-	log.Printf("Received: Name %v", in.Name)
-	log.Printf("Received: Age %v", in.Age)
-	for _, v := range in.Requests {
+func (s *HelloWorldServer) SayHello(ctx context.Context, request *pb_helloworld.HelloRequest) (*pb_helloworld.HelloResponse, error) {
+	log.Printf("Received: Name %v", request.Name)
+	log.Printf("Received: Age %v", request.Age)
+	for _, v := range request.Requests {
 		fmt.Printf("Request: Url:%s, Title:%s, 字符串[]:%s \n", v.Url, v.Title, v.Ins)
 	}
 
 	//构建[]
-	var infos []*pb.Info
+	var infos []*pb_helloworld.Info
 	for i := 0; i < 5; i++ {
-		obj := &pb.Info{
+		obj := &pb_helloworld.Info{
 			Email: fmt.Sprintf("%s%d%s", "test", i, "@zhuge.com"),
 			Money: float64(1000 * i),
 		}
@@ -41,16 +41,15 @@ func (s *Server) SayHello(ctx context.Context, in *pb.HelloRequest) (*pb.HelloRe
 	tmpMap["K3"] = 300
 
 	//构建自定义的kv
-	var myMap = make(map[string]*pb.Info)
-	myMap["my1"] = &pb.Info{Email: "my1@zhuge.com", Money: 1000.00}
-	myMap["my2"] = &pb.Info{Email: "my2@zhuge.com", Money: 2000.00}
+	var myMap = make(map[string]*pb_helloworld.Info)
+	myMap["my1"] = &pb_helloworld.Info{Email: "my1@zhuge.com", Money: 1000.00}
+	myMap["my2"] = &pb_helloworld.Info{Email: "my2@zhuge.com", Money: 2000.00}
 
-	return &pb.HelloReply{
-		Message:  "Hello " + in.Name, //string
-		Infos:    infos,              //数组
+	return &pb_helloworld.HelloResponse{
+		Message:  "Hello " + request.Name, //string
+		Infos:    infos,                   //数组
 		Ans:      []string{"a", "b", "this is a string"},
 		Projects: tmpMap,
 		MyMap:    myMap,
-		Code:     200,
 	}, nil
 }

@@ -1,8 +1,8 @@
 
 syntax = "proto3";
 
-package pb;
-option go_package = "pb"; //指定go中使用的包，pb_signin
+package pb.helloworld;
+option go_package = "pb.helloworld"; //指定go中使用的包，pb_helloworld
 
 import "gogo.proto"; //导入gogo protobuf
 
@@ -16,9 +16,9 @@ option (gogoproto.populate_all) = true;
 option (gogoproto.goproto_getters_all) = false;
 
 // The greeting service definition.
-service Greeter {
+service HelloWorldService {
   // Sends a greeting
-  rpc SayHello (HelloRequest) returns (HelloReply) {}
+  rpc SayHello (HelloRequest) returns (HelloResponse) {}
 }
 
 // The request message containing the user's name.
@@ -40,14 +40,12 @@ message Info {
 }
 
 // gogoproto.jsontag 当序列化为json时，如果是默认的值，同时返回这个字段
-message HelloReply {
+message HelloResponse {
   string message = 1  [(gogoproto.jsontag) = "message"];
   repeated Info Infos = 2; //自定义数组[]
   repeated string ans = 3; //string类型数组
 
   map<string, int32> projects = 4; //map，也就是hash，KV
   map<string, Info> myMap = 5; //自定义k=string , v = Info类型
-
-  int32 code = 6 [(gogoproto.jsontag) = "code"];
 
 }

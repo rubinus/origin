@@ -6,7 +6,7 @@ import (
 	"git.zhugefang.com/gocore/zgo"
 	"git.zhugefang.com/goymd/visource/backend"
 	"git.zhugefang.com/goymd/visource/config"
-	"git.zhugefang.com/goymd/visource/pb"
+	"git.zhugefang.com/goymd/visource/pb/helloworld"
 	"time"
 )
 
@@ -27,21 +27,21 @@ func main() {
 	defer cancel()
 
 	//组织请求参数
-	request1 := &pb.HelloRequest_Request{
+	request1 := &pb_helloworld.HelloRequest_Request{
 		Url:   "zhuge.com",
 		Title: "诸葛找房111111",
 		Ins:   []string{"zhuge.com", "诸葛找房111111"},
 	}
-	request2 := &pb.HelloRequest_Request{
+	request2 := &pb_helloworld.HelloRequest_Request{
 		Url:   "zhuge.com",
 		Title: "诸葛找房222222",
 		Ins:   []string{"zhuge.com", "诸葛找房222222"},
 	}
-	var requests []*pb.HelloRequest_Request
+	var requests []*pb_helloworld.HelloRequest_Request
 	requests = append(requests, request1)
 	requests = append(requests, request2)
 
-	hReq := &pb.HelloRequest{Name: "hello", Age: 30, Requests: requests}
+	hReq := &pb_helloworld.HelloRequest{Name: "hello", Age: 30, Requests: requests}
 	if response, _ := backend.RpcHelloWorld(ctx, config.Conf.RpcHost, config.Conf.RpcPort, hReq); response != nil {
 		bytes, _ := zgo.Utils.Marshal(response)
 		fmt.Printf("RpcHelloWorld: %s \n\n", string(bytes))

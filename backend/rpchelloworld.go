@@ -5,7 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"git.zhugefang.com/gocore/zgo"
-	"git.zhugefang.com/goymd/visource/pb"
+	"git.zhugefang.com/goymd/visource/pb/helloworld"
 )
 
 /*
@@ -15,19 +15,19 @@ import (
 @project: visource
 */
 
-func RpcHelloWorld(ctx context.Context, address, port string, request *pb.HelloRequest) (*pb.HelloReply, error) {
-	out := make(chan *pb.HelloReply)
+func RpcHelloWorld(ctx context.Context, address, port string, request *pb_helloworld.HelloRequest) (*pb_helloworld.HelloResponse, error) {
+	out := make(chan *pb_helloworld.HelloResponse)
 	go func() {
 		conn, err := zgo.Grpc.Client(ctx, address, port, zgo.Grpc.WithInsecure())
 		if err != nil {
-			zgo.Log.Error(err)
+			//zgo.Log.Error(err)
 			return
 		}
 		defer conn.Close()
-		client := pb.NewGreeterClient(conn)
+		client := pb_helloworld.NewHelloWorldServiceClient(conn)
 		response, err := client.SayHello(ctx, request)
 		if err != nil {
-			zgo.Log.Error(err)
+			//zgo.Log.Error(err)
 			return
 		}
 		out <- response
@@ -36,7 +36,7 @@ func RpcHelloWorld(ctx context.Context, address, port string, request *pb.HelloR
 	select {
 	case <-ctx.Done():
 		errStr := fmt.Sprintf("RpcHelloWorld timeout, Host: %s, Port: %s", address, port)
-		zgo.Log.Error(errStr)
+		//zgo.Log.Error(errStr)
 		return nil, errors.New(errStr)
 	case r := <-out:
 		return r, nil
