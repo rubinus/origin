@@ -13,7 +13,7 @@ git clone这个项目后，改名成自己开发的项目名字，然后删除�
 
 安装docker,在本地一次性跑起redis,mongodb,mysql,nsq,kafka
 
-###zgo start测试方法使用：进入到比如samples/demo_mongo目录下执行，生成相应的.out，并通过go tool pprof查看
+###visource测试方法使用：进入到比如samples/demo_mongo目录下执行，生成相应的.out，并通过go tool pprof查看
 
 // 查看测试代码覆盖率
 
@@ -59,7 +59,14 @@ CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o visource
 
 用docker制作image(dck.zhuge.test是任意一个标识，如果愿意你可以改为visource，每一次v1.0.0需要递增)
 本机build
-docker build -t dck.zhuge.test/visource:v1.0.8 .
+docker build -t dck.zhuge.test/visource:v0.0.1 .
+
+docker push dck.zhuge.test/visource:v0.0.1
+
+docker run -d -p 8080:80 -p 50051:50051 --name visource dck.zhuge.test/visource:v0.0.1
+
+docker logs -f --tail=20 visource
+
 
 服务器build
 docker build -t registry.cn-beijing.aliyuncs.com/zhuge/visource:v1.1.6 .
