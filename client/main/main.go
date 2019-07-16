@@ -11,7 +11,7 @@ import (
 )
 
 func main() {
-	config.InitConfig("dev", "", "", "")
+	config.InitConfig("dev", "", "", "", "")
 
 	err := zgo.Engine(&zgo.Options{
 		Env:      config.Conf.Env,
