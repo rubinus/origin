@@ -22,16 +22,16 @@ type allConfig struct {
 	EtcdHosts     string `json:"etcdHosts"`
 	Loglevel      string `json:"loglevel"`
 	RpcHost       string `json:"rpcHost"`
-	RpcPort       string `json:"RpcPort"`
+	RpcPort       string `json:"rpcPort"`
 	ServerPort    int    `json:"serverPort"`
 	UsePreAbsPath int    `json:"usePreAbsPath"`
 }
 
-func InitConfig(e, project, etcdHosts, port string) {
-	initConfig(e, project, etcdHosts, port)
+func InitConfig(e, project, etcdHosts, port, rpcPort string) {
+	initConfig(e, project, etcdHosts, port, rpcPort)
 }
 
-func initConfig(e, project, etcdHosts, port string) {
+func initConfig(e, project, etcdHosts, port, rpcPort string) {
 	var cf string
 	if e == "local" {
 		_, f, _, ok := runtime.Caller(1)
@@ -71,6 +71,9 @@ func initConfig(e, project, etcdHosts, port string) {
 			Conf.ServerPort = portInt
 		}
 
+	}
+	if rpcPort != "" {
+		Conf.RpcPort = rpcPort
 	}
 
 	fmt.Printf("visource %s is started on the ... %s\n", Conf.Version, Conf.Env)

@@ -24,19 +24,21 @@ func init() {
 		project   string
 		etcdHosts string
 		port      string
+		rpcPort   string
 	)
 	//默认读取config/local.json
 	flag.StringVar(&env, "env", "dev", "start local/dev/qa/pro env config")
 	flag.StringVar(&project, "project", "", "create project id by zgo engine admin")
 	flag.StringVar(&etcdHosts, "etcdHosts", "", "etcd hosts host:port,host:port")
 	flag.StringVar(&port, "port", "", "port")
+	flag.StringVar(&rpcPort, "rpcPort", "", "rpcPort")
 
 	flag.Parse()
 	if os.Getenv("ENV") != "" { //从os的env取得ENV，用来在yaml文件中的配置
 		env = os.Getenv("ENV")
 	}
 	//load config from dev/qa/pro
-	config.InitConfig(env, project, etcdHosts, port)
+	config.InitConfig(env, project, etcdHosts, port, rpcPort)
 
 	if os.Getenv("PROJECT") != "" {
 		config.Conf.Project = os.Getenv("PROJECT") //从os的env取得PROJECT，用来在yaml文件中的配置
@@ -45,7 +47,11 @@ func init() {
 		config.Conf.EtcdHosts = os.Getenv("ETCDHOSTS") //从os的env取得ETCDHOSTS，用来在yaml文件中的配置
 	}
 	if os.Getenv("PORT") != "" {
-		config.Conf.EtcdHosts = os.Getenv("PORT") //从os的env取得PORT，用来在yaml文件中的配置
+		port, _ := strconv.Atoi(os.Getenv("PORT"))
+		config.Conf.ServerPort = port //从os的env取得PORT，用来在yaml文件中的配置
+	}
+	if os.Getenv("RPCPORT") != "" {
+		config.Conf.RpcPort = os.Getenv("RPCPORT") //从os的env取得RPCPORT，用来在yaml文件中的配置
 	}
 }
 
