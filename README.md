@@ -5,9 +5,17 @@
 
 ##deploy文件目录是用运维用来部署k8s和istio的，其中的yaml文件需要由开发人员编写
 
-
+##Http
 //前端ajax-->main.go(Run)-->routes-->(实际业务处理handler)-->services-->zgo.组件(mysql/mongo/redis/pika)-->models(库)
 
+##Grpc
+server是grpc服务启动
+
+grpchandlers是类似与 handler的处理grpc的handler
+
+backend 是被grpchandler 调用的
+
+client是grpc模拟发送客户端
 
 git clone这个项目后，改名成自己开发的项目名字，然后删除掉.git目录，这是一个模板，内含有samples目录
 
@@ -77,9 +85,9 @@ docker push registry.cn-beijing.aliyuncs.com/zhuge/visource:v1.1.6
 
 ##visource 本机使用local时测试环境
 阿里云内网
-10.45.146.41
+10.24.188.182
 阿里云公网
-123.56.173.28
+47.95.20.12
 
 数字是端口号，供测试zgo admin使用，跑在docker里
 
