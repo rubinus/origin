@@ -12,7 +12,7 @@ import (
 @Time : 2019-03-22 11:50
 @Author : rubinus.chu
 @File : redis
-@project: visource
+@project: base-to-base-wait-copy
 */
 
 func RedisGet(ctx iris.Context) {

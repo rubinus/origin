@@ -1,7 +1,7 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
-  name: visource-gateway
+  name: base-to-base-wait-copy-gateway
 spec:
   selector:
     istio: ingressgateway

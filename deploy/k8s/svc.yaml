@@ -1,12 +1,12 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: visource
+  name: base-to-base-wait-copy
   labels:
-    app: visource
+    app: base-to-base-wait-copy
 spec:
   selector:
-    app: visource
+    app: base-to-base-wait-copy
   ports:
     - name: http
       port: 80

@@ -3,10 +3,10 @@ package main
 import (
 	"context"
 	"fmt"
+	"git.zhugefang.com/gobase/base-to-base-wait-copy/backend"
+	"git.zhugefang.com/gobase/base-to-base-wait-copy/config"
+	"git.zhugefang.com/gobase/base-to-base-wait-copy/pb/helloworld"
 	"git.zhugefang.com/gocore/zgo"
-	"git.zhugefang.com/goymd/visource/backend"
-	"git.zhugefang.com/goymd/visource/config"
-	"git.zhugefang.com/goymd/visource/pb/helloworld"
 	"time"
 )
 

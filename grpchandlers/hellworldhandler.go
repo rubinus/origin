@@ -2,14 +2,14 @@
 @Time : 2019-03-02 11:51
 @Author : rubinus
 @File : hellworldHandler
-@Software: visource
+@Software: base-to-base-wait-copy
 */
 package grpchandlers
 
 import (
 	"context"
 	"fmt"
-	"git.zhugefang.com/goymd/visource/pb/helloworld"
+	"git.zhugefang.com/gobase/base-to-base-wait-copy/pb/helloworld"
 	"log"
 )
 

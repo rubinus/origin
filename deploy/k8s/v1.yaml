@@ -1,19 +1,19 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: visource-v1
+  name: base-to-base-wait-copy-v1
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        app: visource
+        app: base-to-base-wait-copy
         version: v1
     spec:
       restartPolicy: Always
       containers:
-        - name: visource
-          image: registry.cn-beijing.aliyuncs.com/zhuge/visource:v1.1.6
+        - name: base-to-base-wait-copy
+          image: registry.cn-beijing.aliyuncs.com/zhuge/base-to-base-wait-copy:v1.1.6
           ports:
             - containerPort: 80
           imagePullPolicy: IfNotPresent

@@ -1,7 +1,7 @@
 {
   "version": "1.0.0",
   "env": "pro",
-  "project": "visource",
+  "project": "base-to-base-wait-copy",
   "loglevel": "error",
   "rpcHost": "localhost",
   "rpcPort": "50051",

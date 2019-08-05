@@ -8,4 +8,4 @@ lua/lib/*.so
 *.out
 *.test
 *.DS_Store
-./visource
+./base-to-base-wait-copy

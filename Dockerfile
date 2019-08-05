@@ -16,19 +16,19 @@ RUN apk add --no-cache tzdata && ln -sf /usr/share/zoneinfo/$TZ /etc/localtime &
 
 
 #设置工作目录
-WORKDIR $GOPATH/src/visource/
-#ADD ./ $GOPATH/src/visource/
-ADD visource $GOPATH/src/visource/
+WORKDIR $GOPATH/src/base-to-base-wait-copy/
+#ADD ./ $GOPATH/src/base-to-base-wait-copy/
+ADD base-to-base-wait-copy $GOPATH/src/base-to-base-wait-copy/
 
-ADD config $GOPATH/src/visource/config
-ADD views $GOPATH/src/visource/views
-ADD public $GOPATH/src/visource/public
-ADD deploy $GOPATH/src/visource/deploy
+ADD config $GOPATH/src/base-to-base-wait-copy/config
+ADD views $GOPATH/src/base-to-base-wait-copy/views
+ADD public $GOPATH/src/base-to-base-wait-copy/public
+ADD deploy $GOPATH/src/base-to-base-wait-copy/deploy
 
 
-RUN ["chmod", "+x", "visource"]
+RUN ["chmod", "+x", "base-to-base-wait-copy"]
 
 EXPOSE 80
 EXPOSE 50051
 
-ENTRYPOINT ["./visource","--env","dev"]
+ENTRYPOINT ["./base-to-base-wait-copy","--env","dev"]

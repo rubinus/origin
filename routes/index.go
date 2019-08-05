@@ -4,11 +4,11 @@ package routes
 @Time : 2019-03-05 18:27
 @Author : rubinus.chu
 @File : index
-@project: visource
+@project: base-to-base-wait-copy
 */
 
 import (
-	"git.zhugefang.com/goymd/visource/handlers"
+	"git.zhugefang.com/gobase/base-to-base-wait-copy/handlers"
 	"github.com/kataras/iris"
 )
 
