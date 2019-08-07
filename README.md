@@ -71,6 +71,9 @@ docker build -t dck.zhuge.test/base-to-base-wait-copy:v0.0.1 .
 
 docker push dck.zhuge.test/base-to-base-wait-copy:v0.0.1
 
+###在服务器上执行
+docker pull dck.zhuge.test/base-to-base-wait-copy:v0.0.1
+
 docker run -d -p 8080:80 -p 50051:50051 --name base-to-base-wait-copy dck.zhuge.test/base-to-base-wait-copy:v0.0.1
 
 docker logs -f --tail=20 base-to-base-wait-copy
