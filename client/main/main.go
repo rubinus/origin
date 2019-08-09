@@ -42,9 +42,11 @@ func main() {
 	requests = append(requests, request2)
 
 	hReq := &pb_helloworld.HelloRequest{Name: "hello", Age: 30, Requests: requests}
-	if response, _ := backend.RpcHelloWorld(ctx, config.Conf.RpcHost, config.Conf.RpcPort, hReq); response != nil {
+	if response, err := backend.RpcHelloWorld(ctx, config.Conf.RpcHost, config.Conf.RpcPort, hReq); response != nil {
 		bytes, _ := zgo.Utils.Marshal(response)
 		fmt.Printf("RpcHelloWorld: %s \n\n", string(bytes))
+	} else {
+		zgo.Log.Error(err)
 	}
 
 }
