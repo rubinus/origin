@@ -13,7 +13,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: base-to-base-wait-copy
-          image: registry.cn-beijing.aliyuncs.com/zhuge/base-to-base-wait-copy:v1.1.6
+          image: registry.cn-beijing.aliyuncs.com/zhugeprod/base-to-base-wait-copy:v1.0.0.1
           ports:
             - containerPort: 80
             - containerPort: 50051
@@ -22,7 +22,8 @@ spec:
             - name: ENV
               value: "pro"
             - name: PROJECT
-              value: ""
+              value: "1565606520"
             - name: ETCDHOSTS
-              value: ""
+              value: "10.25.96.1:2380,10.26.100.217:2380,10.26.162.67:2380"
 ---
+

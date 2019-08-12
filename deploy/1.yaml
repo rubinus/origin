@@ -4,16 +4,18 @@ metadata:
   name: base-to-base-wait-copy
 spec:
   hosts:
-    - "*"
+#    - "*"
+    - "base-to-base-wait-copybffp.zhuge.com"
   gateways:
     - base-to-base-wait-copy-gateway
   http:
     - route:
         - destination:
             host: base-to-base-wait-copy
-            subset: v2
-          weight: 50
+            subset: v1
+          weight: 100
         - destination:
             host: base-to-base-wait-copy
-            subset: v1
-          weight: 50
+            subset: v2
+          weight: 0
+---

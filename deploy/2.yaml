@@ -1,0 +1,20 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: base-to-base-wait-copy
+spec:
+  hosts:
+    - "base-to-base-wait-copybffp.zhuge.com"
+  gateways:
+    - base-to-base-wait-copy-gateway
+  http:
+    - route:
+        - destination:
+            host: base-to-base-wait-copy
+            subset: v1
+          weight: 0
+        - destination:
+            host: base-to-base-wait-copy
+            subset: v2
+          weight: 100
+---

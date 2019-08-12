@@ -5,10 +5,10 @@ metadata:
 spec:
   host: base-to-base-wait-copy
   subsets:
-    - name: v2
-      labels:
-        version: v2
     - name: v1
       labels:
         version: v1
+    - name: v2
+      labels:
+        version: v2
 ---
