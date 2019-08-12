@@ -17,4 +17,4 @@ Mgoogle/protobuf/duration.proto=github.com/gogo/protobuf/types,\
 Mgoogle/protobuf/struct.proto=github.com/gogo/protobuf/types,\
 Mgoogle/protobuf/timestamp.proto=github.com/gogo/protobuf/types,\
 Mgoogle/protobuf/wrappers.proto=github.com/gogo/protobuf/types,\
-plugins=grpc:pb --proto_path=proto jgpush/jgpush.proto
+plugins=grpc:pb --proto_path=proto base-to-base-wait-copy/base-to-base-wait-copy.proto
