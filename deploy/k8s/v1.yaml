@@ -16,12 +16,13 @@ spec:
           image: registry.cn-beijing.aliyuncs.com/zhuge/base-to-base-wait-copy:v1.1.6
           ports:
             - containerPort: 80
+            - containerPort: 50051
           imagePullPolicy: IfNotPresent
           env:
             - name: ENV
-              value: "dev"
+              value: "pro"
             - name: PROJECT
-              value: "1553240759"
+              value: ""
             - name: ETCDHOSTS
-              value: "10.45.146.41:2380"
+              value: ""
 ---

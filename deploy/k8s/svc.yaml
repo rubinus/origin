@@ -10,4 +10,6 @@ spec:
   ports:
     - name: http
       port: 80
+    - name: rpc
+      port: 50051
 ---
