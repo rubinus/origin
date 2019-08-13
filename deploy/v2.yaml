@@ -16,7 +16,9 @@ spec:
           image: registry.cn-beijing.aliyuncs.com/zhugeprod/base-to-base-wait-copy:v1.0.0.1
           ports:
             - containerPort: 80
+              name: http-port
             - containerPort: 50051
+              name: grpc-port
           imagePullPolicy: IfNotPresent
           env:
             - name: ENV

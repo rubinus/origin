@@ -8,9 +8,12 @@ spec:
   selector:
     app: base-to-base-wait-copy
   ports:
-    - name: http
-      port: 80
-    - name: rpc
-      port: 50051
----
+    - port: 80
+      name: http-port
+      protocol: TCP
+      targetPort: 80
 
+    - port: 50051
+      name: grpc-port
+      protocol: TCP
+      targetPort: 50051

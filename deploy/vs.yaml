@@ -4,8 +4,7 @@ metadata:
   name: base-to-base-wait-copy
 spec:
   hosts:
-#    - "*"
-    - "base-to-base-wait-copybffp.zhuge.com"
+    - base-to-base-wait-copybffp.zhuge.com
   gateways:
     - base-to-base-wait-copy-gateway
   http:

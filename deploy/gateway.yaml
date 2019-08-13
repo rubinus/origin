@@ -7,10 +7,15 @@ spec:
     istio: ingressgateway
   servers:
     - port:
-        number: 80
         name: http
+        number: 80
         protocol: HTTP
       hosts:
-#        - "*"
-        - "base-to-base-wait-copybffp.zhuge.com"
----
+        - base-to-base-wait-copybffp.zhuge.com
+    - port:
+        name: grpc
+        number: 50051
+        protocol: HTTP
+      hosts:
+        - base-to-base-wait-copybffp.zhuge.com
+
