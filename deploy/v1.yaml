@@ -11,6 +11,8 @@ spec:
         version: v1
     spec:
       restartPolicy: Always
+      imagePullSecrets:
+        - name: bffp-key  #使用镜像密钥,在阿里云后台提前创建
       containers:
         - name: origin
           image: registry.cn-beijing.aliyuncs.com/zhugeprod/origin:v1.0.0.1
@@ -19,7 +21,7 @@ spec:
               name: http-port
             - containerPort: 50051
               name: grpc-port
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always #总是拉取镜像
           env:
             - name: ENV
               value: "pro"
