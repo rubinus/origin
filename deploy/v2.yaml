@@ -1,19 +1,19 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: base-to-base-wait-copy-v2
+  name: origin-v2
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        app: base-to-base-wait-copy
+        app: origin
         version: v2
     spec:
       restartPolicy: Always
       containers:
-        - name: base-to-base-wait-copy
-          image: registry.cn-beijing.aliyuncs.com/zhugeprod/base-to-base-wait-copy:v1.0.0.1
+        - name: origin
+          image: registry.cn-beijing.aliyuncs.com/zhugeprod/origin:v1.0.0.1
           ports:
             - containerPort: 80
               name: http-port

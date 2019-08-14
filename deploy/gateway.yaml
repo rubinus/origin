@@ -1,7 +1,7 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
-  name: base-to-base-wait-copy-gateway
+  name: origin-gateway
 spec:
   selector:
     istio: ingressgateway
@@ -11,11 +11,11 @@ spec:
         number: 80
         protocol: HTTP
       hosts:
-        - base-to-base-wait-copybffp.zhuge.com
+        - originbffp.zhuge.com
     - port:
         name: grpc
         number: 50051
         protocol: HTTP
       hosts:
-        - base-to-base-wait-copybffp.zhuge.com
+        - originbffp.zhuge.com
 

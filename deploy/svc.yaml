@@ -1,12 +1,12 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: base-to-base-wait-copy
+  name: origin
   labels:
-    app: base-to-base-wait-copy
+    app: origin
 spec:
   selector:
-    app: base-to-base-wait-copy
+    app: origin
   ports:
     - port: 80
       name: http-port

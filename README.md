@@ -1,4 +1,4 @@
-# base-to-base-wait-copy
+# origin
 
 
 ##how to use the zgo engine
@@ -21,7 +21,7 @@ git clone这个项目后，改名成自己开发的项目名字，然后删除�
 
 安装docker,在本地一次性跑起redis,mongodb,mysql,nsq,kafka
 
-###base-to-base-wait-copy测试方法使用：进入到比如samples/demo_mongo目录下执行，生成相应的.out，并通过go tool pprof查看
+###origin测试方法使用：进入到比如samples/demo_mongo目录下执行，生成相应的.out，并通过go tool pprof查看
 
 // 查看测试代码覆盖率
 
@@ -60,33 +60,33 @@ docker-compose up
 docker-compose up -d
 
 选项一：在当前目录下编译mac运行的二进制文件，仅适用于本机运行
-go build -o base-to-base-wait-copy
+go build -o origin
 
 选项二：在当前目录下编译linux运行的二进制文件，适用于服务器linux环境
-CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o base-to-base-wait-copy
+CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o origin
 
-用docker制作image(dck.zhuge.test是任意一个标识，如果愿意你可以改为base-to-base-wait-copy，每一次v1.0.0需要递增)
+用docker制作image(dck.zhuge.test是任意一个标识，如果愿意你可以改为origin，每一次v1.0.0需要递增)
 本机build
-docker build -t dck.zhuge.test/base-to-base-wait-copy:v0.0.1 .
+docker build -t dck.zhuge.test/origin:v0.0.1 .
 
-docker push dck.zhuge.test/base-to-base-wait-copy:v0.0.1
+docker push dck.zhuge.test/origin:v0.0.1
 
 ###在服务器上执行
-docker pull dck.zhuge.test/base-to-base-wait-copy:v0.0.1
+docker pull dck.zhuge.test/origin:v0.0.1
 
-docker run -d -p 8080:80 -p 50051:50051 --name base-to-base-wait-copy dck.zhuge.test/base-to-base-wait-copy:v0.0.1
+docker run -d -p 8080:80 -p 50051:50051 --name origin dck.zhuge.test/origin:v0.0.1
 
-docker logs -f --tail=20 base-to-base-wait-copy
+docker logs -f --tail=20 origin
 
 
 服务器build
-docker build -t registry.cn-beijing.aliyuncs.com/zhuge/base-to-base-wait-copy:v1.1.6 .
+docker build -t registry.cn-beijing.aliyuncs.com/zhuge/origin:v1.1.6 .
 
 push到阿里云的私有镜像仓库
-docker push registry.cn-beijing.aliyuncs.com/zhuge/base-to-base-wait-copy:v1.1.6
+docker push registry.cn-beijing.aliyuncs.com/zhuge/origin:v1.1.6
 
 
-##base-to-base-wait-copy 本机使用local时测试环境
+##origin 本机使用local时测试环境
 阿里云内网
 10.24.188.182
 阿里云公网

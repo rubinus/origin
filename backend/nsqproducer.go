@@ -10,7 +10,7 @@ import (
 @Time : 2019-06-14 12:15
 @Author : rubinus.chu
 @File : nsqproducer
-@project: base-to-base-wait-copy
+@project: origin
 */
 
 func NsqProducer(topic string, body interface{}) chan uint8 {

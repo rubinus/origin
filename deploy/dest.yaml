@@ -1,9 +1,9 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
 metadata:
-  name: base-to-base-wait-copy
+  name: origin
 spec:
-  host: base-to-base-wait-copy
+  host: origin
   subsets:
     - name: v1
       labels:

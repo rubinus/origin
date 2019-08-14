@@ -8,4 +8,4 @@ lua/lib/*.so
 *.out
 *.test
 *.DS_Store
-./base-to-base-wait-copy
+./origin

@@ -3,9 +3,9 @@ package handlers
 import (
 	"context"
 	"fmt"
-	"git.zhugefang.com/gobase/base-to-base-wait-copy/config"
-	"git.zhugefang.com/gobase/base-to-base-wait-copy/models/mysql_models"
-	"git.zhugefang.com/gobase/base-to-base-wait-copy/services"
+	"git.zhugefang.com/gobase/origin/config"
+	"git.zhugefang.com/gobase/origin/models/mysql_models"
+	"git.zhugefang.com/gobase/origin/services"
 	"git.zhugefang.com/gocore/zgo"
 	"github.com/kataras/iris"
 	"os"
@@ -16,7 +16,7 @@ import (
 @Time : 2019-03-06 19:46
 @Author : rubinus.chu
 @File : demoHandler
-@project: base-to-base-wait-copy
+@project: origin
 */
 
 type indexPage struct {
@@ -32,7 +32,7 @@ func IndexPage(ctx iris.Context) {
 	hostName, _ := os.Hostname()
 	ctx.ViewData("", indexPage{
 		Title:    project,
-		Message:  fmt.Sprintf("%s welcome base-to-base-wait-copy by zgo engine ...", project),
+		Message:  fmt.Sprintf("%s welcome origin by zgo engine ...", project),
 		Version:  config.Conf.Version,
 		HostName: hostName,
 	})
@@ -51,14 +51,14 @@ func Hello(ctx iris.Context) {
 	s := `{"branch":"beta","change_log":"add the rows{10}","channel":"fros","create_time":"2017-06-13 16:39:08","firmware_list":"","md5":"80dee2bf7305bcf179582088e29fd7b9","note":{"CoreServices":{"md5":"d26975c0a8c7369f70ed699f2855cc2e","package_name":"CoreServices","version_code":"76","version_name":"1.0.76"},"FrDaemon":{"md5":"6b1f0626673200bc2157422cd2103f5d","package_name":"FrDaemon","version_code":"390","version_name":"1.0.390"},"FrGallery":{"md5":"90d767f0f31bcd3c1d27281ec979ba65","package_name":"FrGallery","version_code":"349","version_name":"1.0.349"},"FrLocal":{"md5":"f15a215b2c070a80a01f07bde4f219eb","package_name":"FrLocal","version_code":"791","version_name":"1.0.791"}},"pack_region_urls":{"CN":"https://s3.cn-north-1.amazonaws.com.cn/xxx-os/ttt_xxx_android_1.5.3.344.393.zip","default":"http://192.168.8.78/ttt_xxx_android_1.5.3.344.393.zip","local":"http://192.168.8.78/ttt_xxx_android_1.5.3.344.393.zip"},"pack_version":"1.5.3.344.393","pack_version_code":393,"region":"all","release_flag":0,"revision":62,"size":38966875,"status":3}`
 
 	//set stander json to redis String
-	_, err := zgo.Redis.Set(cotx, "base-to-base-wait-copy_"+name, s)
+	_, err := zgo.Redis.Set(cotx, "origin_"+name, s)
 	if err != nil {
 		zgo.Log.Error(err)
 		return
 	}
 
 	//get String key return a map
-	val, err := zgo.Redis.Get(cotx, "base-to-base-wait-copy_"+name)
+	val, err := zgo.Redis.Get(cotx, "origin_"+name)
 
 	result := zgo.Utils.StringToMap(val.(string))
 
@@ -82,14 +82,14 @@ func Hello(ctx iris.Context) {
 	//if err != nil {
 	//	panic(err)
 	//}
-	//n.Producer(cotx, "base-to-base-wait-copy", []byte("nsq888888"))
+	//n.Producer(cotx, "origin", []byte("nsq888888"))
 	//
 	////发送到kafka
 	//k, err := zgo.Kafka.New("kafka_label_bj")
 	//if err != nil {
 	//	panic(err)
 	//}
-	//k.Producer(cotx, "base-to-base-wait-copy", []byte("kafka9999999999"))
+	//k.Producer(cotx, "origin", []byte("kafka9999999999"))
 
 	select {
 	case <-cotx.Done():

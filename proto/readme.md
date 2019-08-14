@@ -2,7 +2,7 @@ proto文件夹生成的proto源文件
 
 生成pb.go到pb目录下
 
-确保在当前项目的目录下，比如 git.zhugefang.com/gobase/base-to-base-wait-copy/
+确保在当前项目的目录下，比如 git.zhugefang.com/gobase/origin/
 
 protoc --proto_path=proto --gofast_out=plugins=grpc:pb helloworld/helloworld.proto
 
@@ -17,4 +17,4 @@ Mgoogle/protobuf/duration.proto=github.com/gogo/protobuf/types,\
 Mgoogle/protobuf/struct.proto=github.com/gogo/protobuf/types,\
 Mgoogle/protobuf/timestamp.proto=github.com/gogo/protobuf/types,\
 Mgoogle/protobuf/wrappers.proto=github.com/gogo/protobuf/types,\
-plugins=grpc:pb --proto_path=proto base-to-base-wait-copy/base-to-base-wait-copy.proto
+plugins=grpc:pb --proto_path=proto origin/origin.proto

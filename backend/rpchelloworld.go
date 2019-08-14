@@ -4,7 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"git.zhugefang.com/gobase/base-to-base-wait-copy/pb/helloworld"
+	"git.zhugefang.com/gobase/origin/pb/helloworld"
 	"git.zhugefang.com/gocore/zgo"
 )
 
@@ -12,7 +12,7 @@ import (
 @Time : 2019-06-15 11:09
 @Author : rubinus.chu
 @File : rpchelloworld
-@project: base-to-base-wait-copy
+@project: origin
 */
 
 func RpcHelloWorld(ctx context.Context, address, port string, request *pb_helloworld.HelloRequest) (*pb_helloworld.HelloResponse, error) {

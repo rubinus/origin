@@ -1,7 +1,7 @@
 package engine
 
 import (
-	"git.zhugefang.com/gobase/base-to-base-wait-copy/config"
+	"git.zhugefang.com/gobase/origin/config"
 	"git.zhugefang.com/gocore/zgo"
 	"time"
 )

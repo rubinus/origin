@@ -12,7 +12,7 @@ import (
 @Time : 2019-03-22 11:50
 @Author : rubinus.chu
 @File : redis
-@project: base-to-base-wait-copy
+@project: origin
 */
 
 func NsqPut(ctx iris.Context) {

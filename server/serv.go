@@ -3,9 +3,9 @@ package server
 import (
 	"context"
 	"fmt"
-	"git.zhugefang.com/gobase/base-to-base-wait-copy/config"
-	"git.zhugefang.com/gobase/base-to-base-wait-copy/grpchandlers"
-	"git.zhugefang.com/gobase/base-to-base-wait-copy/pb/helloworld"
+	"git.zhugefang.com/gobase/origin/config"
+	"git.zhugefang.com/gobase/origin/grpchandlers"
+	"git.zhugefang.com/gobase/origin/pb/helloworld"
 	"git.zhugefang.com/gocore/zgo"
 )
 

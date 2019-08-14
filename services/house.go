@@ -2,14 +2,14 @@
 @Time : 2019-03-08 17:40
 @Author : lucas
 @File : House
-@project: base-to-base-wait-copy
+@project: origin
 */
 package services
 
 import (
 	"context"
 	"errors"
-	"git.zhugefang.com/gobase/base-to-base-wait-copy/models/mysql_models"
+	"git.zhugefang.com/gobase/origin/models/mysql_models"
 )
 
 type HouseService struct {

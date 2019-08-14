@@ -16,19 +16,19 @@ RUN apk add --no-cache tzdata && ln -sf /usr/share/zoneinfo/$TZ /etc/localtime &
 
 
 #设置工作目录
-WORKDIR $GOPATH/src/base-to-base-wait-copy/
-#ADD ./ $GOPATH/src/base-to-base-wait-copy/
-ADD base-to-base-wait-copy $GOPATH/src/base-to-base-wait-copy/
+WORKDIR $GOPATH/src/origin/
+#ADD ./ $GOPATH/src/origin/
+ADD origin $GOPATH/src/origin/
 
-ADD config $GOPATH/src/base-to-base-wait-copy/config
-ADD views $GOPATH/src/base-to-base-wait-copy/views
-ADD public $GOPATH/src/base-to-base-wait-copy/public
-ADD deploy $GOPATH/src/base-to-base-wait-copy/deploy
+ADD config $GOPATH/src/origin/config
+ADD views $GOPATH/src/origin/views
+ADD public $GOPATH/src/origin/public
+ADD deploy $GOPATH/src/origin/deploy
 
 
-RUN ["chmod", "+x", "base-to-base-wait-copy"]
+RUN ["chmod", "+x", "origin"]
 
 EXPOSE 80
 EXPOSE 50051
 
-ENTRYPOINT ["./base-to-base-wait-copy","--env","dev"]
+ENTRYPOINT ["./origin","--env","dev"]

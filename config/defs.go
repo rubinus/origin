@@ -76,7 +76,7 @@ func initConfig(e, project, etcdHosts, port, rpcPort string) {
 		Conf.RpcPort = rpcPort
 	}
 
-	fmt.Printf("base-to-base-wait-copy %s is started on the ... %s\n", Conf.Version, Conf.Env)
+	fmt.Printf("origin %s is started on the ... %s\n", Conf.Version, Conf.Env)
 }
 
 // LoadConfigByFile暂时不用

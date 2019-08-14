@@ -2,14 +2,14 @@
 @Time : 2019-03-02 11:51
 @Author : rubinus
 @File : hellworldHandler
-@Software: base-to-base-wait-copy
+@Software: origin
 */
 package grpchandlers
 
 import (
 	"context"
 	"fmt"
-	"git.zhugefang.com/gobase/base-to-base-wait-copy/pb/helloworld"
+	"git.zhugefang.com/gobase/origin/pb/helloworld"
 	"log"
 )
 

@@ -1,7 +1,7 @@
 {
   "version": "1.0.0",
   "env": "pro",
-  "project": "base-to-base-wait-copy",
+  "project": "origin",
   "loglevel": "error",
   "rpcHost": "localhost",
   "rpcPort": "50051",
