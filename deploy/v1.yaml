@@ -25,9 +25,5 @@ spec:
           env:
             - name: ENV
               value: "pro"
-            - name: PROJECT
-              value: ""
-            - name: ETCDHOSTS
-              value: "10.25.96.1:2380,10.26.100.217:2380,10.26.162.67:2380"
 ---
 
