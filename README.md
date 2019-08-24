@@ -74,17 +74,26 @@ docker push dck.zhuge.test/origin:v0.0.1
 ###在服务器上执行
 docker pull dck.zhuge.test/origin:v0.0.1
 
+docker rm -f origin
+
 docker run -d -p 8080:80 -p 50051:50051 --name origin dck.zhuge.test/origin:v0.0.1
 
 docker logs -f --tail=20 origin
 
 
-服务器build
-docker build -t registry.cn-beijing.aliyuncs.com/zhuge/origin:v1.1.6 .
+服务器build (zhugeprod是生产，zhugedev是qa，各自2个版本)
+docker build -t registry.cn-beijing.aliyuncs.com/zhugeprod/origin:v1.0.0.1 .
+docker build -t registry.cn-beijing.aliyuncs.com/zhugedev/origin:v1.0.0.1 .
+
+docker build -t registry.cn-beijing.aliyuncs.com/zhugeprod/origin:v1.0.0.2 .
+docker build -t registry.cn-beijing.aliyuncs.com/zhugedev/origin:v1.0.0.2 .
 
 push到阿里云的私有镜像仓库
-docker push registry.cn-beijing.aliyuncs.com/zhuge/origin:v1.1.6
+docker push registry.cn-beijing.aliyuncs.com/zhugeprod/origin:v1.0.0.1
+docker push registry.cn-beijing.aliyuncs.com/zhugedev/origin:v1.0.0.1
 
+docker push registry.cn-beijing.aliyuncs.com/zhugeprod/origin:v1.0.0.2
+docker push registry.cn-beijing.aliyuncs.com/zhugedev/origin:v1.0.0.2
 
 ##origin 本机使用local时测试环境
 阿里云内网

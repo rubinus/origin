@@ -74,6 +74,8 @@ func main() {
 		pre = "./views"
 	}
 
+	app.StaticWeb("/", "./public") //static
+
 	app.RegisterView(iris.HTML(pre, ".html")) // select the html engine to serve templates
 
 	//集中调用路由
