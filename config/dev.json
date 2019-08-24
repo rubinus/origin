@@ -1,7 +1,7 @@
 {
   "version": "1.0.0",
   "env": "dev",
-  "project": "1559734620",
+  "project": "",
   "loglevel": "info",
   "rpcHost": "localhost",
   "rpcPort": "50051",
