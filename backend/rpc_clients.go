@@ -16,6 +16,7 @@ import (
 @project: wechat
 */
 
+// 可以起名为你的 xxxxClient
 var HelloworldClient pb_helloworld.HelloWorldServiceClient
 
 func RPCClientsRun() {
