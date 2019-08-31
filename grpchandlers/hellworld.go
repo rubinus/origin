@@ -13,10 +13,10 @@ import (
 	"log"
 )
 
-// server is used to implement helloworld.GreeterServer.
+// 可以起名为你的 xxxxServer
 type HelloWorldServer struct{}
 
-// SayHello implements helloworld.GreeterServer
+// SayHello implements func
 func (s *HelloWorldServer) SayHello(ctx context.Context, request *pb_helloworld.HelloRequest) (*pb_helloworld.HelloResponse, error) {
 	log.Printf("Received: Name %v", request.Name)
 	log.Printf("Received: Age %v", request.Age)
