@@ -29,7 +29,6 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 
-// The request message containing the user's name.
 type HelloRequest struct {
 	Name                 string                  `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	Age                  uint32                  `protobuf:"varint,2,opt,name=age,proto3" json:"age,omitempty"`
@@ -155,7 +154,6 @@ func (m *Info) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_Info proto.InternalMessageInfo
 
-// gogoproto.jsontag 当序列化为json时，如果是默认的值，同时返回这个字段
 type HelloResponse struct {
 	Message              string           `protobuf:"bytes,1,opt,name=message,proto3" json:"message"`
 	Infos                []*Info          `protobuf:"bytes,2,rep,name=Infos,proto3" json:"Infos,omitempty"`
@@ -708,7 +706,8 @@ const _ = grpc.SupportPackageIsVersion4
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type HelloWorldServiceClient interface {
-	// Sends a greeting
+	//HelloRequest 改名为你的 XXXXXRequest
+	//HelloResponse 改名为你的 XXXXXResponse
 	SayHello(ctx context.Context, in *HelloRequest, opts ...grpc.CallOption) (*HelloResponse, error)
 }
 
@@ -731,7 +730,8 @@ func (c *helloWorldServiceClient) SayHello(ctx context.Context, in *HelloRequest
 
 // HelloWorldServiceServer is the server API for HelloWorldService service.
 type HelloWorldServiceServer interface {
-	// Sends a greeting
+	//HelloRequest 改名为你的 XXXXXRequest
+	//HelloResponse 改名为你的 XXXXXResponse
 	SayHello(context.Context, *HelloRequest) (*HelloResponse, error)
 }
 

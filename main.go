@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"git.zhugefang.com/gobase/origin/backend"
 	"git.zhugefang.com/gobase/origin/config"
 	"git.zhugefang.com/gobase/origin/engine"
 	"git.zhugefang.com/gobase/origin/routes"
@@ -89,6 +90,9 @@ func main() {
 	go func() { //start grpc server on the default port 50051
 		server.Start()
 	}()
+
+	//start grpc clients
+	backend.RPCClientsRun()
 
 	app.Run(iris.Addr(":" + strconv.Itoa(config.Conf.ServerPort)))
 

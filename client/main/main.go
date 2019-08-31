@@ -23,6 +23,10 @@ func main() {
 		return
 	}
 
+	//start grpc clients
+	backend.RPCClientsRun()
+	time.Sleep(1 * time.Second)
+
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
@@ -42,7 +46,7 @@ func main() {
 	requests = append(requests, request2)
 
 	hReq := &pb_helloworld.HelloRequest{Name: "hello", Age: 30, Requests: requests}
-	if response, err := backend.RpcHelloWorld(ctx, config.Conf.RpcHost, config.Conf.RpcPort, hReq); response != nil {
+	if response, err := backend.RpcHelloWorld(ctx, hReq); response != nil {
 		bytes, _ := zgo.Utils.Marshal(response)
 		fmt.Printf("RpcHelloWorld: %s \n\n", string(bytes))
 	} else {
