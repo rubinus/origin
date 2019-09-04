@@ -13,6 +13,8 @@ import (
 	"strconv"
 )
 
+//从.json文件中加载配置项
+
 var Conf *allConfig
 
 type allConfig struct {
