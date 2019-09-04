@@ -21,9 +21,6 @@ func Index(app *iris.Application) {
 	//http://localhost:8080/hello?name=niubi
 	app.Get("/hello", handlers.Hello)
 
-	//http://localhost:8080/house
-	app.Post("/{city:string}/house", handlers.AddHouse)
-
 	//http://localhost:8080/v1/bj/addone
 	v1 := app.Party("/v1")
 	{

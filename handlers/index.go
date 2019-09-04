@@ -4,8 +4,6 @@ import (
 	"context"
 	"fmt"
 	"git.zhugefang.com/gobase/origin/config"
-	"git.zhugefang.com/gobase/origin/models/mysql_models"
-	"git.zhugefang.com/gobase/origin/services"
 	"git.zhugefang.com/gocore/zgo"
 	"github.com/kataras/iris"
 	"os"
@@ -103,30 +101,4 @@ func Hello(ctx iris.Context) {
 
 	}
 
-}
-
-// AddHouse 保存房源信息的handler方法
-func AddHouse(ctx iris.Context) {
-	zctx := context.Background()
-	city := ctx.Params().GetString("city")
-	h := &mysql_models.House{}
-	err := ctx.ReadJSON(h)
-	if err != nil {
-		zgo.Http.JsonpErr(ctx, err.Error())
-	}
-	fmt.Println(h)
-	// 验证数据是否有Id
-	if h.Id > 0 {
-		zgo.Http.JsonpErr(ctx, "Id不为空")
-		return
-	}
-
-	hs := services.HouseService{}
-	err = hs.AddHouse(zctx, h, city)
-	if err != nil {
-		zgo.Http.JsonpErr(ctx, err.Error())
-		return
-	}
-
-	zgo.Http.JsonpOK(ctx, h)
 }
