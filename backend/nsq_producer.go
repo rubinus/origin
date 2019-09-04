@@ -9,7 +9,7 @@ import (
 /*
 @Time : 2019-06-14 12:15
 @Author : rubinus.chu
-@File : nsqproducer
+@File : nsq_producer
 @project: origin
 */
 

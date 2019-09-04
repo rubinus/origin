@@ -82,10 +82,10 @@ func main() {
 	//集中调用路由
 	routes.Index(app)
 
-	//测试消费nsq
-	//demo_nsq.Consumer()
-	//测试消费kafka
-	//demo_kafka.Consumer()
+	//测试消费nsq 需要先配置上nsq
+	//queue.NsqConsumer()
+	//测试消费kafka 需要先配置上kafka
+	//queue.KafkaConsumer()
 
 	go func() { //start grpc server on the default port 50051
 		server.Start()
