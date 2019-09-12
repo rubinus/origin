@@ -25,6 +25,9 @@ func Start() {
 
 	pb_helloworld.RegisterHelloWorldServiceServer(server, &grpchandlers.HelloWorldServer{})
 
+	//在这里继续添加你的rpc服务
+	// todo add your rpc service
+
 	msg, err := zgo.Grpc.Run(context.TODO(), server, config.Conf.RpcPort)
 	if err != nil {
 		fmt.Println("=====grpc server is error :", err)
