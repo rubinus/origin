@@ -87,11 +87,11 @@ func main() {
 	//测试消费kafka 需要先配置上kafka
 	//queue.KafkaConsumer()
 
-	go func() { //start grpc server on the default port 50051
+	go func() { //start grpc server on the default port 50051 如果作为rpc服务端，让其它client连接进来
 		server.Start()
 	}()
 
-	//start grpc clients
+	//start grpc clients 如果作为客户端要连其它 rpc server开启下面
 	backend.RPCClientsRun()
 
 	app.Run(iris.Addr(":" + strconv.Itoa(config.Conf.ServerPort)))
