@@ -95,60 +95,84 @@ docker push registry.cn-beijing.aliyuncs.com/zhugedev/origin:v1.0.0.1
 docker push registry.cn-beijing.aliyuncs.com/zhugeprod/origin:v1.0.0.2
 docker push registry.cn-beijing.aliyuncs.com/zhugedev/origin:v1.0.0.2
 
-##origin 本机使用local时测试环境
+##origin 本机使用local时测试环境，测试服务器IP地址
 阿里云内网
 10.24.188.182
+
 阿里云公网
 47.95.20.12
 
 数字是端口号，供测试zgo admin使用，跑在docker里
 
+##Mysql
 2个mysql
+
 3307
+
 3308
 
+##Mongo
 2个mongo
+
 27018
+
 27019
 
+##Redis
 2个redis
+
 6380
+
 6381
 
+##Postgres
 2个postgres
+
 5433
+
 5434
 
+##Etcd
 1个etcd
+
 2381
-
-1个neo4j
-7687
-####Neo4j操作页面
-http://47.95.20.12:7474
-连接：bolt://47.95.20.12:7687
-账号：neo4j
-密码：12345678
-
-####redis监控页面,grafana,prometheus
-http://47.95.20.12:3000
-账号/密码：admin/admin
-
-http://47.95.20.12:9090
-
-1个kafka
-生产：9202
-消费：2081
-
-1个nsq
-4150
-####Nsq管理页面
-http://47.95.20.12:4171
 
 ####Etcd管理页面
 http://47.93.163.209:9097
 
+##Neo4j
+1个neo4j
+
+7687
+
+####Neo4j操作页面
+http://47.95.20.12:7474
+
+连接：bolt://47.95.20.12:7687
+
+账号：neo4j
+
+密码：12345678
+
+##Kafka
+1个kafka
+
+生产：9202
+
+消费：2081
+
+##Nsq
+1个nsq
+
+4150
+
+####Nsq管理页面
+http://47.95.20.12:4171
+
+
+##ES
 1个es
+
 9200
 ####ES管理页面--打开localhost:9800后，输入http://es:9200 connect
 http://47.95.20.12:9800
@@ -163,13 +187,20 @@ http://47.95.20.12:5601
 
 ####redis 集群，任意节点支持读写
 47.95.20.12:7001
+
 47.95.20.12:7002
+
 47.95.20.12:7003
+
 47.95.20.12:7004
+
 47.95.20.12:7005
+
 47.95.20.12:7006
 
 ####1个portainer--用于查看所有docker中的资源
 http://47.95.20.12:9000
+
 账号: admin
+
 密码: 12345678
