@@ -126,6 +126,9 @@ docker push registry.cn-beijing.aliyuncs.com/zhugedev/origin:v1.0.0.2
 7687
 ####Neo4j操作页面
 http://47.95.20.12:7474
+连接：bolt://47.95.20.12:7687
+账号：neo4j
+密码：12345678
 
 ####redis监控页面,grafana,prometheus
 http://47.95.20.12:3000
