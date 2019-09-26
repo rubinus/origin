@@ -154,6 +154,23 @@ http://47.95.20.12:7474
 
 密码：12345678
 
+##ClickHouse
+1个clickhouse
+
+http端口 8123
+
+tcp端口 9019
+
+####ClickHouse管理操作页面
+
+http://47.95.20.12:9020
+
+输入：http://47.95.20.12:8123
+
+login: default
+
+password: 空
+
 ##Kafka
 1个kafka
 
