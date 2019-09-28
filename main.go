@@ -82,16 +82,18 @@ func main() {
 	//集中调用路由
 	routes.Index(app)
 
-	//测试消费nsq 需要先配置上nsq
+	//消费nsq 需要先配置上nsq
 	//queue.NsqConsumer()
-	//测试消费kafka 需要先配置上kafka
+	//消费kafka 需要先配置上kafka
 	//queue.KafkaConsumer()
+	//消费Rabbitmq
+	//queue.RabbitmqConsumer() //需要先配置上rabbitmq
 
 	go func() { //start grpc server on the default port 50051 如果作为rpc服务端，让其它client连接进来
 		server.Start()
 	}()
 
-	//start grpc clients 如果作为客户端要连其它 rpc server开启下面
+	//start grpc clients 如果作为客户端要连其它rpc server需要开启下面，否则可注释掉
 	backend.RPCClientsRun()
 
 	app.Run(iris.Addr(":" + strconv.Itoa(config.Conf.ServerPort)))

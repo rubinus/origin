@@ -1,7 +1,6 @@
 package queue
 
 import (
-	"git.zhugefang.com/gobase/origin/config"
 	"git.zhugefang.com/gocore/zgo"
 )
 
@@ -9,7 +8,7 @@ import (
 @Time : 2019-06-11 10:12
 @Author : rubinus.chu
 @File : nsq_consumer
-@project: wechat
+@project: origin
 */
 
 type nsqer struct {
@@ -43,11 +42,12 @@ func deal(smg []byte) {
 }
 
 func NsqConsumer() {
+	zgo.Log.Info("---------------启动消费Nsq---------------")
 
 	go func() {
 		c := nsqer{
-			Topic:   config.Conf.Project,
-			Channel: config.Conf.Project,
+			Topic:   "topic",
+			Channel: "topic",
 		}
 		c.Consumer()
 	}()

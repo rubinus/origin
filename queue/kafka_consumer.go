@@ -8,7 +8,7 @@ import (
 @Time : 2019-06-11 10:12
 @Author : rubinus.chu
 @File : kafka_consumer
-@project: integral
+@project: origin
 */
 
 type noRead struct {
@@ -65,6 +65,8 @@ func (c *noRead) Consumer(label string) {
 
 func KafkaConsumer() { //kafka topic 名字不能带有-
 	//topic := fmt.Sprintf("%s_%s_%s", config.MidPlatform, config.Conf.Project, config.Conf.KafkaTopics["noread"])
+	zgo.Log.Info("---------------启动消费Kafka---------------")
+
 	topic := ""
 	c := noRead{
 		Topic:   topic,
