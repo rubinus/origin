@@ -29,7 +29,7 @@ func (c *Msg) Consumer(label string) {
 
 	for val := range consumer {
 
-		zgo.Log.Infof("消息：%s, 类型:%s, 路由: %s, 交换机名: %s", val.Body, val.Type, val.RoutingKey, val.Exchange)
+		zgo.Log.Infof("ID: %s, 消息：%s, 类型:%s, 路由: %s, 交换机名: %s\n", val.MessageId, val.Body, val.Type, val.RoutingKey, val.Exchange)
 
 		//todo something for u work
 
