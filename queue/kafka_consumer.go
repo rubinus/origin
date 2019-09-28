@@ -38,7 +38,7 @@ func (c *noRead) Consumer(label string) {
 				go func(pc zgo.PartitionConsumer) {
 					for msg := range pc.Messages() {
 
-						zgo.Log.Infof("==partition message===%s %d %s\n", msg.Topic, msg.Offset, msg.Value)
+						zgo.Log.Infof("==partition message===%s %d %s", msg.Topic, msg.Offset, msg.Value)
 
 						//todo something for u work
 
@@ -49,7 +49,7 @@ func (c *noRead) Consumer(label string) {
 
 			case msg, ok := <-consumer.Messages():
 				if ok {
-					zgo.Log.Infof("----message----%s %d %s\n", msg.Topic, msg.Offset, msg.Value)
+					zgo.Log.Infof("----message----%s %d %s", msg.Topic, msg.Offset, msg.Value)
 
 					//todo something for u work
 
