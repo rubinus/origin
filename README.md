@@ -118,6 +118,9 @@ docker push registry.cn-beijing.aliyuncs.com/zhugedev/origin:v1.0.0.2
 
 27019
 
+####Mongo管理页面
+http://47.95.20.12:8081
+
 ##Redis
 2个redis
 
