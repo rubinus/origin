@@ -21,7 +21,7 @@ git clone这个项目后，改名成自己开发的项目名字，然后删除�
 
 安装docker,在本地一次性跑起redis,mongodb,mysql,nsq,kafka
 
-###origin测试方法使用：进入到比如samples/demo_mongo目录下执行，生成相应的.out，并通过go tool pprof查看
+###origin测试方法使用：建立xxx_test.go文件，生成相应的.out，并通过go tool pprof查看
 
 // 查看测试代码覆盖率
 
