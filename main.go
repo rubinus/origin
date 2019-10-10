@@ -29,9 +29,13 @@ func init() {
 	)
 	//默认读取config/local.json
 	flag.StringVar(&env, "env", "dev", "start local/dev/qa/pro env config")
+
 	flag.StringVar(&project, "project", "", "create project id by zgo engine admin")
+
 	flag.StringVar(&etcdHosts, "etcdHosts", "", "etcd hosts host:port,host:port")
+
 	flag.StringVar(&port, "port", "", "port")
+
 	flag.StringVar(&rpcPort, "rpcPort", "", "rpcPort")
 
 	flag.Parse()
