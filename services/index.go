@@ -14,20 +14,20 @@ type Payer interface {
 }
 
 func NewPay() Payer {
-	return &A{}
+	return &svc{
+		repo: models.NewTradeRepo(),
+	}
 }
 
-type A struct {
+type svc struct {
+	repo models.Trader
 }
 
-//Search 这个func 由http与grpc共用
-func (a *A) Search(pay *models.PayRequest) (*models.Trade, error) {
+func (svc *svc) Search(pay *models.PayRequest) (*models.Trade, error) {
 	trade := &models.Trade{}
-
 	//todo 构造Trade
-	//trade.Channel = 1
 
-	err := trade.Insert()
+	err := svc.repo.Insert()
 	if err != nil {
 		return nil, err
 	}

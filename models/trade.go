@@ -11,7 +11,15 @@ import (
 @project: origin
 */
 
-// Trade映射PG的表结构
+type Trader interface {
+	Insert() error
+}
+
+func NewTradeRepo() Trader {
+	return &Trade{}
+}
+
+// 映射pg表结构
 type Trade struct {
 	//tableName  struct{}               `sql:"trades"` // "_" means no name
 	Id  int64  `json:"id" sql:"id,pk"`
@@ -43,14 +51,14 @@ type Trade struct {
 	UpdateTime int64 `json:"update_time"`
 }
 
-//Insert 保存方法
-func (trade *Trade) Insert() error {
+// Insert保存方法
+func (repo *Trade) Insert() error {
 
-	if trade.CreateTime == 0 {
-		trade.CreateTime = zgo.Utils.GetTimestamp(10)
+	if repo.CreateTime == 0 {
+		repo.CreateTime = zgo.Utils.GetTimestamp(10)
 	}
-	if trade.UpdateTime == 0 {
-		trade.UpdateTime = trade.CreateTime
+	if repo.UpdateTime == 0 {
+		repo.UpdateTime = repo.CreateTime
 	}
 
 	//取db连接
@@ -64,7 +72,7 @@ func (trade *Trade) Insert() error {
 		zgo.Log.Error("db get ConnChan Error:" + err.Error())
 		return err
 	} else {
-		err := db.Insert(trade)
+		err := db.Insert(repo)
 		if err != nil {
 			zgo.Log.Error(err)
 		}
