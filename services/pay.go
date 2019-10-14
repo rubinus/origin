@@ -10,7 +10,7 @@ import "git.zhugefang.com/gobase/origin/models"
 */
 
 type Payer interface {
-	Insert(payReq *models.PayRequest) (*models.Trade, error)
+	Insert(req *models.PayRequest) (*models.Trade, error)
 	//请在此处添加其它方法
 }
 
@@ -25,9 +25,12 @@ type svc struct {
 }
 
 // Insert保存方法
-func (svc *svc) Insert(payReq *models.PayRequest) (*models.Trade, error) {
-	trade := &models.Trade{}
+func (svc *svc) Insert(req *models.PayRequest) (*models.Trade, error) {
+
+	//todo something
+
 	//todo 通过传入的参数payReq 来构造Trade
+	trade := &models.Trade{}
 
 	err := svc.repo.Insert(trade)
 	if err != nil {

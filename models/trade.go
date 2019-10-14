@@ -37,7 +37,7 @@ type Trade struct {
 	Channel   uint8 `json:"channel"`
 
 	Amount  int         `json:"amount"`
-	FeeType string      `json:"fee_type"`
+	FeeType uint8       `json:"fee_type"`
 	Body    string      `json:"body"`
 	Detail  interface{} `json:"detail"`
 
