@@ -20,8 +20,10 @@ func Index(app *iris.Application) {
 
 	v1 := app.Party("/v1")
 	{
+		//这是一个get的例子，可以直接copy或是更改
 		v1.Get("/redis/get", handlers.RedisGet)
 
+		//这是一个Post的例子，请按照结构，更改结构体与请求参数
 		v1.Post("/pay/do", handlers.DoPay)
 
 	}

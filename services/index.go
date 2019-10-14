@@ -11,6 +11,7 @@ import "git.zhugefang.com/gobase/origin/models"
 
 type Payer interface {
 	Insert(payReq *models.PayRequest) (*models.Trade, error)
+	//请在此处添加其它方法
 }
 
 func NewPay() Payer {
@@ -23,13 +24,16 @@ type svc struct {
 	repo models.Trader
 }
 
+// Insert保存方法
 func (svc *svc) Insert(payReq *models.PayRequest) (*models.Trade, error) {
 	trade := &models.Trade{}
-	//todo 构造Trade
+	//todo 通过传入的参数payReq 来构造Trade
 
-	err := svc.repo.Insert()
+	err := svc.repo.Insert(trade)
 	if err != nil {
 		return nil, err
 	}
 	return trade, nil
 }
+
+//todo add other func

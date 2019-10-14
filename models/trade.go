@@ -12,7 +12,7 @@ import (
 */
 
 type Trader interface {
-	Insert() error
+	Insert(trade *Trade) error
 }
 
 func NewTradeRepo() Trader {
@@ -52,13 +52,13 @@ type Trade struct {
 }
 
 // Insert保存方法
-func (repo *Trade) Insert() error {
+func (repo *Trade) Insert(trade *Trade) error {
 
-	if repo.CreateTime == 0 {
-		repo.CreateTime = zgo.Utils.GetTimestamp(10)
+	if trade.CreateTime == 0 {
+		trade.CreateTime = zgo.Utils.GetTimestamp(10)
 	}
-	if repo.UpdateTime == 0 {
-		repo.UpdateTime = repo.CreateTime
+	if trade.UpdateTime == 0 {
+		trade.UpdateTime = trade.CreateTime
 	}
 
 	//取db连接
@@ -72,7 +72,7 @@ func (repo *Trade) Insert() error {
 		zgo.Log.Error("db get ConnChan Error:" + err.Error())
 		return err
 	} else {
-		err := db.Insert(repo)
+		err := db.Insert(trade)
 		if err != nil {
 			zgo.Log.Error(err)
 		}
