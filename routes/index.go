@@ -20,8 +20,9 @@ func Index(app *iris.Application) {
 
 	v1 := app.Party("/v1")
 	{
-		v1.Get("/mongo/get", handlers.RedisGet)
-		v1.Post("/mongo/put", handlers.RedisSet)
+		v1.Get("/redis/get", handlers.RedisGet)
+
+		v1.Post("/pay/do", handlers.DoPay)
 
 	}
 
