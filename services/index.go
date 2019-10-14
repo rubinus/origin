@@ -10,7 +10,7 @@ import "git.zhugefang.com/gobase/origin/models"
 */
 
 type Payer interface {
-	Search(pay *models.PayRequest) (*models.Trade, error)
+	Insert(payReq *models.PayRequest) (*models.Trade, error)
 }
 
 func NewPay() Payer {
@@ -23,7 +23,7 @@ type svc struct {
 	repo models.Trader
 }
 
-func (svc *svc) Search(pay *models.PayRequest) (*models.Trade, error) {
+func (svc *svc) Insert(payReq *models.PayRequest) (*models.Trade, error) {
 	trade := &models.Trade{}
 	//todo 构造Trade
 

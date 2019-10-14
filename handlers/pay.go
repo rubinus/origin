@@ -70,7 +70,7 @@ func DoPay(ctx iris.Context) {
 	}
 
 	pay := services.NewPay()
-	tcb, err := pay.Search(request)
+	tcb, err := pay.Insert(request)
 	if err != nil {
 		zgo.Log.Error(err)
 		zgo.Http.JsonpErr(ctx, err.Error())
