@@ -11,6 +11,14 @@ spec:
         version: v2
     spec:
       restartPolicy: Always
+      ##########################如果需要在docker中添加hosts#########################
+      hostAliases:
+        - ip: "172.16.2.37"
+          hostnames:
+          - "grpc-smsbffp.zhuge.com"
+          - "grpc-wxcbbffp.zhuge.com"
+          - "grpc-timerbffp.zhuge.com"
+      ###########################################################################
       imagePullSecrets:
         - name: bffp-key  #使用镜像密钥,在阿里云后台提前创建
       containers:

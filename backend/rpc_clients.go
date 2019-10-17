@@ -13,7 +13,7 @@ import (
 @Time : 2019-08-31 15:17
 @Author : rubinus.chu
 @File : rpc_clients
-@project: wechat
+@project: origin
 */
 
 // 可以起名为你的 xxxxClient
