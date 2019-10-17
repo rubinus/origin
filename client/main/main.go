@@ -45,7 +45,7 @@ func main() {
 	requests = append(requests, request1)
 	requests = append(requests, request2)
 
-	hReq := &pb_helloworld.HelloRequest{Name: "hello", Age: 30, Requests: requests}
+	hReq := &pb_helloworld.HelloRequest{Name: "origin project hello", Age: 30, Requests: requests}
 	if response, err := backend.RpcHelloWorld(ctx, hReq); response != nil {
 		bytes, _ := zgo.Utils.Marshal(response)
 		fmt.Printf("RpcHelloWorld: %s \n\n", string(bytes))
