@@ -6,5 +6,17 @@
   "rpcHost": "localhost",
   "rpcPort": "50051",
   "serverPort": 80,
-  "usePreAbsPath": 0
+  "usePreAbsPath": 0,
+
+  "start_service_registry": true,
+  "service_info": {
+    "svc_name": "origin.bffp",
+    "svc_host": "",
+    "svc_http_port": "80",
+    "svc_grpc_port": "50051",
+    "svc_etcd_hosts": ""
+  },
+  "other_services": [
+    "origin.bffp"
+  ]
 }

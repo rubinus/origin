@@ -14,16 +14,29 @@ import (
 
 var Conf *allConfig
 
+type ServiceInfo struct {
+	SvcName      string `json:"svc_name"`
+	SvcHost      string `json:"svc_host"`
+	SvcHttpPort  string `json:"svc_http_port"`
+	SvcGrpcPort  string `json:"svc_grpc_port"`
+	SvcEtcdHosts string `json:"svc_etcd_hosts"`
+}
+
 type allConfig struct {
-	Env           string `json:"env"`
-	Version       string `json:"version"`
-	Project       string `json:"project"`
-	EtcdHosts     string `json:"etcdHosts"`
-	Loglevel      string `json:"loglevel"`
-	RpcHost       string `json:"rpcHost"`
-	RpcPort       string `json:"rpcPort"`
-	ServerPort    int    `json:"serverPort"`
-	UsePreAbsPath int    `json:"usePreAbsPath"`
+	Env                  string      `json:"env"`
+	Version              string      `json:"version"`
+	Project              string      `json:"project"`
+	EtcdHosts            string      `json:"etcdHosts"`
+	Loglevel             string      `json:"loglevel"`
+	RpcHost              string      `json:"rpcHost"`
+	RpcPort              string      `json:"rpcPort"`
+	ServerPort           int         `json:"serverPort"`
+	UsePreAbsPath        int         `json:"usePreAbsPath"`
+	StartServiceRegistry bool        `json:"start_service_registry"`
+	ServiceInfo          ServiceInfo `json:"service_info"`
+	OtherServices        []string    `json:"other_services"`
+	//demo host
+	DemoHostForPayCanChangeAnyName string `json:"demo_host_for_pay_can_change_any_name"`
 }
 
 func InitConfig(e, project, etcdHosts, port, rpcPort string) {

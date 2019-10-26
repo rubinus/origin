@@ -5,6 +5,8 @@ import (
 	"errors"
 	"fmt"
 	"git.zhugefang.com/gobase/origin/pb/helloworld"
+	"git.zhugefang.com/gocore/zgo"
+	"time"
 )
 
 /*
@@ -18,6 +20,10 @@ func RpcHelloWorld(ctx context.Context, request *pb_helloworld.HelloRequest) (*p
 	out := make(chan *pb_helloworld.HelloResponse)
 	errCh := make(chan error)
 	go func() {
+		if HelloworldClient == nil {
+			errCh <- errors.New("HelloworldClient not ready")
+			return
+		}
 		response, err := HelloworldClient.SayHello(ctx, request)
 		if err != nil {
 			errCh <- err
@@ -38,4 +44,32 @@ func RpcHelloWorld(ctx context.Context, request *pb_helloworld.HelloRequest) (*p
 		return r, nil
 	}
 
+}
+
+func CallRpcHelloworld() {
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	//组织请求参数
+	request1 := &pb_helloworld.HelloRequest_Request{
+		Url:   "zhuge.com",
+		Title: "诸葛找房111111",
+		Ins:   []string{"zhuge.com", "诸葛找房111111"},
+	}
+	request2 := &pb_helloworld.HelloRequest_Request{
+		Url:   "zhuge.com",
+		Title: "诸葛找房222222",
+		Ins:   []string{"zhuge.com", "诸葛找房222222"},
+	}
+	var requests []*pb_helloworld.HelloRequest_Request
+	requests = append(requests, request1)
+	requests = append(requests, request2)
+
+	hReq := &pb_helloworld.HelloRequest{Name: "origin project hello", Age: 30, Requests: requests}
+	if response, err := RpcHelloWorld(ctx, hReq); response != nil {
+		bytes, _ := zgo.Utils.Marshal(response)
+		fmt.Printf("RpcHelloWorld: %s \n\n", string(bytes))
+	} else {
+		zgo.Log.Error(err)
+	}
 }
