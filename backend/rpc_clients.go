@@ -44,7 +44,7 @@ func RPCClientsRun(ch chan string) {
 					//继续通过服务名，来再次初始化host grpc port
 				}
 
-				zgo.Log.Warnf("监听到Grpc负载变化，服务：%s,正在使用 Host: %s, grpc_host: %s", value, lbRes.SvcHost, lbRes.SvcGrpcPort)
+				zgo.Log.Warnf("监听到Grpc服务：%s,正在使用负载节点 Host: %s, grpc_host: %s", value, lbRes.SvcHost, lbRes.SvcGrpcPort)
 
 			}
 		}()

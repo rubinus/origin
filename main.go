@@ -14,11 +14,10 @@ import (
 	"os"
 	"path/filepath"
 	"strconv"
-	"sync"
 	"time"
 )
 
-var wg = new(sync.WaitGroup)
+//var wg = new(sync.WaitGroup)
 
 func init() {
 	var (
@@ -175,16 +174,14 @@ func main() {
 		}), iris.WithoutInterruptHandler)
 
 	} else {
-		//使用服务发现模式
-
-		useServiceDiscover(app)
-
+		//使用服务注册与服务发现模式
+		useServiceRegistryDiscover(app)
 	}
 
 	//wg.Wait()
 }
 
-func useServiceDiscover(app *iris.Application) {
+func useServiceRegistryDiscover(app *iris.Application) {
 	//注册服务到 注册中心etcd中，然后监听当前服务使用的其它服务的名字
 
 	//***********************************************************
@@ -300,7 +297,7 @@ func initHttpVarByService(ch chan string) {
 				//继续通过服务名，来再次初始化host port
 			}
 
-			zgo.Log.Warnf("监听到Http负载变化，服务：%s,正在使用 Host: %s, http_port: %s", value, lbRes.SvcHost, lbRes.SvcHttpPort)
+			zgo.Log.Warnf("监听到Http服务：%s,正在使用负载节点 Host: %s, http_port: %s", value, lbRes.SvcHost, lbRes.SvcHttpPort)
 
 		}
 	}()
