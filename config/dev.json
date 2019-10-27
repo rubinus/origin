@@ -10,19 +10,24 @@
 
   "demo_host_for_pay_can_change_any_name": "http://47.95.20.12",
 
-  "service信息是做为服务注册与发现时": "指定被其它外部服务访问的name,host,http_port,grpc_port，用Docker时要注意",
+  "是否开启服务注册与服务发现": "全局控制兼容旧模式，部分服务可能会只提供服务注册，或只提供服务发现，使用下面二级开关",
+  "start_service": true,
+  "是否开启服务注册": "当前服务提供给其它外部服务使用",
   "start_service_registry": true,
+  "service信息是做为服务注册与发现时": "指定被其它外部服务访问的name,host,http_port,grpc_port，用Docker时要注意",
   "service_info": {
     "svc_name": "origin.bffp",
+    "下面字段是服务可被外部访问的主机": "默认为空使用宿主机内网IP地址",
     "svc_host": "",
-    "svcHost字段是服务可被外部访问的主机": "默认为空使用宿主机内网IP地址",
     "svc_http_port": "80",
     "svc_grpc_port": "50051",
-    "svc_etcd_hosts": "",
-    "svcEtcdHosts字段用到的注册中心ETCD_HOST": "可以这里指定外部etcd hosts，默认为空与zgo engine共用同一组etcd，形如：host:port,host:port,host:port"
+    "下面字段用到的注册中心ETCD_HOSTS": "可以这里指定外部etcd hosts，默认为空与zgo engine共用同一组etcd，形如：host:port,host:port,host:port",
+    "svc_etcd_hosts": ""
   },
+  "是否开启服务发现": "当前服务要使用其它外部服务",
+  "start_service_discover": true,
   "other_services": [
-    "添加其它要使用的服务的名字(本条可删除) 服务名.命名空间",
+    "添加其它要使用的服务的名字(本条要删除) 服务名.命名空间",
     "origin.bffp"
   ]
 }

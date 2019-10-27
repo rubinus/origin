@@ -25,12 +25,13 @@ var HelloworldClient pb_helloworld.HelloWorldServiceClient
 func RPCClientsRun(ch chan string) {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
-	if config.Conf.StartServiceRegistry == true { //使用服务发现模式
+	if config.Conf.StartService == true &&
+		config.Conf.StartServiceDiscover == true { //使用服务发现模式
 		go func() {
 			for value := range ch {
 				lbRes, err := zgo.Service.LB(value) //变化的服务
 				if err != nil {
-					zgo.Log.Error(fmt.Sprintf("%s 服务取Grpc负载失败,", value), err)
+					zgo.Log.Error(fmt.Sprintf("%s 服务取Grpc负载,", value), err)
 					continue
 				}
 

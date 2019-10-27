@@ -14,6 +14,7 @@ import (
 
 var Conf *allConfig
 
+//服务信息
 type ServiceInfo struct {
 	SvcName      string `json:"svc_name"`
 	SvcHost      string `json:"svc_host"`
@@ -21,20 +22,27 @@ type ServiceInfo struct {
 	SvcGrpcPort  string `json:"svc_grpc_port"`
 	SvcEtcdHosts string `json:"svc_etcd_hosts"`
 }
-
-type allConfig struct {
-	Env                  string      `json:"env"`
-	Version              string      `json:"version"`
-	Project              string      `json:"project"`
-	EtcdHosts            string      `json:"etcdHosts"`
-	Loglevel             string      `json:"loglevel"`
-	RpcHost              string      `json:"rpcHost"`
-	RpcPort              string      `json:"rpcPort"`
-	ServerPort           int         `json:"serverPort"`
-	UsePreAbsPath        int         `json:"usePreAbsPath"`
-	StartServiceRegistry bool        `json:"start_service_registry"`
+type Service struct {
+	StartService         bool        `json:"start_service"`          //开启使用服务注册与服务发现
+	StartServiceRegistry bool        `json:"start_service_registry"` //开启服务注册
+	StartServiceDiscover bool        `json:"start_service_discover"` //开启服务发现
 	ServiceInfo          ServiceInfo `json:"service_info"`
 	OtherServices        []string    `json:"other_services"`
+}
+
+type allConfig struct {
+	Env           string `json:"env"`
+	Version       string `json:"version"`
+	Project       string `json:"project"`
+	EtcdHosts     string `json:"etcdHosts"`
+	Loglevel      string `json:"loglevel"`
+	RpcHost       string `json:"rpcHost"`
+	RpcPort       string `json:"rpcPort"`
+	ServerPort    int    `json:"serverPort"`
+	UsePreAbsPath int    `json:"usePreAbsPath"`
+
+	Service //内嵌服务结构体
+
 	//demo host
 	DemoHostForPayCanChangeAnyName string `json:"demo_host_for_pay_can_change_any_name"`
 }

@@ -12,11 +12,9 @@ import (
 	"git.zhugefang.com/gocore/zgo"
 	"github.com/kataras/iris"
 	"os"
-	"os/signal"
 	"path/filepath"
 	"strconv"
 	"sync"
-	"syscall"
 	"time"
 )
 
@@ -116,8 +114,8 @@ func init() {
 }
 
 func main() {
-	//优雅的退出
-	WatchSignal()
+	//优雅的退出 -- 使用iris框架中的退出
+	//WatchSignal()
 
 	err := engine.Run() //start zgo engine
 	if err != nil {
@@ -152,7 +150,7 @@ func main() {
 		server.Start()
 	}()
 
-	if config.Conf.StartServiceRegistry == false { //不使用服务发现，原来标准模式
+	if config.Conf.StartService == false { //不使用服务发现，原来标准模式
 
 		//###################### ################
 		//todo 启动GRPC 客户端 如果作为客户端要连其它rpc server需要开启下面，否则可注释掉
@@ -183,14 +181,14 @@ func main() {
 
 	}
 
-	wg.Wait()
+	//wg.Wait()
 }
 
 func useServiceDiscover(app *iris.Application) {
 	//注册服务到 注册中心etcd中，然后监听当前服务使用的其它服务的名字
 
 	//***********************************************************
-	//第一步
+	//第一步 必须
 	//***********************************************************
 	registryAndDiscover, err := zgo.Service.New(5,
 		config.Conf.ServiceInfo.SvcEtcdHosts)
@@ -201,54 +199,60 @@ func useServiceDiscover(app *iris.Application) {
 	}
 
 	//***********************************************************
-	//第二步
-	//***********************************************************
-	watch := zgo.Service.Watch()
-	httpChan := make(chan string, 1000)
-	grpcChan := make(chan string, 1000)
-	go func() {
-		for value := range watch {
-			go func(value string) {
-				initHttpVarByService(httpChan) //http再次初始化负载的host,port
-				httpChan <- value
-			}(value)
-
-			go func(value string) {
-				//###################### ################
-				//todo 启动GRPC 客户端 如果作为客户端要连其它rpc server需要开启下面，否则可注释掉
-				//###################### ################
-				backend.RPCClientsRun(grpcChan) //grpc再次初始化host,port
-				grpcChan <- value
-			}(value)
-
-		}
-	}()
-
-	//***********************************************************
-	//第三步 这一步很重要，一定要注册外部可以访问当前服务的，尤其用docker时要注意
+	//第二步 配置文件决定是否开启使用，这一步很重要，一定要注册外部可以访问当前服务的，尤其用docker时要注意
 	//***********************************************************
 	//todo 请确认下面三项 host httpport grpcport 使其它服务可访问到
-	var host string
-	if config.Conf.ServiceInfo.SvcHost == "" { //默认为空使用宿主机内部IP
-		host = zgo.Utils.GetIntranetIP()
-	} else {
-		host = config.Conf.ServiceInfo.SvcHost
-	}
-	err = registryAndDiscover.Registry(config.Conf.ServiceInfo.SvcName, host,
-		config.Conf.ServiceInfo.SvcHttpPort, config.Conf.ServiceInfo.SvcGrpcPort)
-	//注册当前服务(自己)到注册中心
-	if err != nil {
-		zgo.Log.Errorf("%s 注册微服务失败 %v", "test", err)
-		return
+	if config.Conf.StartServiceRegistry == true {
+		var host string
+		if config.Conf.ServiceInfo.SvcHost == "" { //默认为空使用宿主机内部IP
+			host = zgo.Utils.GetIntranetIP()
+		} else {
+			host = config.Conf.ServiceInfo.SvcHost
+		}
+		err = registryAndDiscover.Registry(config.Conf.ServiceInfo.SvcName, host,
+			config.Conf.ServiceInfo.SvcHttpPort, config.Conf.ServiceInfo.SvcGrpcPort)
+		//注册当前服务(自己)到注册中心
+		if err != nil {
+			zgo.Log.Errorf("%s 注册微服务失败 %v", "test", err)
+			return
+		}
 	}
 
 	//***********************************************************
-	//第四步 通过服务发现要使用的其它服务，并自动watch其状态的改变，先初始化
+	//第三步 配置文件决定是否开启使用，这是服务发现的监听，必须与第四步同时使用
 	//***********************************************************
-	otherService := config.Conf.OtherServices
-	err = registryAndDiscover.Discovery(otherService) //err=nil表示并发执行服务发现成功并监听ing...
-	for _, value := range otherService {              //初始化
-		watch <- value
+	if config.Conf.StartServiceDiscover == true {
+		watch := zgo.Service.Watch()
+		httpChan := make(chan string, 1000)
+		grpcChan := make(chan string, 1000)
+		go func() {
+			for value := range watch {
+				go func(value string) {
+					initHttpVarByService(httpChan) //http再次初始化负载的host,port
+					httpChan <- value
+				}(value)
+
+				go func(value string) {
+					//###################### ################
+					//todo 启动GRPC 客户端 如果作为客户端要连其它rpc server需要开启下面，否则可注释掉
+					//###################### ################
+					backend.RPCClientsRun(grpcChan) //grpc再次初始化host,port
+					grpcChan <- value
+				}(value)
+
+			}
+		}()
+
+		//***********************************************************
+		//第四步 通过服务发现要使用的其它服务，并自动watch其状态的改变，先初始化
+		//这是服务发现，必须与第三步同时使用
+		//***********************************************************
+		otherService := config.Conf.OtherServices
+		err = registryAndDiscover.Discovery(otherService) //err=nil表示并发执行服务发现成功并监听ing...
+		for _, value := range otherService {              //初始化
+			watch <- value
+		}
+
 	}
 
 	//这是测试可取消
@@ -262,7 +266,7 @@ func useServiceDiscover(app *iris.Application) {
 		ctx, cancel := context.WithTimeout(context.Background(), timeout)
 		defer cancel()
 
-		fmt.Println("---origin app serv shutdown by Iris, you can do something ...---")
+		fmt.Println("######origin, this server shutdown by Iris, you can do something from here ...######")
 		// 关闭所有主机
 		_ = app.Shutdown(ctx)
 	})
@@ -283,7 +287,7 @@ func initHttpVarByService(ch chan string) {
 		for value := range ch {
 			lbRes, err := zgo.Service.LB(value) //变化的服务
 			if err != nil {
-				zgo.Log.Error(fmt.Sprintf("%s 服务取Http负载失败,", value), err)
+				zgo.Log.Error(fmt.Sprintf("%s 服务取Http负载,", value), err)
 				continue
 			}
 
@@ -302,37 +306,37 @@ func initHttpVarByService(ch chan string) {
 	}()
 }
 
-func WatchSignal() {
-	//创建监听退出chan
-	signalChan := make(chan os.Signal)
-	//监听指定信号 ctrl+c kill
-	signal.Notify(signalChan, syscall.SIGHUP, syscall.SIGINT, syscall.SIGTERM, syscall.SIGQUIT, syscall.SIGUSR1, syscall.SIGUSR2)
-	go func() {
-		for s := range signalChan {
-			switch s {
-			case syscall.SIGHUP, syscall.SIGINT, syscall.SIGTERM, syscall.SIGQUIT:
-				go func() {
-					wg.Add(1)
-					defer wg.Done()
-
-					fmt.Println("---i am out over from killed cmd, but not kill -9, you can do something ...---")
-
-				}()
-			case syscall.SIGUSR1:
-				//todo something
-				fmt.Println("usr1", s)
-			case syscall.SIGUSR2:
-				//todo something
-
-				fmt.Println("usr2", s)
-			default:
-				//todo something
-
-				fmt.Println("other", s)
-			}
-		}
-	}()
-}
+//func WatchSignal() {
+//	//创建监听退出chan
+//	signalChan := make(chan os.Signal)
+//	//监听指定信号 ctrl+c kill
+//	signal.Notify(signalChan, syscall.SIGHUP, syscall.SIGINT, syscall.SIGTERM, syscall.SIGQUIT, syscall.SIGUSR1, syscall.SIGUSR2)
+//	go func() {
+//		for s := range signalChan {
+//			switch s {
+//			case syscall.SIGHUP, syscall.SIGINT, syscall.SIGTERM, syscall.SIGQUIT:
+//				go func() {
+//					wg.Add(1)
+//					defer wg.Done()
+//
+//					fmt.Println("---i am out over from killed cmd, but not kill -9, you can do something ...---")
+//
+//				}()
+//			case syscall.SIGUSR1:
+//				//todo something
+//				fmt.Println("usr1", s)
+//			case syscall.SIGUSR2:
+//				//todo something
+//
+//				fmt.Println("usr2", s)
+//			default:
+//				//todo something
+//
+//				fmt.Println("other", s)
+//			}
+//		}
+//	}()
+//}
 
 func TestLB() {
 	//以下为测试使用，通过内部负载均衡使用其它服务
