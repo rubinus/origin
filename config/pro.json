@@ -8,7 +8,7 @@
   "serverPort": 80,
   "usePreAbsPath": 0,
 
-  "demo_host_for_pay_can_change_any_name": "http://47.95.20.12",
+  "demo_host_for_pay_can_change_any_name": "",
 
   "是否开启服务注册与服务发现": "全局控制兼容旧模式，部分服务可能会只提供服务注册，或只提供服务发现，使用下面二级开关",
   "start_service": true,

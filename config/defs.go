@@ -96,3 +96,27 @@ func initConfig(e, project, etcdHosts, port, rpcPort string) {
 
 	fmt.Printf("origin %s is started on the ... %s\n", Conf.Version, Conf.Env)
 }
+
+func WatchHttpConfigByService(ch chan string) {
+	go func() {
+		for value := range ch {
+			lbRes, err := zgo.Service.LB(value) //变化的服务
+			if err != nil {
+				zgo.Log.Error(fmt.Sprintf("%s 服务取Http负载,", value), err)
+				continue
+			}
+
+			switch value {
+			case "origin.bffp": //自己做为客户端连接自己的服务端测试
+				Conf.DemoHostForPayCanChangeAnyName = fmt.Sprintf("%s:%s", lbRes.SvcHost, lbRes.SvcHttpPort)
+				//其它变量如果已经存在，可以在不改变原代码前提下，对config.Conf.***中的变量再次赋值
+
+			case "other":
+				//继续通过服务名，来再次初始化host port
+			}
+
+			zgo.Log.Warnf("监听到Http服务：%s,正在使用负载节点 Host: %s, http_port: %s", value, lbRes.SvcHost, lbRes.SvcHttpPort)
+
+		}
+	}()
+}
