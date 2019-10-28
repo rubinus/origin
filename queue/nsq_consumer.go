@@ -37,7 +37,7 @@ func (c *nsqer) Deal(msg zgo.NsqMessage) error {
 	return nil
 }
 
-func deal(smg []byte) {
+func deal(body []byte) {
 
 }
 
