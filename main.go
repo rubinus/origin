@@ -162,7 +162,7 @@ func main() {
 			timeout := 5 * time.Second
 			ctx, cancel := context.WithTimeout(context.Background(), timeout)
 			defer cancel()
-			fmt.Println("---origin app serv shutdown by Iris, you can do something ...---")
+			fmt.Println("######origin, this server shutdown by Iris, you can do something from here ...######")
 			// 关闭所有主机
 			_ = app.Shutdown(ctx)
 		})
