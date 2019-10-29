@@ -209,10 +209,7 @@ func useServiceRegistryDiscover(app *iris.Application) {
 	if config.Conf.StartServiceRegistry == true {
 		var host string
 		if config.Conf.ServiceInfo.SvcHost == "" { //默认为空使用宿主机内部IP
-			host = zgo.Utils.GetIntranetIPByName("eth0")
-			if host == "" {
-				host = zgo.Utils.GetIntranetIP()
-			}
+			host = zgo.Utils.GetIntranetIP()
 		} else {
 			host = config.Conf.ServiceInfo.SvcHost
 		}
