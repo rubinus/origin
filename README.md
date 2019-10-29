@@ -76,15 +76,16 @@ docker pull dck.zhuge.test/origin:v0.0.1
 
 docker rm -f origin
 
+###下面一行非服务注册模式
 docker run -d -p 8080:80 -p 50051:50051 --name origin dck.zhuge.test/origin:v0.0.1
 
-##作为服务注册
+##作为服务注册(本地)
 docker run -d -p 8081:80 -p 51051:50051 -e SVC_HOST=192.168.100.19 -e SVC_HTTP_PORT=8081 -e SVC_GRPC_PORT=51051 --name origin dck.zhuge.test/origin:v0.0.1
 
 ##再启动一个（仅更换端口号）模拟正式环境
 docker run -d -p 8082:80 -p 51052:50051 -e SVC_HOST=192.168.100.19 -e SVC_HTTP_PORT=8082 -e SVC_GRPC_PORT=51052 --name origin2 dck.zhuge.test/origin:v0.0.1
 
-##在开发服务器上启动docker并指定 svc 服务的访问host及port
+##在开发服务器上启动docker并指定 svc 服务的访问host及port(服务器上使用服务注册模式)
 docker run -d -p 8281:80 -p 52051:50051 -e SVC_HOST=47.95.20.12 -e SVC_HTTP_PORT=8281 -e SVC_GRPC_PORT=52051 --name origin dck.zhuge.test/origin:v0.0.1
 
 docker run -d -p 8282:80 -p 52052:50051 -e SVC_HOST=47.95.20.12 -e SVC_HTTP_PORT=8282 -e SVC_GRPC_PORT=52052 --name origin2 dck.zhuge.test/origin:v0.0.1
