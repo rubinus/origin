@@ -44,7 +44,7 @@ func init() {
 	flag.StringVar(&rpcPort, "rpcPort", "", "grpc port")
 
 	//暴露服务信息
-	flag.StringVar(&svcName, "svc_name", "origin.bffp", "让服务对外可访问的名称")
+	flag.StringVar(&svcName, "svc_name", "", "让服务对外可访问的名称")
 
 	flag.StringVar(&svcHost, "svc_host", "", "让服务对外可访问的主机地址，默认是宿主机的内网IP")
 
