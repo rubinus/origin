@@ -48,9 +48,9 @@ func init() {
 
 	flag.StringVar(&svcHost, "svc_host", "", "让服务对外可访问的主机地址，默认是宿主机的内网IP")
 
-	flag.StringVar(&svcHttpPort, "svc_http_port", "80", "让服务http对外可访问的端口号，默认是80")
+	flag.StringVar(&svcHttpPort, "svc_http_port", "", "让服务http对外可访问的端口号，默认是80")
 
-	flag.StringVar(&svcGrpcPort, "svc_grpc_port", "50051", "让服务grpc对外可访问的端口号，默认是50051")
+	flag.StringVar(&svcGrpcPort, "svc_grpc_port", "", "让服务grpc对外可访问的端口号，默认是50051")
 
 	flag.StringVar(&svcEtcdHosts, "svc_etcd_hosts", "", "让服务可以用外部的注册中心地址，默认与zgo engine相同")
 
@@ -108,6 +108,13 @@ func init() {
 	}
 	if os.Getenv("SVC_ETCD_HOSTS") != "" {
 		config.Conf.ServiceInfo.SvcEtcdHosts = os.Getenv("SVC_ETCD_HOSTS") //来os的env，用来在yaml文件中的配置
+	}
+
+	if config.Conf.ServiceInfo.SvcHttpPort == "" {
+		config.Conf.ServiceInfo.SvcHttpPort = port
+	}
+	if config.Conf.ServiceInfo.SvcGrpcPort == "" {
+		config.Conf.ServiceInfo.SvcGrpcPort = rpcPort
 	}
 
 }
