@@ -111,10 +111,10 @@ func init() {
 	}
 
 	if config.Conf.ServiceInfo.SvcHttpPort == "" {
-		config.Conf.ServiceInfo.SvcHttpPort = port
+		config.Conf.ServiceInfo.SvcHttpPort = fmt.Sprintf("%d", config.Conf.ServerPort)
 	}
 	if config.Conf.ServiceInfo.SvcGrpcPort == "" {
-		config.Conf.ServiceInfo.SvcGrpcPort = rpcPort
+		config.Conf.ServiceInfo.SvcGrpcPort = config.Conf.RpcPort
 	}
 
 }
@@ -209,7 +209,10 @@ func useServiceRegistryDiscover(app *iris.Application) {
 	if config.Conf.StartServiceRegistry == true {
 		var host string
 		if config.Conf.ServiceInfo.SvcHost == "" { //默认为空使用宿主机内部IP
-			host = zgo.Utils.GetIntranetIP()
+			host = zgo.Utils.GetIntranetIPByName("eth0")
+			if host == "" {
+				host = zgo.Utils.GetIntranetIP()
+			}
 		} else {
 			host = config.Conf.ServiceInfo.SvcHost
 		}

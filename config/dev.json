@@ -19,8 +19,8 @@
     "svc_name": "origin.bffp",
     "下面字段是服务可被外部访问的主机": "默认为空使用宿主机内网IP地址",
     "svc_host": "",
-    "svc_http_port": "80",
-    "svc_grpc_port": "50051",
+    "svc_http_port": "",
+    "svc_grpc_port": "",
     "下面字段用到的注册中心ETCD_HOSTS": "可以这里指定外部etcd hosts，默认为空与zgo engine共用同一组etcd，形如：host:port,host:port,host:port",
     "svc_etcd_hosts": ""
   },
