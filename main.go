@@ -194,7 +194,7 @@ func useServiceRegistryDiscover(app *iris.Application) {
 	//***********************************************************
 	//第一步 必须
 	//***********************************************************
-	registryAndDiscover, err := zgo.Service.New(9,
+	registryAndDiscover, err := zgo.Service.New(6,
 		config.Conf.ServiceInfo.SvcEtcdHosts)
 	if err != nil {
 		zgo.Log.Errorf("创建微服务实例化失败 %v", err)
