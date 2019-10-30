@@ -1,8 +1,8 @@
 {
   "version": "1.0.0",
-  "env": "dev",
-  "project": "1553240759",
-  "loglevel": "info",
+  "env": "k8s",
+  "project": "origin",
+  "loglevel": "error",
   "rpcHost": "localhost",
   "rpcPort": "50051",
   "serverPort": 80,
@@ -16,7 +16,7 @@
   "start_service_registry": true,
   "service信息是做为服务注册与发现时": "指定被其它外部服务访问的name,host,http_port,grpc_port，用Docker时要注意",
   "service_info": {
-    "svc_name": "origin.bffp",
+    "svc_name": "k8s.origin.bffp",
     "下面字段是服务可被外部访问的主机": "默认为空使用宿主机内网IP地址",
     "svc_host": "",
     "svc_http_port": "",
@@ -27,7 +27,6 @@
   "是否开启服务发现": "当前服务要使用其它外部服务",
   "start_service_discover": true,
   "other_services": [
-    "添加其它要使用的服务的名字(本条要删除) 服务名.命名空间",
-    "timer.bffp"
+    "k8s.origin.bffp"
   ]
 }

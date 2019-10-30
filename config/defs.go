@@ -107,7 +107,7 @@ func WatchHttpConfigByService(ch chan string) {
 			}
 
 			switch value {
-			case "origin.bffp": //自己做为客户端连接自己的服务端测试
+			case "timer.bffp": //自己做为客户端连接自己的服务端测试
 				Conf.DemoHostForPayCanChangeAnyName = fmt.Sprintf("%s:%s", lbRes.SvcHost, lbRes.SvcHttpPort)
 				//其它变量如果已经存在，可以在不改变原代码前提下，对config.Conf.***中的变量再次赋值
 
