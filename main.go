@@ -194,9 +194,8 @@ func useServiceRegistryDiscover(app *iris.Application) {
 	//***********************************************************
 	//第一步 必须
 	//***********************************************************
-	registryAndDiscover, err := zgo.Service.New(5,
+	registryAndDiscover, err := zgo.Service.New(3600,
 		config.Conf.ServiceInfo.SvcEtcdHosts)
-	//与注册中心保持心跳间隔5秒，默认与zgo engine的etcd相同
 	if err != nil {
 		zgo.Log.Errorf("创建微服务实例化失败 %v", err)
 		return
@@ -269,7 +268,11 @@ func useServiceRegistryDiscover(app *iris.Application) {
 		timeout := 5 * time.Second
 		ctx, cancel := context.WithTimeout(context.Background(), timeout)
 		defer cancel()
-
+		//注销掉当前服务 unregistry
+		err = registryAndDiscover.UnRegistry()
+		if err != nil {
+			zgo.Log.Error(err)
+		}
 		fmt.Println("######origin, this server shutdown by Iris, you can do something from here ...######")
 		// 关闭所有主机
 		_ = app.Shutdown(ctx)
@@ -325,20 +328,21 @@ func TestLB() {
 			//每次LB会动态改变config.Conf中的host变量
 			fmt.Println("DemoHostForPayCanChangeAnyName: ", config.Conf.DemoHostForPayCanChangeAnyName)
 
-			time.Sleep(2 * time.Second)
-			lbRes, err := zgo.Service.LB(config.Conf.ServiceInfo.SvcName)
+			time.Sleep(1 * time.Second)
+			//lbRes, err := zgo.Service.LB(config.Conf.ServiceInfo.SvcName)
+			lbRes, err := zgo.Service.LB("origin.bffp")
 			if err != nil {
 				zgo.Log.Error(err)
 				return
 			}
 			//fmt.Printf("host: %s, HttpPort: %s, GrpcPort: %s\n", lbRes.SvcHost, lbRes.SvcHttpPort, lbRes.SvcGrpcPort)
-			ul := fmt.Sprintf("http://%s:%s", lbRes.SvcHost, lbRes.SvcHttpPort)
-			_, err = zgo.Http.Get(ul)
+			//ul := fmt.Sprintf("http://%s:%s", lbRes.SvcHost, lbRes.SvcHttpPort)
+			_, err = zgo.Http.Get(lbRes.SimpleHttpHost)
 			if err != nil {
 				zgo.Log.Error(err)
 				continue
 			}
-			zgo.Log.Infof("请求http: %s, 200\n", ul)
+			zgo.Log.Infof("请求http: %s, 200\n", lbRes.SimpleHttpHost)
 
 			//测试call rpc
 			//backend.CallRpcHelloworld()
