@@ -4,7 +4,7 @@ import "git.zhugefang.com/gocore/zgo"
 
 /*
 @Time : 2019-09-04 19:07
-@Author : rubinus.chu
+@Author : zhuhonglei
 @File : comm
 @project: origin
 */
