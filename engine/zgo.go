@@ -8,6 +8,7 @@ import (
 
 func Run() error {
 	err := zgo.Engine(&zgo.Options{
+		CPath:     config.Conf.CPath,
 		Env:       config.Conf.Env,
 		Loglevel:  config.Conf.Loglevel,
 		Project:   config.Conf.Project,
@@ -20,14 +21,14 @@ func Run() error {
 		********************
 		*/
 		Kafka: []string{
-			"kafka_label_bj",
-			"kafka_label_sh",
+			//"kafka_label_bj",
+			//"kafka_label_sh",
 		},
 		Nsq: []string{
-			"nsq_label_bj",
+			//"nsq_label_bj",
 		},
 		Redis: []string{
-			"redis_label_bj",
+			//"redis_label_bj",
 		},
 		Mysql: []string{
 			//"mysql_sell_1",

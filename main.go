@@ -17,10 +17,9 @@ import (
 	"time"
 )
 
-//var wg = new(sync.WaitGroup)
-
 func init() {
 	var (
+		cpath        string
 		env          string
 		project      string
 		etcdHosts    string
@@ -33,6 +32,8 @@ func init() {
 		svcEtcdHosts string
 	)
 	//默认读取config/local.json
+	flag.StringVar(&cpath, "cpath", "", "env=local时cpath必须指定配置文件所在路径")
+
 	flag.StringVar(&env, "env", "dev", "start local/dev/qa/pro env config")
 
 	flag.StringVar(&project, "project", "", "create project id by zgo engine admin")
@@ -61,6 +62,10 @@ func init() {
 
 	//load config from dev/qa/pro
 	config.InitConfig(env, project, etcdHosts, port, rpcPort)
+
+	if cpath != "" {
+		config.Conf.CPath = cpath
+	}
 
 	//输入覆盖配置中的.json中的
 	if svcName != "" {
@@ -117,12 +122,13 @@ func init() {
 		config.Conf.ServiceInfo.SvcGrpcPort = config.Conf.RpcPort
 	}
 
+	if env == "local" && config.Conf.CPath == "" {
+		panic("请输入配置所在路径")
+	}
 }
 
 func main() {
 	//优雅的退出 -- 使用iris框架中的退出
-	//WatchSignal()
-
 	err := engine.Run() //start zgo engine
 	if err != nil {
 		panic(err)
@@ -185,7 +191,6 @@ func main() {
 		useServiceRegistryDiscover(app)
 	}
 
-	//wg.Wait()
 }
 
 func useServiceRegistryDiscover(app *iris.Application) {
@@ -288,38 +293,6 @@ func useServiceRegistryDiscover(app *iris.Application) {
 
 	}), iris.WithoutInterruptHandler)
 }
-
-//func WatchSignal() {
-//	//创建监听退出chan
-//	signalChan := make(chan os.Signal)
-//	//监听指定信号 ctrl+c kill
-//	signal.Notify(signalChan, syscall.SIGHUP, syscall.SIGINT, syscall.SIGTERM, syscall.SIGQUIT, syscall.SIGUSR1, syscall.SIGUSR2)
-//	go func() {
-//		for s := range signalChan {
-//			switch s {
-//			case syscall.SIGHUP, syscall.SIGINT, syscall.SIGTERM, syscall.SIGQUIT:
-//				go func() {
-//					wg.Add(1)
-//					defer wg.Done()
-//
-//					fmt.Println("---i am out over from killed cmd, but not kill -9, you can do something ...---")
-//
-//				}()
-//			case syscall.SIGUSR1:
-//				//todo something
-//				fmt.Println("usr1", s)
-//			case syscall.SIGUSR2:
-//				//todo something
-//
-//				fmt.Println("usr2", s)
-//			default:
-//				//todo something
-//
-//				fmt.Println("other", s)
-//			}
-//		}
-//	}()
-//}
 
 func TestLB() {
 	//以下为测试使用，通过内部负载均衡使用其它服务

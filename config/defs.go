@@ -31,6 +31,7 @@ type Service struct {
 }
 
 type allConfig struct {
+	CPath         string `json:"cpath"`
 	Env           string `json:"env"`
 	Version       string `json:"version"`
 	Project       string `json:"project"`
