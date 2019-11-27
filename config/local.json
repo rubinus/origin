@@ -7,5 +7,17 @@
   "rpcHost": "localhost",
   "rpcPort": "50051",
   "serverPort": 8081,
-  "usePreAbsPath": 0
+  "usePreAbsPath": 0,
+
+  "file": {
+    "type": "local",
+    "home": "/tmp"
+  },
+  "log": {
+    "c": "日志存储",
+    "start": 0,
+    "dbType": "file",
+    "label": "/tmp",
+    "loglevel": 0
+  }
 }
