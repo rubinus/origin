@@ -62,6 +62,11 @@ docker-compose up -d
 选项一：在当前目录下编译mac运行的二进制文件，仅适用于本机运行
 go build -o origin
 
+###使用godebug查看
+GODEBUG=scheddetail=1,schedtrace=1000,gctrace=1 ./origin
+####
+GODEBUG=scheddetail=1,schedtrace=1000,gctrace=1 go run main.go
+
 选项二：在当前目录下编译linux运行的二进制文件，适用于服务器linux环境
 CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o origin
 
