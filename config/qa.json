@@ -6,7 +6,7 @@
   "loglevel": "info",
   "rpcHost": "localhost",
   "rpcPort": "50051",
-  "debugPort": 8181,
+  "pprofPort": 8181,
   "serverPort": 80,
   "usePreAbsPath": 0
 }

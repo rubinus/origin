@@ -164,40 +164,43 @@ func main() {
 		server.Start()
 	}()
 
-	//用于debug
+	//用于pprof server分析性能
 	go func() {
-		http.ListenAndServe(fmt.Sprintf("0.0.0.0:%v", config.Conf.DebugPort), nil)
+		http.ListenAndServe(fmt.Sprintf("0.0.0.0:%v", config.Conf.PprofPort), nil)
 	}()
 
-	if config.Conf.StartService == false { //不使用服务发现，原来标准模式
-
-		//###################### ################
-		//todo 启动GRPC 客户端 如果作为客户端要连其它rpc server需要开启下面，否则可注释掉
-		//###################### ################
-		backend.RPCClientsRun(nil) //start grpc client
-
-		//run起自己
-		//****change four*****
-		iris.RegisterOnInterrupt(func() {
-			timeout := 5 * time.Second
-			ctx, cancel := context.WithTimeout(context.Background(), timeout)
-			defer cancel()
-			fmt.Println("######origin, this server shutdown by Iris, you can do something from here ...######")
-			// 关闭所有主机
-			_ = app.Shutdown(ctx)
-		})
-		_ = app.Run(iris.Addr(":"+strconv.Itoa(config.Conf.ServerPort), func(h *iris.Supervisor) {
-			h.RegisterOnShutdown(func() {
-
-			})
-
-		}), iris.WithoutInterruptHandler)
-
+	if config.Conf.StartService == false {
+		//正常启动服务，不使用服务注册与发现，标准模式
+		normalStart(app)
 	} else {
 		//使用服务注册与服务发现模式
 		useServiceRegistryDiscover(app)
 	}
 
+}
+
+func normalStart(app *iris.Application) {
+	//###################### ################
+	//todo 启动GRPC 客户端 如果作为客户端要连其它rpc server需要开启下面，否则可注释掉
+	//###################### ################
+	backend.RPCClientsRun(nil) //start grpc client
+
+	//run起自己
+	//****change four*****
+	iris.RegisterOnInterrupt(func() {
+		timeout := 5 * time.Second
+		ctx, cancel := context.WithTimeout(context.Background(), timeout)
+		defer cancel()
+		fmt.Println("######origin, this server is normal shutdown by Iris, you can do something from here ...######")
+		// 关闭所有主机
+		_ = app.Shutdown(ctx)
+	})
+	_ = app.Run(iris.Addr(":"+strconv.Itoa(config.Conf.ServerPort), func(h *iris.Supervisor) {
+		h.RegisterOnShutdown(func() {
+
+		})
+
+	}), iris.WithoutInterruptHandler)
 }
 
 func useServiceRegistryDiscover(app *iris.Application) {
@@ -285,7 +288,7 @@ func useServiceRegistryDiscover(app *iris.Application) {
 		if err != nil {
 			zgo.Log.Error(err)
 		}
-		fmt.Println("######origin, this server shutdown by Iris, you can do something from here ...######")
+		fmt.Println("######origin, this server use the register/discover shutdown by Iris, you can do something from here ...######")
 		// 关闭所有主机
 		_ = app.Shutdown(ctx)
 	})

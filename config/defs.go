@@ -39,7 +39,7 @@ type allConfig struct {
 	Loglevel      string `json:"loglevel"`
 	RpcHost       string `json:"rpcHost"`
 	RpcPort       string `json:"rpcPort"`
-	DebugPort     int    `json:"debugPort"`
+	PprofPort     int    `json:"pprofPort"`
 	ServerPort    int    `json:"serverPort"`
 	UsePreAbsPath int    `json:"usePreAbsPath"`
 
