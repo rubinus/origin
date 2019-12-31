@@ -60,6 +60,19 @@ make
 
 make install
 
+##=====启动go run main.go 查看web服务下的pprof输入web=====
+####图形报告
+http://localhost:8181/debug/pprof/
+####使用pprof查看所有gorutines
+go tool pprof http://localhost:8181/debug/pprof/goroutine?debug=1
+####使用pprof查看堆内存分配
+go tool pprof http://localhost:8181/debug/pprof/heap
+####使用pprof查看10秒CPU使用
+go tool pprof http://localhost:8181/debug/pprof/profile?seconds=10
+####使用go tool trace查看trace
+wget -O trace.out http://localhost:8181/debug/pprof/trace?seconds=10
+go tool trace trace.out
+
 ###========
 #编译文件mac或linux
 ##选项一：在当前目录下编译mac运行的二进制文件，仅适用于本机运行

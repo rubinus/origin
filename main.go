@@ -11,6 +11,8 @@ import (
 	"git.zhugefang.com/gobase/origin/server"
 	"git.zhugefang.com/gocore/zgo"
 	"github.com/kataras/iris"
+	"net/http"
+	_ "net/http/pprof"
 	"os"
 	"path/filepath"
 	"strconv"
@@ -160,6 +162,11 @@ func main() {
 
 	go func() { //start grpc server on the default port 50051 如果作为rpc服务端，让其它client连接进来
 		server.Start()
+	}()
+
+	//用于debug
+	go func() {
+		http.ListenAndServe(fmt.Sprintf("0.0.0.0:%v", config.Conf.DebugPort), nil)
 	}()
 
 	if config.Conf.StartService == false { //不使用服务发现，原来标准模式
