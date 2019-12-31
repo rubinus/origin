@@ -21,27 +21,34 @@ git clone这个项目后，改名成自己开发的项目名字，然后删除�
 
 安装docker,在本地一次性跑起redis,mongodb,mysql,nsq,kafka
 
-###origin测试方法使用：建立xxx_test.go文件，生成相应的.out，并通过go tool pprof查看
+#========
+##origin测试方法使用：建立xxx_test.go文件，生成相应的.out，并通过go tool pprof查看
 
-// 查看测试代码覆盖率
+###查看测试代码覆盖率
 
 go test -coverprofile=c.out
 
 go tool cover -html=c.out
 
-// 查看cpu使用
+###查看测试代码trace
+
+go test -trace=t.out
+
+go tool trace t.out
+
+###查看cpu使用
 
 go test -bench . -cpuprofile cpu.out
 
 go tool pprof -http=":8081" cpu.out
 
-// 查看内存使用
+###查看内存使用
 
 go test -memprofile mem.out
 
 go tool pprof -http=":8081" mem.out
 
-执行pprof后，然后输入web  或是quit 保证下载了svg
+####执行pprof后，然后输入web  或是quit 保证下载了svg
 
 https://graphviz.gitlab.io/_pages/Download/Download_source.html
 
@@ -53,27 +60,23 @@ make
 
 make install
 
-###======================
-执行
-docker-compose up
-或
-docker-compose up -d
-
-选项一：在当前目录下编译mac运行的二进制文件，仅适用于本机运行
+###========
+#编译文件mac或linux
+##选项一：在当前目录下编译mac运行的二进制文件，仅适用于本机运行
 go build -o origin
 
 ####查看逃逸分析
 go build -gcflags '-m -l' -o origin
-###使用godebug查看
+####使用godebug查看
 GODEBUG=scheddetail=1,schedtrace=1000,gctrace=1 ./origin
 ####使用godebug 直接运行main.go
 GODEBUG=scheddetail=1,schedtrace=1000,gctrace=1 go run main.go
 
-选项二：在当前目录下编译linux运行的二进制文件，适用于服务器linux环境
+##选项二：在当前目录下编译linux运行的二进制文件，适用于服务器linux环境
 CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o origin
 
 用docker制作image(dck.zhuge.test是任意一个标识，如果愿意你可以改为origin，每一次v1.0.0需要递增)
-本机build
+###本机build
 docker build -t dck.zhuge.test/origin:v0.0.1 .
 
 docker push dck.zhuge.test/origin:v0.0.1
@@ -83,13 +86,13 @@ docker pull dck.zhuge.test/origin:v0.0.1
 
 docker rm -f origin
 
-###下面一行非服务注册模式
+####下面一行非服务注册模式
 docker run -d --restart always -p 8080:80 -p 50051:50051 --name origin dck.zhuge.test/origin:v0.0.1
 
-##作为服务注册(本地)
+###作为服务注册(本地)
 docker run -d --restart always -p 8081:80 -p 51051:50051 -e SVC_HOST=192.168.100.19 -e SVC_HTTP_PORT=8081 -e SVC_GRPC_PORT=51051 --name origin dck.zhuge.test/origin:v0.0.1
 
-##再启动一个（仅更换端口号）模拟正式环境
+###再启动一个（仅更换端口号）模拟正式环境
 docker run -d --restart always -p 8082:80 -p 51052:50051 -e SVC_HOST=192.168.100.19 -e SVC_HTTP_PORT=8082 -e SVC_GRPC_PORT=51052 --name origin2 dck.zhuge.test/origin:v0.0.1
 
 ##在开发服务器上启动docker并指定 svc 服务的访问host及port(服务器上使用服务注册模式)
@@ -113,6 +116,13 @@ docker push registry.cn-beijing.aliyuncs.com/zhugedev/origin:v1.0.0.1
 
 docker push registry.cn-beijing.aliyuncs.com/zhugeprod/origin:v1.0.0.2
 docker push registry.cn-beijing.aliyuncs.com/zhugedev/origin:v1.0.0.2
+
+###======================
+#本地运行docker-compose
+执行
+docker-compose up
+或
+docker-compose up -d
 
 ##origin 本机使用local时测试环境，测试服务器IP地址
 阿里云内网
