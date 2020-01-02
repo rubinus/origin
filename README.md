@@ -63,14 +63,19 @@ make install
 ##=====启动go run main.go 查看web服务下的pprof输入web=====
 ####图形报告
 http://localhost:8181/debug/pprof/
+
 ####使用pprof查看所有gorutines
 go tool pprof http://localhost:8181/debug/pprof/goroutine?debug=1
+
 ####使用pprof查看堆内存分配
 go tool pprof http://localhost:8181/debug/pprof/heap
+
 ####使用pprof查看10秒CPU使用
 go tool pprof http://localhost:8181/debug/pprof/profile?seconds=10
+
 ####使用go tool trace查看trace
 wget -O trace.out http://localhost:8181/debug/pprof/trace?seconds=10
+
 go tool trace trace.out
 
 ###========
@@ -80,15 +85,17 @@ go build -o origin
 
 ####查看逃逸分析
 go build -gcflags '-m -l' -o origin
+
 ####使用godebug查看
 GODEBUG=scheddetail=1,schedtrace=1000,gctrace=1 ./origin
+
 ####使用godebug 直接运行main.go
 GODEBUG=scheddetail=1,schedtrace=1000,gctrace=1 go run main.go
 
 ##选项二：在当前目录下编译linux运行的二进制文件，适用于服务器linux环境
 CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o origin
 
-用docker制作image(dck.zhuge.test是任意一个标识，如果愿意你可以改为origin，每一次v1.0.0需要递增)
+用docker制作image(dck.zhuge.test是任意一个标识，如果愿意你可以改为你的名字，每一次v0.0.1需要递增)
 ###本机build
 docker build -t dck.zhuge.test/origin:v0.0.1 .
 
@@ -99,17 +106,22 @@ docker pull dck.zhuge.test/origin:v0.0.1
 
 docker rm -f origin
 
+#====本机运行====
 ####下面一行非服务注册模式
 docker run -d --restart always -p 8080:80 -p 50051:50051 --name origin dck.zhuge.test/origin:v0.0.1
 
 ###作为服务注册(本地)
-docker run -d --restart always -p 8081:80 -p 51051:50051 -e SVC_HOST=192.168.100.19 -e SVC_HTTP_PORT=8081 -e SVC_GRPC_PORT=51051 --name origin dck.zhuge.test/origin:v0.0.1
+docker run -d --restart always -p 8081:80 -p 51051:50051 -e SVC_HOST=192.168.100.19 -e SVC_HTTP_PORT=8081 -e SVC_GRPC_PORT=51051 --name origin1 dck.zhuge.test/origin:v0.0.1
 
 ###再启动一个（仅更换端口号）模拟正式环境
 docker run -d --restart always -p 8082:80 -p 51052:50051 -e SVC_HOST=192.168.100.19 -e SVC_HTTP_PORT=8082 -e SVC_GRPC_PORT=51052 --name origin2 dck.zhuge.test/origin:v0.0.1
 
+#====服务器上运行====
+##正常运行
+docker run -d --restart always -p 8080:80 -p 50051:50051 --name origin dck.zhuge.test/origin:v0.0.1
+
 ##在开发服务器上启动docker并指定 svc 服务的访问host及port(服务器上使用服务注册模式)
-docker run -d --restart always -p 8281:80 -p 52051:50051 -e SVC_HOST=47.95.20.12 -e SVC_HTTP_PORT=8281 -e SVC_GRPC_PORT=52051 --name origin dck.zhuge.test/origin:v0.0.1
+docker run -d --restart always -p 8281:80 -p 52051:50051 -e SVC_HOST=47.95.20.12 -e SVC_HTTP_PORT=8281 -e SVC_GRPC_PORT=52051 --name origin1 dck.zhuge.test/origin:v0.0.1
 
 docker run -d --restart always -p 8282:80 -p 52052:50051 -e SVC_HOST=47.95.20.12 -e SVC_HTTP_PORT=8282 -e SVC_GRPC_PORT=52052 --name origin2 dck.zhuge.test/origin:v0.0.1
 
