@@ -3,9 +3,9 @@ package backend
 import (
 	"context"
 	"fmt"
-	"git.zhugefang.com/gobase/origin/config"
-	"git.zhugefang.com/gobase/origin/pb/helloworld"
-	"git.zhugefang.com/gocore/zgo"
+	"github.com/rubinus/origin/config"
+	"github.com/rubinus/origin/pb/helloworld"
+	"github.com/rubinus/zgo"
 	"time"
 )
 

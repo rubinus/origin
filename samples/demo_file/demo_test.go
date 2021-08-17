@@ -3,8 +3,8 @@ package demo_file
 import (
 	"bufio"
 	"fmt"
-	"git.zhugefang.com/gobase/origin/config"
-	"git.zhugefang.com/gocore/zgo"
+	"github.com/rubinus/origin/config"
+	"github.com/rubinus/zgo"
 	"os"
 	"strconv"
 	"testing"

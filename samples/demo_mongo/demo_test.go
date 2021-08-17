@@ -3,9 +3,9 @@ package demo_mongo
 import (
 	"context"
 	"fmt"
-	"git.zhugefang.com/gobase/origin/config"
-	"git.zhugefang.com/gocore/zgo"
-	"git.zhugefang.com/gocore/zgo/zgomongo"
+	"github.com/rubinus/origin/config"
+	"github.com/rubinus/zgo"
+	"github.com/rubinus/zgo/zgomongo"
 	"testing"
 	"time"
 )

@@ -3,9 +3,9 @@ package demo_mysql
 import (
 	"context"
 	"fmt"
-	"git.zhugefang.com/gobase/origin/config"
-	"git.zhugefang.com/gocore/zgo"
-	"git.zhugefang.com/gocore/zgo/zgomysql"
+	"github.com/rubinus/origin/config"
+	"github.com/rubinus/zgo"
+	"github.com/rubinus/zgo/zgomysql"
 	"time"
 )
 

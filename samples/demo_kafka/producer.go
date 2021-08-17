@@ -3,7 +3,7 @@ package demo_kafka
 import (
 	"context"
 	"fmt"
-	"git.zhugefang.com/gocore/zgo/zgokafka"
+	"github.com/rubinus/zgo/zgokafka"
 	"time"
 )
 

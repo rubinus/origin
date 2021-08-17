@@ -8,7 +8,7 @@ package handler
 
 import (
 	"context"
-	pb "git.zhugefang.com/gobase/origin/samples/demo_grpc/go/pb"
+	pb "github.com/rubinus/origin/samples/demo_grpc/go/pb"
 	"log"
 )
 

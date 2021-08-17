@@ -3,9 +3,9 @@ package handlers
 import (
 	"context"
 	"fmt"
-	"git.zhugefang.com/gobase/origin/models"
-	"git.zhugefang.com/gobase/origin/services"
-	"git.zhugefang.com/gocore/zgo"
+	"github.com/rubinus/origin/models"
+	"github.com/rubinus/origin/services"
+	"github.com/rubinus/zgo"
 	"github.com/kataras/iris"
 	"strings"
 	"time"

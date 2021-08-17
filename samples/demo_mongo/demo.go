@@ -4,7 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"git.zhugefang.com/gocore/zgo"
+	"github.com/rubinus/zgo"
 	"time"
 )
 

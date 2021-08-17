@@ -3,7 +3,7 @@ package demo_rabbitmq
 import (
 	"context"
 	"fmt"
-	"git.zhugefang.com/gocore/zgo"
+	"github.com/rubinus/zgo"
 	"time"
 )
 

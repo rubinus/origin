@@ -3,7 +3,7 @@ package config
 import (
 	"errors"
 	"fmt"
-	"git.zhugefang.com/gocore/zgo"
+	"github.com/rubinus/zgo"
 	"io/ioutil"
 	"path/filepath"
 	"runtime"

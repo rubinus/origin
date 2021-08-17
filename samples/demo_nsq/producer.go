@@ -3,7 +3,7 @@ package demo_nsq
 import (
 	"context"
 	"fmt"
-	"git.zhugefang.com/gocore/zgo/zgonsq"
+	"github.com/rubinus/zgo/zgonsq"
 	"time"
 )
 

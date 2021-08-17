@@ -2,7 +2,7 @@ package demo_etcd
 
 import (
 	"context"
-	"git.zhugefang.com/gocore/zgo"
+	"github.com/rubinus/zgo"
 )
 
 /*

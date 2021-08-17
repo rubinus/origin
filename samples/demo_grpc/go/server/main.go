@@ -11,10 +11,10 @@ package main
 import (
 	"context"
 	"fmt"
-	"git.zhugefang.com/gobase/origin/config"
-	"git.zhugefang.com/gobase/origin/samples/demo_grpc/go/handler"
-	pb "git.zhugefang.com/gobase/origin/samples/demo_grpc/go/pb"
-	"git.zhugefang.com/gocore/zgo"
+	"github.com/rubinus/origin/config"
+	"github.com/rubinus/origin/samples/demo_grpc/go/handler"
+	pb "github.com/rubinus/origin/samples/demo_grpc/go/pb"
+	"github.com/rubinus/zgo"
 )
 
 func main() {

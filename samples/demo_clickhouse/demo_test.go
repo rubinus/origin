@@ -1,7 +1,7 @@
 package demo_clickhouse
 
 import (
-	"git.zhugefang.com/gocore/zgo"
+	"github.com/rubinus/zgo"
 	"testing"
 	"time"
 )

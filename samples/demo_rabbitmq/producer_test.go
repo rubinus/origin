@@ -1,8 +1,8 @@
 package demo_rabbitmq
 
 import (
-	"git.zhugefang.com/gobase/origin/backend"
-	"git.zhugefang.com/gocore/zgo"
+	"github.com/rubinus/origin/backend"
+	"github.com/rubinus/zgo"
 	"testing"
 	"time"
 )

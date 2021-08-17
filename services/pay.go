@@ -1,6 +1,6 @@
 package services
 
-import "git.zhugefang.com/gobase/origin/models"
+import "github.com/rubinus/origin/models"
 
 /*
 @Time : 2019-03-06 19:02

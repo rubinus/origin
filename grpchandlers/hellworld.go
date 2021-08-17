@@ -9,7 +9,7 @@ package grpchandlers
 import (
 	"context"
 	"fmt"
-	"git.zhugefang.com/gobase/origin/pb/helloworld"
+	"github.com/rubinus/origin/pb/helloworld"
 	"log"
 )
 

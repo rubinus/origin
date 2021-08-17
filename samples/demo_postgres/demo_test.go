@@ -2,7 +2,7 @@ package demo_postgres
 
 import (
 	"fmt"
-	"git.zhugefang.com/gocore/zgo"
+	"github.com/rubinus/zgo"
 	"strconv"
 	"testing"
 	"time"

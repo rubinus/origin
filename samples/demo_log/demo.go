@@ -1,9 +1,9 @@
 package demo_log
 
 import (
-	"git.zhugefang.com/gobase/origin/config"
-	"git.zhugefang.com/gobase/origin/engine"
-	"git.zhugefang.com/gocore/zgo"
+	"github.com/rubinus/origin/config"
+	"github.com/rubinus/origin/engine"
+	"github.com/rubinus/zgo"
 )
 
 const (

@@ -2,7 +2,7 @@ package demo_etcd
 
 import (
 	"fmt"
-	"git.zhugefang.com/gocore/zgo"
+	"github.com/rubinus/zgo"
 	"testing"
 	"time"
 )

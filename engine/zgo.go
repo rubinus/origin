@@ -1,8 +1,8 @@
 package engine
 
 import (
-	"git.zhugefang.com/gobase/origin/config"
-	"git.zhugefang.com/gocore/zgo"
+	"github.com/rubinus/origin/config"
+	"github.com/rubinus/zgo"
 	"time"
 )
 

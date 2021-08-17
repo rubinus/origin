@@ -1,7 +1,7 @@
 package queue
 
 import (
-	"git.zhugefang.com/gocore/zgo"
+	"github.com/rubinus/zgo"
 )
 
 /*

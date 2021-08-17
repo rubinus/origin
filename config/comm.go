@@ -1,6 +1,6 @@
 package config
 
-import "git.zhugefang.com/gocore/zgo"
+import "github.com/rubinus/zgo"
 
 /*
 @Time : 2019-09-04 19:07
