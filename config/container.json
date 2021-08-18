@@ -1,0 +1,24 @@
+{
+  "cpath": "/opt/origin/config",
+  "version": "1.0.0",
+  "env": "container",
+  "project": "origin",
+  "loglevel": "debug",
+  "rpcHost": "localhost",
+  "rpcPort": "50051",
+  "pprofPort": 8181,
+  "httpPort": 8081,
+  "usePreAbsPath": 0,
+
+  "file": {
+    "type": "local",
+    "home": "/tmp"
+  },
+  "log": {
+    "c": "日志存储",
+    "start": 0,
+    "dbType": "file",
+    "label": "/tmp",
+    "loglevel": 0
+  }
+}

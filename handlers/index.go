@@ -28,7 +28,7 @@ func IndexPage(ctx iris.Context) {
 	hostName, _ := os.Hostname()
 	ctx.ViewData("", indexPage{
 		Title:    project,
-		Message:  fmt.Sprintf("%s welcome origin by zgo engine ...", project),
+		Message:  fmt.Sprintf("%s welcome by zgo engine %s ...", project, zgo.Version),
 		Version:  config.Conf.Version,
 		HostName: hostName,
 		IP:       zgo.Utils.GetIntranetIP(),
@@ -41,7 +41,7 @@ func FourZeroFourPage(ctx iris.Context) {
 	hostName, _ := os.Hostname()
 	ctx.ViewData("", indexPage{
 		Title:    project,
-		Message:  fmt.Sprintf("%d -- %s origin by zgo engine ...", 404, project),
+		Message:  fmt.Sprintf("%d -- %s by zgo engine %s ...", 404, project, zgo.Version),
 		Version:  config.Conf.Version,
 		HostName: hostName,
 		IP:       zgo.Utils.GetIntranetIP(),
@@ -54,7 +54,7 @@ func FiveZeroZeroPage(ctx iris.Context) {
 	hostName, _ := os.Hostname()
 	ctx.ViewData("", indexPage{
 		Title:    project,
-		Message:  fmt.Sprintf("%d -- %s origin by zgo engine ...", 500, project),
+		Message:  fmt.Sprintf("%d -- %s by zgo engine %s ...", 500, project, zgo.Version),
 		Version:  config.Conf.Version,
 		HostName: hostName,
 		IP:       zgo.Utils.GetIntranetIP(),
@@ -62,7 +62,7 @@ func FiveZeroZeroPage(ctx iris.Context) {
 	ctx.View("500.html")
 }
 
-func Health(ctx iris.Context)  {
+func Health(ctx iris.Context) {
 	ctx.JSONP(map[string]string{
 		"health": "true",
 	})

@@ -367,8 +367,14 @@ github.com/rogpeppe/go-charset v0.0.0-20180617210344-2471d30d28b4/go.mod h1:qgYe
 github.com/rogpeppe/go-internal v1.1.0/go.mod h1:M8bDsm7K2OlrFYOpmOWEs/qY81heoFRclV5y23lUDJ4=
 github.com/rogpeppe/go-internal v1.2.2/go.mod h1:M8bDsm7K2OlrFYOpmOWEs/qY81heoFRclV5y23lUDJ4=
 github.com/rogpeppe/go-internal v1.3.0/go.mod h1:M8bDsm7K2OlrFYOpmOWEs/qY81heoFRclV5y23lUDJ4=
+github.com/rubinus/zgo v1.2.2 h1:LbtzVUl+Ei2Hsb1KXwk6BiqiVSXtpzx5Etw0hIA4sR8=
+github.com/rubinus/zgo v1.2.2/go.mod h1:daER5F1oCmVBvcLh+FeXi964SbQOI96Md/r7XR1EW6E=
 github.com/rubinus/zgo v1.3.5 h1:LPWLOszdztkq7q8M04wuY/aZMH8e/x474DcJ5vhAgDM=
 github.com/rubinus/zgo v1.3.5/go.mod h1:daER5F1oCmVBvcLh+FeXi964SbQOI96Md/r7XR1EW6E=
+github.com/rubinus/zgo v1.4.0 h1:QsIZ6w/YjkO4gDXGAUeNhVdMToSmKgqDz4vbIsKIgHg=
+github.com/rubinus/zgo v1.4.0/go.mod h1:daER5F1oCmVBvcLh+FeXi964SbQOI96Md/r7XR1EW6E=
+github.com/rubinus/zgo v1.4.1 h1:cy/29Lqp4/2f7hKjtGldVGbo3CQw25xl4ZGp+9DglKk=
+github.com/rubinus/zgo v1.4.1/go.mod h1:daER5F1oCmVBvcLh+FeXi964SbQOI96Md/r7XR1EW6E=
 github.com/russross/blackfriday v1.5.2/go.mod h1:JO/DiYxRf+HjHt06OyowR9PTA263kcR/rfWxYHBV53g=
 github.com/ryanuber/columnize v2.1.0+incompatible/go.mod h1:sm1tb6uqfes/u+d4ooFouqFdy9/2g9QGwK3SQygK0Ts=
 github.com/ryanuber/columnize v2.1.2+incompatible h1:C89EOx/XBWwIXl8wm8OPJBd7kPF25UfsK2X7Ph/zCAk=

@@ -1,5 +1,8 @@
 # origin
 
+## auto build image
+make image
+通过makefile，运行dockerfile，制作包含git版本的image
 
 ##how to use the zgo engine
 
@@ -125,9 +128,9 @@ docker run -d --restart always -p 8082:80 -p 51052:50051 -e SVC_HOST=192.168.100
 docker run -d --restart always -p 8080:80 -p 50051:50051 --name origin dck.example.test/origin:v0.0.1
 
 ##在开发服务器上启动docker并指定 svc 服务的访问host及port(服务器上使用服务注册模式)
-docker run -d --restart always -p 8281:80 -p 52051:50051 -e SVC_HOST=47.95.20.12 -e SVC_HTTP_PORT=8281 -e SVC_GRPC_PORT=52051 --name origin1 dck.example.test/origin:v0.0.1
+docker run -d --restart always -p 8281:80 -p 52051:50051 -e SVC_HOST=localhost -e SVC_HTTP_PORT=8281 -e SVC_GRPC_PORT=52051 --name origin1 dck.example.test/origin:v0.0.1
 
-docker run -d --restart always -p 8282:80 -p 52052:50051 -e SVC_HOST=47.95.20.12 -e SVC_HTTP_PORT=8282 -e SVC_GRPC_PORT=52052 --name origin2 dck.example.test/origin:v0.0.1
+docker run -d --restart always -p 8282:80 -p 52052:50051 -e SVC_HOST=localhost -e SVC_HTTP_PORT=8282 -e SVC_GRPC_PORT=52052 --name origin2 dck.example.test/origin:v0.0.1
 
 docker logs -f --tail=20 origin
 
@@ -154,13 +157,6 @@ docker-compose up
 docker-compose up -d
 
 ##origin 本机使用local时测试环境，测试服务器IP地址
-阿里云内网
-10.24.188.182
-
-阿里云公网
-47.95.20.12
-
-数字是端口号，供测试zgo admin使用，跑在docker里
 
 ##Mysql
 2个mysql
@@ -177,7 +173,7 @@ docker-compose up -d
 27019
 
 ####Mongo管理页面
-http://47.95.20.12:8081
+http://localhost:8081
 
 ##Redis
 2个redis
@@ -207,9 +203,9 @@ http://47.93.163.209:9097
 7687
 
 ####Neo4j操作页面
-http://47.95.20.12:7474
+http://localhost:7474
 
-连接：bolt://47.95.20.12:7687
+连接：bolt://localhost:7687
 
 账号：neo4j
 
@@ -224,9 +220,9 @@ tcp端口 9019
 
 ####ClickHouse管理操作页面
 
-http://47.95.20.12:9020
+http://localhost:9020
 
-输入：http://47.95.20.12:8123
+输入：http://localhost:8123
 
 login: default
 
@@ -239,7 +235,7 @@ password: 空
 
 ####rabbitmq管理页面
 
-http://47.95.20.12:8672
+http://localhost:8672
 
 管理账号/密码：admin/admin
 
@@ -251,7 +247,7 @@ http://47.95.20.12:8672
 消费：2081
 
 ####Kafka管理页面
-http://47.95.20.12:9093
+http://localhost:9093
 
 管理账号/密码：admin/admin
 
@@ -261,7 +257,7 @@ http://47.95.20.12:9093
 4150
 
 ####Nsq管理页面
-http://47.95.20.12:4171
+http://localhost:4171
 
 
 ##ES
@@ -269,31 +265,31 @@ http://47.95.20.12:4171
 
 9200
 ####ES管理页面--打开localhost:9800后，输入http://es:9200 connect
-http://47.95.20.12:9800
+http://localhost:9800
 
-#####管理页面--打开http://47.95.20.12:1358，输入http://47.95.20.12:9200
+#####管理页面--打开http://localhost:1358，输入http://localhost:9200
 后面输入index，connect
 
-http://47.95.20.12:1358
+http://localhost:1358
 
 ####Kibana
-http://47.95.20.12:5601
+http://localhost:5601
 
 ####redis 集群，任意节点支持读写
-47.95.20.12:7001
+localhost:7001
 
-47.95.20.12:7002
+localhost:7002
 
-47.95.20.12:7003
+localhost:7003
 
-47.95.20.12:7004
+localhost:7004
 
-47.95.20.12:7005
+localhost:7005
 
-47.95.20.12:7006
+localhost:7006
 
 ####1个portainer--用于查看所有docker中的资源
-http://47.95.20.12:9000
+http://localhost:9000
 
 账号: admin
 
