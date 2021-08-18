@@ -61,3 +61,9 @@ func FiveZeroZeroPage(ctx iris.Context) {
 	})
 	ctx.View("500.html")
 }
+
+func Health(ctx iris.Context)  {
+	ctx.JSONP(map[string]string{
+		"health": "true",
+	})
+}

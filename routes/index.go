@@ -20,6 +20,8 @@ func Index(app *iris.Application) {
 
 	app.Get("/", handlers.IndexPage)
 
+	app.Get("/health", handlers.Health)
+
 	v1 := app.Party("/v1")
 	{
 		//这是一个get的例子，可以直接copy或是更改
