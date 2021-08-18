@@ -1,5 +1,5 @@
 FROM alpine:edge
-LABEL maintainer="zhuhonglei@zhuge.com"
+LABEL maintainer="zhuhonglei@example.com"
 
 #设置国内镜像
 RUN echo 'https://mirrors.ustc.edu.cn/alpine/edge/community' > /etc/apk/repositories

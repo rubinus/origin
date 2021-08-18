@@ -4,7 +4,7 @@ metadata:
   name: origin
 spec:
   hosts:
-    - originbffp.zhuge.com
+    - originbffp.example.com
   gateways:
     - origin-gateway
   http:

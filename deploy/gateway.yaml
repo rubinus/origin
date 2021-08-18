@@ -11,11 +11,11 @@ spec:
         number: 80
         protocol: HTTP
       hosts:
-        - originbffp.zhuge.com
+        - originbffp.example.com
     - port:
         name: grpc
         number: 50051
         protocol: TCP
       hosts:
-        - originbffp.zhuge.com
+        - originbffp.example.com
 

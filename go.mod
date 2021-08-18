@@ -10,7 +10,7 @@ require (
 	github.com/golang/protobuf v1.5.0
 	github.com/kataras/iris/v12 v12.1.8
 	github.com/op/go-logging v0.0.0-20160315200505-970db520ece7 // indirect
-	github.com/rubinus/zgo v1.3.3
+	github.com/rubinus/zgo v1.3.5
 	github.com/ryanuber/columnize v2.1.2+incompatible // indirect
 	golang.org/x/crypto v0.0.0-20210817164053-32db794688a5 // indirect
 	golang.org/x/net v0.0.0-20210813160813-60bc85c4be6d

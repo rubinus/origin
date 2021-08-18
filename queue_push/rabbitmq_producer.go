@@ -1,4 +1,4 @@
-package backend
+package queue_push
 
 import (
 	"context"
@@ -9,11 +9,11 @@ import (
 /*
 @Time : 2019-06-14 12:15
 @Author : rubinus.chu
-@File : kafka_producer
+@File : rabbitmq_producer
 @project: origin
 */
 
-func KafkaProducer(topic string, body interface{}) chan uint8 {
+func RabbitmqProducer(exchangeName, exchangeType, routingKey string, body interface{}) chan uint8 {
 
 	out := make(chan uint8, 1)
 
@@ -28,7 +28,7 @@ func KafkaProducer(topic string, body interface{}) chan uint8 {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
-	out, err = zgo.Kafka.Producer(ctx, topic, bytes)
+	out, err = zgo.MQ.Producer(ctx, exchangeName, exchangeType, routingKey, bytes)
 
 	if err != nil {
 		zgo.Log.Error(err)

@@ -1,4 +1,4 @@
-package backend
+package grpcclients
 
 import (
 	"context"
@@ -12,11 +12,11 @@ import (
 /*
 @Time : 2019-08-31 15:17
 @Author : rubinus.chu
-@File : rpc_clients
+@File : clients
 @project: origin
 */
 
-// 可以起名为你的 xxxxClient
+// HelloworldClient 可以起名为你的 xxxxClient
 var HelloworldClient pb_helloworld.HelloWorldServiceClient
 
 // you are client

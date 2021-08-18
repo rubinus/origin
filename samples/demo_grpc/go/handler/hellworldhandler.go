@@ -12,7 +12,7 @@ import (
 	"log"
 )
 
-// server is used to implement helloworld.GreeterServer.
+// grpcserver is used to implement helloworld.GreeterServer.
 type Server struct{}
 
 // SayHello implements helloworld.GreeterServer

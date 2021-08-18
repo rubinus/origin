@@ -5,11 +5,11 @@ import (
 	"flag"
 	"fmt"
 	"github.com/kataras/iris/v12"
-	"github.com/rubinus/origin/backend"
 	"github.com/rubinus/origin/config"
 	"github.com/rubinus/origin/engine"
+	"github.com/rubinus/origin/grpcclients"
+	"github.com/rubinus/origin/grpcserver"
 	"github.com/rubinus/origin/routes"
-	"github.com/rubinus/origin/server"
 	"github.com/rubinus/zgo"
 	"net/http"
 	_ "net/http/pprof"
@@ -36,7 +36,7 @@ func init() {
 	//默认读取config/local.json
 	flag.StringVar(&cpath, "cpath", "", "env=local时cpath必须指定配置文件所在路径")
 
-	flag.StringVar(&env, "env", "dev", "start local/dev/qa/pro env config")
+	flag.StringVar(&env, "env", "local", "start local/dev/qa/pro env config")
 
 	flag.StringVar(&project, "project", "", "create project id by zgo engine admin")
 
@@ -94,7 +94,7 @@ func init() {
 	}
 	if os.Getenv("PORT") != "" {
 		port, _ := strconv.Atoi(os.Getenv("PORT"))
-		config.Conf.ServerPort = port //从os的env取得PORT，用来在yaml文件中的配置
+		config.Conf.HttpPort = port //从os的env取得PORT，用来在yaml文件中的配置
 	}
 	if os.Getenv("RPCPORT") != "" {
 		config.Conf.RpcPort = os.Getenv("RPCPORT") //从os的env取得RPCPORT，用来在yaml文件中的配置
@@ -118,7 +118,7 @@ func init() {
 	}
 
 	if config.Conf.ServiceInfo.SvcHttpPort == "" {
-		config.Conf.ServiceInfo.SvcHttpPort = fmt.Sprintf("%d", config.Conf.ServerPort)
+		config.Conf.ServiceInfo.SvcHttpPort = fmt.Sprintf("%d", config.Conf.HttpPort)
 	}
 	if config.Conf.ServiceInfo.SvcGrpcPort == "" {
 		config.Conf.ServiceInfo.SvcGrpcPort = config.Conf.RpcPort
@@ -130,13 +130,12 @@ func init() {
 }
 
 func main() {
-	//优雅的退出 -- 使用iris框架中的退出
 	err := engine.Run() //start zgo engine
 	if err != nil {
 		panic(err)
 	}
 
-	app := iris.New() //start web
+	app := iris.New() //start web http server
 	app.Logger().SetLevel(config.Conf.Loglevel)
 
 	var pre string
@@ -155,18 +154,19 @@ func main() {
 	routes.Index(app)
 
 	//消费nsq 需要先配置上nsq
-	//queue.NsqConsumer()
+	//queue_pop.NsqConsumer()
 	//消费kafka 需要先配置上kafka
-	//queue.KafkaConsumer()
+	//queue_pop.KafkaConsumer()
 	//消费Rabbitmq
-	//queue.RabbitmqConsumer() //需要先配置上rabbitmq
+	//queue_pop.RabbitmqConsumer() //需要先配置上rabbitmq
 
-	go func() { //start grpc server on the default port 50051 如果作为rpc服务端，让其它client连接进来
-		server.Start()
+	go func() { //start grpc grpcserver on the default port 50051 如果作为rpc服务端，让其它client连接进来
+		grpcserver.Start()
 	}()
 
 	//用于pprof server分析性能
 	go func() {
+		fmt.Printf("Now listening pprof Serv on: http://%s:%d/debug/pprof\n",zgo.Utils.GetIntranetIP(), config.Conf.PprofPort)
 		http.ListenAndServe(fmt.Sprintf("0.0.0.0:%v", config.Conf.PprofPort), nil)
 	}()
 
@@ -184,19 +184,19 @@ func normalStart(app *iris.Application) {
 	//###################### ################
 	//todo 启动GRPC 客户端 如果作为客户端要连其它rpc server需要开启下面，否则可注释掉
 	//###################### ################
-	backend.RPCClientsRun(nil) //start grpc client
+	grpcclients.RPCClientsRun(nil) //start grpc client
 
 	//run起自己
 	//****change four*****
-	iris.RegisterOnInterrupt(func() {
+	iris.RegisterOnInterrupt(func() {	//优雅的退出 -- 使用iris框架中的退出
 		timeout := 5 * time.Second
 		ctx, cancel := context.WithTimeout(context.Background(), timeout)
 		defer cancel()
-		fmt.Println("######origin, this server is normal shutdown by Iris, you can do something from here ...######")
+		fmt.Println("######origin, this grpcserver is normal shutdown by Iris, you can do something from here ...######")
 		// 关闭所有主机
 		_ = app.Shutdown(ctx)
 	})
-	_ = app.Run(iris.Addr(":"+strconv.Itoa(config.Conf.ServerPort), func(h *iris.Supervisor) {
+	_ = app.Run(iris.Addr(":"+strconv.Itoa(config.Conf.HttpPort), func(h *iris.Supervisor) {
 		h.RegisterOnShutdown(func() {
 
 		})
@@ -255,7 +255,7 @@ func useServiceRegistryDiscover(app *iris.Application) {
 					//###################### ################
 					//todo 启动GRPC 客户端 如果作为客户端要连其它rpc server需要开启下面，否则可注释掉
 					//###################### ################
-					backend.RPCClientsRun(grpcChan) //grpc再次初始化host,port
+					grpcclients.RPCClientsRun(grpcChan) //grpc再次初始化host,port
 					grpcChan <- value
 				}(value)
 
@@ -280,7 +280,7 @@ func useServiceRegistryDiscover(app *iris.Application) {
 	//***********************************************************
 	//第五步 run起服务自己并监听当服务down之前，执行某些操作
 	//***********************************************************
-	iris.RegisterOnInterrupt(func() {
+	iris.RegisterOnInterrupt(func() {	//优雅的退出 -- 使用iris框架中的退出
 		timeout := 5 * time.Second
 		ctx, cancel := context.WithTimeout(context.Background(), timeout)
 		defer cancel()
@@ -289,11 +289,11 @@ func useServiceRegistryDiscover(app *iris.Application) {
 		if err != nil {
 			zgo.Log.Error(err)
 		}
-		fmt.Println("######origin, this server use the register/discover shutdown by Iris, you can do something from here ...######")
+		fmt.Println("######origin, this grpcserver use the register/discover shutdown by Iris, you can do something from here ...######")
 		// 关闭所有主机
 		_ = app.Shutdown(ctx)
 	})
-	_ = app.Run(iris.Addr(":"+strconv.Itoa(config.Conf.ServerPort), func(h *iris.Supervisor) {
+	_ = app.Run(iris.Addr(":"+strconv.Itoa(config.Conf.HttpPort), func(h *iris.Supervisor) {
 		h.RegisterOnShutdown(func() {
 			//注销掉当前服务 unregistry
 			err = registryAndDiscover.UnRegistry()
@@ -327,9 +327,6 @@ func TestLB() {
 				continue
 			}
 			zgo.Log.Infof("请求http: %s, 200\n", lbRes.SimpleHttpHost)
-
-			//测试call rpc
-			//backend.CallRpcHelloworld()
 
 		}
 	}()

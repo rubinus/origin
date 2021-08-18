@@ -17,7 +17,7 @@ import (
 */
 
 var (
-	url = "http://zhuge.com"
+	url = "http://example.com"
 )
 
 func DemoGet() {

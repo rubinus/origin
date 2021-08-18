@@ -150,7 +150,7 @@ services:
 
   clickhouse-server:
     image: yandex/clickhouse-server
-    container_name: clickhouse-server
+    container_name: clickhouse-grpcserver
     ports:
       - "8123:8123" ##http
       - "9019:9000" ##tcp
@@ -172,7 +172,7 @@ services:
     environment:
       #      USER: admin
       #      PASSWORD: admin
-      CH_HOST: clickhouse-server
+      CH_HOST: clickhouse-grpcserver
     #      CH_LOGIN: default
     #      CH_PASSWORD:
     depends_on:
@@ -473,7 +473,7 @@ services:
     container_name: kafka_exporter
     restart: always
     environment:
-      - kafka.server=kafka:9092
+      - kafka.grpcserver=kafka:9092
     ports:
       - 9308:9308
     networks:

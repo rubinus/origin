@@ -40,7 +40,7 @@ type allConfig struct {
 	RpcHost       string `json:"rpcHost"`
 	RpcPort       string `json:"rpcPort"`
 	PprofPort     int    `json:"pprofPort"`
-	ServerPort    int    `json:"serverPort"`
+	HttpPort    int    `json:"httpPort"`
 	UsePreAbsPath int    `json:"usePreAbsPath"`
 
 	Service //内嵌服务结构体
@@ -88,7 +88,7 @@ func initConfig(e, project, etcdHosts, port, rpcPort string) {
 		if err != nil {
 			zgo.Log.Error(err)
 		} else {
-			Conf.ServerPort = portInt
+			Conf.HttpPort = portInt
 		}
 
 	}

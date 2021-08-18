@@ -728,7 +728,7 @@ func (c *helloWorldServiceClient) SayHello(ctx context.Context, in *HelloRequest
 	return out, nil
 }
 
-// HelloWorldServiceServer is the server API for HelloWorldService service.
+// HelloWorldServiceServer is the grpcserver API for HelloWorldService service.
 type HelloWorldServiceServer interface {
 	//HelloRequest 改名为你的 XXXXXRequest
 	//HelloResponse 改名为你的 XXXXXResponse

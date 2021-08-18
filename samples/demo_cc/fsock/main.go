@@ -22,7 +22,7 @@ type ASRResult struct {
 }
 
 var (
-	fshost   = flag.String("fshost", "testwsssip.zhuge.com", "Freeswitch hostname. Default: localhost")
+	fshost   = flag.String("fshost", "testwsssip.example.com", "Freeswitch hostname. Default: localhost")
 	fsport   = flag.Uint("fsport", 8021, "Freeswitch port. Default: 8021")
 	password = flag.String("pass", "ClueCon", "Freeswitch password. Default: ClueCon")
 	timeout  = flag.Int("timeout", 10, "Freeswitch conneciton timeout in seconds. Default: 10")
@@ -57,7 +57,7 @@ func callOut(client *eventsocket.Connection, sessionUUID string) {
 	jsonArgs["uuid"] = sessionUUID
 	jsonArgs["action"] = "originate"
 	jsonArgs["asr_engine"] = "puqiang"
-	jsonArgs["gateway_name"] = "zhugevos"
+	jsonArgs["gateway_name"] = "examplevos"
 	jsonArgs["caller_number"] = "01012341234"
 	jsonArgs["called_number"] = "36518513379185"
 	jsonArgs["extra_headers"] = extraHeaderArgs
@@ -112,7 +112,7 @@ func transferCall(client *eventsocket.Connection, sessionUUID string, eavesdropU
 	jsonArgs["uuid"] = sessionUUID
 	jsonArgs["action"] = "transfer"
 	jsonArgs["eavesdrop_uuid"] = eavesdropUUID
-	jsonArgs["gateway_name"] = "zhugevos"
+	jsonArgs["gateway_name"] = "examplevos"
 	jsonArgs["caller_number"] = "18510409326"
 	jsonArgs["called_number"] = "6800000000"
 

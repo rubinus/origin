@@ -39,7 +39,7 @@ func init() {
 	//    privateKey：应用秘钥
 	//    isProd：是否是正式环境
 	aliPayer = zgo.AliPay.Pay(aliAppId, privateKey, true)
-	aliPayer.SetNotifyUrl("http://testpaybffp.zhuge.com/v1/pay/alipaynotify")
+	aliPayer.SetNotifyUrl("http://testpaybffp.example.com/v1/pay/alipaynotify")
 
 	//初始化微信客户端
 	//    appId：应用ID
@@ -48,7 +48,7 @@ func init() {
 	//    isProd：是否是正式环境
 	wechatPayer = zgo.Wechat.Pay(appId, mchId, apiKey, true)
 	wechatPayer.SetCountry(1)
-	wechatPayer.SetNotifyUrl("http://testpaybffp.zhuge.com/v1/pay/wechatnotify")
+	wechatPayer.SetNotifyUrl("http://testpaybffp.example.com/v1/pay/wechatnotify")
 }
 
 func WechatTradeOrder() {
@@ -349,7 +349,7 @@ func AliPayTradeWapPay() {
 	body := make(zgo.BodyMap)
 	body.Set("subject", "手机网站测试支付")
 	body.Set("out_trade_no", "GZ2019013010403557034")
-	body.Set("quit_url", "https://testpaybffp.zhuge.com")
+	body.Set("quit_url", "https://testpaybffp.example.com")
 	body.Set("total_amount", "100.00")
 	body.Set("product_code", "QUICK_WAP_WAY")
 

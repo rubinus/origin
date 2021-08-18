@@ -1,5 +1,5 @@
 {
-  "cpath": "/Users/jianguo/mygo/src/github.com/rubinus/origin/config",
+  "cpath": "/Users/rubinus/app/origin/config",
   "version": "1.0.0",
   "env": "local",
   "project": "origin",
@@ -7,7 +7,7 @@
   "rpcHost": "localhost",
   "rpcPort": "50051",
   "pprofPort": 8181,
-  "serverPort": 8081,
+  "httpPort": 8081,
   "usePreAbsPath": 0,
 
   "file": {

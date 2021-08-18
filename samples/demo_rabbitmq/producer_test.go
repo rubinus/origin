@@ -1,7 +1,7 @@
 package demo_rabbitmq
 
 import (
-	"github.com/rubinus/origin/backend"
+	"github.com/rubinus/origin/queue_push"
 	"github.com/rubinus/zgo"
 	"testing"
 	"time"
@@ -54,14 +54,14 @@ func TestProducer(t *testing.T) {
 				CreateTime: zgo.Utils.GetTimestamp(13), //获取13位unix时间戳
 			}
 			for i := 0; i < 100; i++ {
-				backend.RabbitmqProducer("exchangeName", "topic", "routingKey", msg)
+				queue_push.RabbitmqProducer("exchangeName", "topic", "routingKey", msg)
 			}
 			//***********测试调用封装
 		}
 	}()
 
 	//************第二：测试封装好的rabbit mq 消费数据
-	//queue.RabbitmqConsumer()
+	//queue_pop.RabbitmqConsumer()
 	//************测试封装好的rabbit mq 消费数据
 
 	go Consumer() //第一：简单测试

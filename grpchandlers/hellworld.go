@@ -1,9 +1,3 @@
-/*
-@Time : 2019-03-02 11:51
-@Author : rubinus
-@File : hellworld
-@Software: origin
-*/
 package grpchandlers
 
 import (
@@ -13,7 +7,7 @@ import (
 	"log"
 )
 
-// 可以起名为你的 xxxxServer
+// HelloWorldServer 可以起名为你的 xxxxServer
 type HelloWorldServer struct{}
 
 // SayHello implements func
@@ -28,7 +22,7 @@ func (s *HelloWorldServer) SayHello(ctx context.Context, request *pb_helloworld.
 	var infos []*pb_helloworld.Info
 	for i := 0; i < 5; i++ {
 		obj := &pb_helloworld.Info{
-			Email: fmt.Sprintf("%s%d%s", "test", i, "@zhuge.com"),
+			Email: fmt.Sprintf("%s%d%s", "test", i, "@example.com"),
 			Money: float64(1000 * i),
 		}
 		infos = append(infos, obj)
@@ -42,8 +36,8 @@ func (s *HelloWorldServer) SayHello(ctx context.Context, request *pb_helloworld.
 
 	//构建自定义的kv
 	var myMap = make(map[string]*pb_helloworld.Info)
-	myMap["my1"] = &pb_helloworld.Info{Email: "my1@zhuge.com", Money: 1000.00}
-	myMap["my2"] = &pb_helloworld.Info{Email: "my2@zhuge.com", Money: 2000.00}
+	myMap["my1"] = &pb_helloworld.Info{Email: "my1@example.com", Money: 1000.00}
+	myMap["my2"] = &pb_helloworld.Info{Email: "my2@example.com", Money: 2000.00}
 
 	return &pb_helloworld.HelloResponse{
 		Message:  "Hello " + request.Name, //string

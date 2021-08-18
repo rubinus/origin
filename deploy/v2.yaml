@@ -15,15 +15,15 @@ spec:
 #      hostAliases:
 #        - ip: "172.16.2.37"
 #          hostnames:
-#          - "grpc-smsbffp.zhuge.com"
-#          - "grpc-wxcbbffp.zhuge.com"
-#          - "grpc-timerbffp.zhuge.com"
+#          - "grpc-smsbffp.example.com"
+#          - "grpc-wxcbbffp.example.com"
+#          - "grpc-timerbffp.example.com"
       ###########################################################################
       imagePullSecrets:
         - name: bffp-key  #使用镜像密钥,在阿里云后台提前创建
       containers:
         - name: origin
-          image: registry.cn-beijing.aliyuncs.com/zhugeprod/origin:v1.0.0.1
+          image: registry.cn-beijing.aliyuncs.com/exampleprod/origin:v1.0.0.1
           ports:
             - containerPort: 80
               name: http-port

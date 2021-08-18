@@ -5,7 +5,7 @@
 @Software: GoLand
 */
 
-// Package main implements a server for Greeter service.
+// Package main implements a grpcserver for Greeter service.
 package main
 
 import (

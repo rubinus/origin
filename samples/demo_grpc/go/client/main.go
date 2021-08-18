@@ -38,7 +38,7 @@ func main() {
 
 	c := pb.NewGreeterClient(conn)
 
-	// Contact the server and print out its response.
+	// Contact the grpcserver and print out its response.
 	name := defaultName
 	if len(os.Args) > 1 {
 		name = os.Args[1]

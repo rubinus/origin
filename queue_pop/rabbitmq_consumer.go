@@ -1,4 +1,4 @@
-package queue
+package queue_pop
 
 import (
 	"github.com/rubinus/zgo"

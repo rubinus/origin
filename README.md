@@ -9,15 +9,19 @@
 //前端ajax-->main.go(Run)-->routes-->(实际业务处理handler)-->services-->zgo.组件(mysql/mongo/redis/pika)-->models(库)
 
 ##Grpc
-server是grpc服务启动
+grpcserver是grpc服务端实现与启动
 
-grpchandlers是类似与 handler的处理grpc的handler
+grpchandlers是类似与 handler的处理grpc的handler，服务端的实现
 
-backend 是被grpchandler 调用的
+grpcclients是grp客户端的连接与封装
 
-client是grpc模拟发送客户端
+grpcclient-test是grpc模拟发送客户端
 
-git clone这个项目后，改名成自己开发的项目名字，然后删除掉.git目录，这是一个模板，内含有samples目录
+queue_push 是队列生产端
+
+queue_pop 是队列消费端
+
+git 复制这个项目后，改名成自己开发的项目名字（全局替换：origin），这是一个模板，内含有samples目录
 
 安装docker,在本地一次性跑起redis,mongodb,mysql,nsq,kafka
 
@@ -95,52 +99,52 @@ GODEBUG=scheddetail=1,schedtrace=1000,gctrace=1 go run main.go
 ##选项二：在当前目录下编译linux运行的二进制文件，适用于服务器linux环境
 CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o origin
 
-用docker制作image(dck.zhuge.test是任意一个标识，如果愿意你可以改为你的名字，每一次v0.0.1需要递增)
+用docker制作image(dck.example.test是任意一个标识，如果愿意你可以改为你的名字，每一次v0.0.1需要递增)
 ###本机build
-docker build -t dck.zhuge.test/origin:v0.0.1 .
+docker build -t dck.example.test/origin:v0.0.1 .
 
-docker push dck.zhuge.test/origin:v0.0.1
+docker push dck.example.test/origin:v0.0.1
 
 ###在服务器上执行
-docker pull dck.zhuge.test/origin:v0.0.1
+docker pull dck.example.test/origin:v0.0.1
 
 docker rm -f origin
 
 #====本机运行====
 ####下面一行非服务注册模式
-docker run -d --restart always -p 8080:80 -p 50051:50051 --name origin dck.zhuge.test/origin:v0.0.1
+docker run -d --restart always -p 8080:80 -p 50051:50051 --name origin dck.example.test/origin:v0.0.1
 
 ###作为服务注册(本地)
-docker run -d --restart always -p 8081:80 -p 51051:50051 -e SVC_HOST=192.168.100.19 -e SVC_HTTP_PORT=8081 -e SVC_GRPC_PORT=51051 --name origin1 dck.zhuge.test/origin:v0.0.1
+docker run -d --restart always -p 8081:80 -p 51051:50051 -e SVC_HOST=192.168.100.19 -e SVC_HTTP_PORT=8081 -e SVC_GRPC_PORT=51051 --name origin1 dck.example.test/origin:v0.0.1
 
 ###再启动一个（仅更换端口号）模拟正式环境
-docker run -d --restart always -p 8082:80 -p 51052:50051 -e SVC_HOST=192.168.100.19 -e SVC_HTTP_PORT=8082 -e SVC_GRPC_PORT=51052 --name origin2 dck.zhuge.test/origin:v0.0.1
+docker run -d --restart always -p 8082:80 -p 51052:50051 -e SVC_HOST=192.168.100.19 -e SVC_HTTP_PORT=8082 -e SVC_GRPC_PORT=51052 --name origin2 dck.example.test/origin:v0.0.1
 
 #====服务器上运行====
 ##正常运行
-docker run -d --restart always -p 8080:80 -p 50051:50051 --name origin dck.zhuge.test/origin:v0.0.1
+docker run -d --restart always -p 8080:80 -p 50051:50051 --name origin dck.example.test/origin:v0.0.1
 
 ##在开发服务器上启动docker并指定 svc 服务的访问host及port(服务器上使用服务注册模式)
-docker run -d --restart always -p 8281:80 -p 52051:50051 -e SVC_HOST=47.95.20.12 -e SVC_HTTP_PORT=8281 -e SVC_GRPC_PORT=52051 --name origin1 dck.zhuge.test/origin:v0.0.1
+docker run -d --restart always -p 8281:80 -p 52051:50051 -e SVC_HOST=47.95.20.12 -e SVC_HTTP_PORT=8281 -e SVC_GRPC_PORT=52051 --name origin1 dck.example.test/origin:v0.0.1
 
-docker run -d --restart always -p 8282:80 -p 52052:50051 -e SVC_HOST=47.95.20.12 -e SVC_HTTP_PORT=8282 -e SVC_GRPC_PORT=52052 --name origin2 dck.zhuge.test/origin:v0.0.1
+docker run -d --restart always -p 8282:80 -p 52052:50051 -e SVC_HOST=47.95.20.12 -e SVC_HTTP_PORT=8282 -e SVC_GRPC_PORT=52052 --name origin2 dck.example.test/origin:v0.0.1
 
 docker logs -f --tail=20 origin
 
 
-服务器build (zhugeprod是生产，zhugedev是qa，各自2个版本)
-docker build -t registry.cn-beijing.aliyuncs.com/zhugeprod/origin:v1.0.0.1 .
-docker build -t registry.cn-beijing.aliyuncs.com/zhugedev/origin:v1.0.0.1 .
+服务器build (exampleprod是生产，exampledev是qa，各自2个版本)
+docker build -t registry.cn-beijing.aliyuncs.com/exampleprod/origin:v1.0.0.1 .
+docker build -t registry.cn-beijing.aliyuncs.com/exampledev/origin:v1.0.0.1 .
 
-docker build -t registry.cn-beijing.aliyuncs.com/zhugeprod/origin:v1.0.0.2 .
-docker build -t registry.cn-beijing.aliyuncs.com/zhugedev/origin:v1.0.0.2 .
+docker build -t registry.cn-beijing.aliyuncs.com/exampleprod/origin:v1.0.0.2 .
+docker build -t registry.cn-beijing.aliyuncs.com/exampledev/origin:v1.0.0.2 .
 
 push到阿里云的私有镜像仓库
-docker push registry.cn-beijing.aliyuncs.com/zhugeprod/origin:v1.0.0.1
-docker push registry.cn-beijing.aliyuncs.com/zhugedev/origin:v1.0.0.1
+docker push registry.cn-beijing.aliyuncs.com/exampleprod/origin:v1.0.0.1
+docker push registry.cn-beijing.aliyuncs.com/exampledev/origin:v1.0.0.1
 
-docker push registry.cn-beijing.aliyuncs.com/zhugeprod/origin:v1.0.0.2
-docker push registry.cn-beijing.aliyuncs.com/zhugedev/origin:v1.0.0.2
+docker push registry.cn-beijing.aliyuncs.com/exampleprod/origin:v1.0.0.2
+docker push registry.cn-beijing.aliyuncs.com/exampledev/origin:v1.0.0.2
 
 ###======================
 #本地运行docker-compose
