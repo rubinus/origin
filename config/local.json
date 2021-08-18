@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "env": "local",
   "project": "origin",
-  "loglevel": "info",
+  "loglevel": "debug",
   "rpcHost": "localhost",
   "rpcPort": "50051",
   "pprofPort": 8181,

@@ -4,7 +4,7 @@ import (
 	"context"
 	"flag"
 	"fmt"
-	"github.com/kataras/iris"
+	"github.com/kataras/iris/v12"
 	"github.com/rubinus/origin/backend"
 	"github.com/rubinus/origin/config"
 	"github.com/rubinus/origin/engine"
@@ -137,6 +137,7 @@ func main() {
 	}
 
 	app := iris.New() //start web
+	app.Logger().SetLevel(config.Conf.Loglevel)
 
 	var pre string
 	if config.Conf.UsePreAbsPath == 1 {
@@ -146,9 +147,9 @@ func main() {
 		pre = "./views"
 	}
 
-	app.StaticWeb("/", "./public") //static
+	app.HandleDir("/", "./public") //static
 
-	app.RegisterView(iris.HTML(pre, ".html")) // select the html engine to serve templates
+	app.RegisterView(iris.HTML(pre, ".html").Reload(true)) // select the html engine to serve templates
 
 	//集中调用路由
 	routes.Index(app)
