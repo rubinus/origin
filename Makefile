@@ -1,8 +1,12 @@
-.PHONY: build image release proto
+.PHONY: build image image-all release release-all proto
+
+TARGETOS_LINUX = linux
+TARGETARCH_AMD64 = amd64
+TARGETARCH_ARM64 = arm64
 
 VERSION_TAG = 1.0.0
 MILESTONE_TAG = 08.2021
-REGISTRY = docker.io/rubinus
+REGISTRY = rubinus
 
 # auto-generated
 COMMIT_ID := $(shell git rev-parse HEAD)
@@ -16,34 +20,51 @@ BUILD := $(VERSION_TAG)-$(MILESTONE_TAG)-build-$(BUILD_TS)-$(BRANCH_TAG)-$(COMMI
 PROJECT_ROOT := $(shell pwd -L)
 OUTPUT := $(PROJECT_ROOT)/_output
 
-default: image
+default: build
 
-build: compile 
-# vet lint compile
+build:
+	@echo "... build normal mod binary ..."
+	go build -p 8  -o $(OUTPUT)/origin
+	@echo "Compile Done !!!"
 
-compile:
-ifeq ($(GOOS),$(GOHOSTOS))
-	@echo "... build with race condition detector on ..."
-	@go build -race -p 8  -o $(OUTPUT)/origin
-else
-	@echo "... race condition detector is disabled on cross compiling"
-	@go build -p 8 -o $(OUTPUT)/origin
-endif
+image: linux-amd64	# make image只编译并制作amd64的镜像
 
-image:
+image-all: linux-amd64 linux-arm64
+
+linux-amd64:
 	@echo "Build image of version $(VERSION)"
-	@echo "Build origin"
-	@$(MAKE) GOOS=linux GOARCH=amd64 CGO_ENABLED=0 build
-	@echo "Build image $(REGISTRY)/origin:$(VERSION)"
-	@docker build -f $(PROJECT_ROOT)/Dockerfile --build-arg BUILD=$(BUILD) -t $(REGISTRY)/origin:$(VERSION) . >/dev/null
+	@echo "Build origin for $(TARGETOS_LINUX) $(TARGETARCH_AMD64)"
+	@GOOS=$(TARGETOS_LINUX) GOARCH=$(TARGETARCH_AMD64) CGO_ENABLED=0 go build -p 8 -o $(OUTPUT)/origin-$(TARGETOS_LINUX)-$(TARGETARCH_AMD64)
+	@echo "Build image $(REGISTRY)/origin-$(TARGETOS_LINUX)-$(TARGETARCH_AMD64):$(VERSION)"
+	@docker build -f $(PROJECT_ROOT)/Dockerfile --build-arg BUILD=$(BUILD) -t $(REGISTRY)/origin-$(TARGETOS_LINUX)-$(TARGETARCH_AMD64):$(VERSION) . >/dev/null
 	@echo "Done"
 
-release:
+linux-arm64:
+	@echo "Build image of version $(VERSION)"
+	@echo "Build origin for $(TARGETOS_LINUX) $(TARGETARCH_ARM64)"
+	@GOOS=$(TARGETOS_LINUX) GOARCH=$(TARGETARCH_ARM64) CGO_ENABLED=0 go build -p 8 -o $(OUTPUT)/origin-$(TARGETOS_LINUX)-$(TARGETARCH_ARM64)
+	@echo "Build image $(REGISTRY)/origin-$(TARGETOS_LINUX)-$(TARGETARCH_ARM64):$(VERSION)"
+	@docker build -f $(PROJECT_ROOT)/Dockerfile --build-arg BUILD=$(BUILD) -t $(REGISTRY)/origin-$(TARGETOS_LINUX)-$(TARGETARCH_ARM64):$(VERSION) . >/dev/null
+	@echo "Done"
+
+release:rele-linux-amd64
+
+release-all: rele-linux-amd64 rele-linux-arm64
+
+rele-linux-amd64:
 	@echo "Build image of version $(GIT_TAG)"
-	@echo "Build origin"
-	@$(MAKE) GOOS=linux GOARCH=amd64 CGO_ENABLED=0 build
-	@echo "Build image $(REGISTRY)/origin:$(GIT_TAG)"
-	@docker build -f $(PROJECT_ROOT)/Dockerfile --build-arg BUILD=$(BUILD) -t $(REGISTRY)/origin:$(GIT_TAG) . >/dev/null
+	@echo "Build origin $(TARGETOS_LINUX) $(TARGETARCH_AMD64)"
+	@GOOS=$(TARGETOS_LINUX) GOARCH=$(TARGETARCH_AMD64) CGO_ENABLED=0 go build -p 8 -o $(OUTPUT)/origin-$(TARGETOS_LINUX)-$(TARGETARCH_AMD64)
+	@echo "Build image $(REGISTRY)/origin-$(TARGETOS_LINUX)-$(TARGETARCH_AMD64):$(GIT_TAG)"
+	@docker build -f $(PROJECT_ROOT)/Dockerfile --build-arg BUILD=$(BUILD) -t $(REGISTRY)/origin-$(TARGETOS_LINUX)-$(TARGETARCH_AMD64):$(GIT_TAG) . >/dev/null
+	@echo "Done"
+
+rele-linux-arm64:
+	@echo "Build image of version $(GIT_TAG)"
+	@echo "Build origin $(TARGETOS_LINUX) $(TARGETARCH_ARM64)"
+	@GOOS=$(TARGETOS_LINUX) GOARCH=$(TARGETARCH_ARM64) CGO_ENABLED=0 go build -p 8 -o $(OUTPUT)/origin-$(TARGETOS_LINUX)-$(TARGETARCH_ARM64)
+	@echo "Build image $(REGISTRY)/origin-$(TARGETOS_LINUX)-$(TARGETARCH_ARM64):$(GIT_TAG)"
+	@docker build -f $(PROJECT_ROOT)/Dockerfile --build-arg BUILD=$(BUILD) -t $(REGISTRY)/origin-$(TARGETOS_LINUX)-$(TARGETARCH_ARM64):$(GIT_TAG) . >/dev/null
 	@echo "Done"
 
 proto:
