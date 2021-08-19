@@ -21,5 +21,62 @@
     "dbType": "file",
     "label": "/tmp",
     "loglevel": 0
-  }
+  },
+
+  "redis": [
+    {
+      "key": "redis_label_bj",
+      "values": [
+        {
+          "c": "北京主库1-----etcd redis",
+          "host": "localhost",
+          "port": 6381,
+          "connSize": 10,
+          "poolSize": 5000,
+          "username": "",
+          "password": "",
+          "db": 0,
+          "cluster": 0
+        },
+        {
+          "c": "北京主库2-----etcd redis",
+          "host": "localhost",
+          "port": 6381,
+          "connSize": 10,
+          "poolSize": 5000,
+          "username": "",
+          "password": "",
+          "db": 0,
+          "cluster": 0
+        }
+      ]
+    },
+    {
+      "key": "redis_label_sh",
+      "values": [
+        {
+          "c": "上海从库1=====redis",
+          "host": "localhost",
+          "port": 6379,
+          "connSize": 1,
+          "poolSize": 100,
+          "username": "",
+          "password": "",
+          "db": 0,
+          "cluster": 0
+        },
+        {
+          "c": "上海从库3=====redis",
+          "host": "localhost",
+          "port": 6379,
+          "connSize": 50,
+          "poolSize": 222,
+          "username": "",
+          "password": "",
+          "db": 0,
+          "cluster": 0
+        }
+      ]
+    }
+  ]
 }

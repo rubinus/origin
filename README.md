@@ -1,11 +1,19 @@
 # origin
 
+## config/local.json
+local.json适合本地调试开发，仍然使用原生的方式来连接各种db，部署以配置文件的方式在ECS机器上，在此以redis为例
+如果使用
+dev.josn/qa.json/pro.json就会使用etcd做为库，其中的数据存储格式就是local.json中redis部分的实例，当然真实的
+etcd中还存有其它mysql/mongo/kafka等等的配置文件
+
+当使用local.json本地开发时，还需要在 engine/zgo.go中指定使用的中间件的key
+
 ## auto build image
 make image
 通过makefile，运行dockerfile，制作包含git版本的image
 
 #### 在本地执行打包好的镜像origin并使用etcd
-docker run --rm -e ENV=dev -e ETCDHOSTS=10.10.13.3:2379 -p 8081:80 -p 8181:8181 -d --name origin rubinus/origin:1.0.0
+docker run --rm -p 8081:80 -p 8181:8181 -d --name origin rubinus/origin:1.0.0
 
 ##how to use the zgo engine
 
@@ -13,6 +21,7 @@ docker run --rm -e ENV=dev -e ETCDHOSTS=10.10.13.3:2379 -p 8081:80 -p 8181:8181 
 
 ##Http
 //前端ajax-->main.go(Run)-->routes-->(实际业务处理handler)-->services-->zgo.组件(mysql/mongo/redis/pika)-->models(库)
+请参照：routes对应的handlers中的regis.go来写接口
 
 ##Grpc
 grpcserver是grpc服务端实现与启动

@@ -20,6 +20,7 @@ func Index(app *iris.Application) {
 
 	app.Get("/", handlers.IndexPage)
 
+	// 不要删除这个路由，这是专门为容器运行在k8s时，提供的探针路由，判断微服务是否健康的
 	app.Get("/health", handlers.Health)
 
 	v1 := app.Party("/v1")

@@ -15,7 +15,7 @@ func Run() error {
 		EtcdHosts: config.Conf.EtcdHosts,
 
 		/**
-		注意
+		注意local.json方式
 		********************
 		如果是在本地开发可以对下面的组件选择是否使用，如果是非local，不需要填写，应用的配置是从etcd配置中心读取的
 		********************
@@ -28,7 +28,7 @@ func Run() error {
 			//"nsq_label_bj",
 		},
 		Redis: []string{
-			//"redis_label_bj",
+			//"redis_label_sh",	//测试时可以放开注释，通过配置文件来调试连接中间件redis
 		},
 		Mysql: []string{
 			//"mysql_sell_1",

@@ -1,14 +1,11 @@
 package handlers
 
 import (
-	"context"
-	"fmt"
 	"github.com/kataras/iris/v12"
 	"github.com/rubinus/origin/models"
 	"github.com/rubinus/origin/services"
 	"github.com/rubinus/zgo"
 	"strings"
-	"time"
 )
 
 /*
@@ -18,41 +15,8 @@ import (
 @project: origin
 */
 
-func RedisGet(ctx iris.Context) {
-	name := ctx.URLParam("name")
-
-	var errStr string
-	cotx, cancel := context.WithTimeout(context.Background(), 5000*time.Millisecond) //you can change this time number
-	defer cancel()
-
-	key := fmt.Sprintf("%s:%s:%s", "zgo", "start", name)
-
-	//get String key return a map
-	val, err := zgo.Redis.Get(cotx, key)
-
-	result := zgo.Utils.StringToMap(val.(string))
-
-	if err != nil {
-		zgo.Log.Error(err)
-		return
-	}
-
-	select {
-	case <-cotx.Done():
-		errStr = "call redis get string timeout"
-		zgo.Log.Error(errStr) //通过zgo.Log统计日志
-		//ctx.JSONP(iris.Map{"status": 201, "msg": errStr}) //返回jsonp格式
-		zgo.Http.JsonpErr(ctx, errStr)
-	default:
-		//ctx.JSONP(iris.Map{"status": 200, "data": result})
-		zgo.Http.JsonpOK(ctx, result)
-
-	}
-
-}
-
+// DoPay 使用MVC模式
 func DoPay(ctx iris.Context) {
-
 	request := &models.PayRequest{}
 	if strings.Contains(ctx.GetContentTypeRequested(), "json") {
 		if err := ctx.ReadJSON(request); err != nil {
