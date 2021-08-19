@@ -37,10 +37,11 @@ type allConfig struct {
 	Project       string `json:"project"`
 	EtcdHosts     string `json:"etcdHosts"`
 	Loglevel      string `json:"loglevel"`
+	IrisMod       bool   `json:"irisMod"`
 	RpcHost       string `json:"rpcHost"`
 	RpcPort       string `json:"rpcPort"`
 	PprofPort     int    `json:"pprofPort"`
-	HttpPort    int    `json:"httpPort"`
+	HttpPort      int    `json:"httpPort"`
 	UsePreAbsPath int    `json:"usePreAbsPath"`
 
 	Service //内嵌服务结构体

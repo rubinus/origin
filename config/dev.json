@@ -3,6 +3,7 @@
   "env": "dev",
   "project": "1553240759",
   "loglevel": "info",
+  "irisMode": true,
   "rpcHost": "localhost",
   "rpcPort": "50051",
   "pprofPort": 8181,

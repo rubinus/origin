@@ -3,6 +3,7 @@
   "env": "qa",
   "project": "origin",
   "loglevel": "info",
+  "irisMode": true,
   "rpcHost": "localhost",
   "rpcPort": "50051",
   "pprofPort": 8181,

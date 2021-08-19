@@ -2,7 +2,7 @@ package main
 
 import (
 	"context"
-	"flag"
+	goflag "flag"
 	"fmt"
 	"github.com/kataras/iris/v12"
 	"github.com/rubinus/origin/config"
@@ -11,36 +11,39 @@ import (
 	"github.com/rubinus/origin/grpcserver"
 	"github.com/rubinus/origin/routes"
 	"github.com/rubinus/zgo"
+	flag "github.com/spf13/pflag"
 	"net/http"
 	_ "net/http/pprof"
 	"os"
+	"os/exec"
 	"path/filepath"
+	"runtime"
 	"strconv"
 	"time"
 )
 
+var (
+	cpath        string
+	env          string
+	project      string
+	etcdHosts    string
+	port         string
+	rpcPort      string
+	svcName      string
+	svcHost      string
+	svcHttpPort  string
+	svcGrpcPort  string
+	svcEtcdHosts string
+)
+
 func init() {
-	var (
-		cpath        string
-		env          string
-		project      string
-		etcdHosts    string
-		port         string
-		rpcPort      string
-		svcName      string
-		svcHost      string
-		svcHttpPort  string
-		svcGrpcPort  string
-		svcEtcdHosts string
-	)
-	//默认读取config/local.json
-	flag.StringVar(&cpath, "cpath", "", "env=local时cpath必须指定配置文件所在路径")
+	flag.StringVar(&cpath, "cpath", "", "不使用etcd配置中心时，通过配置文件cpath和env=local一起使用")
 
 	flag.StringVar(&env, "env", "local", "start local/dev/qa/pro env config")
 
 	flag.StringVar(&project, "project", "", "create project id by zgo engine admin")
 
-	flag.StringVar(&etcdHosts, "etcdHosts", "", "etcd hosts host:port,host:port")
+	flag.StringVar(&etcdHosts, "etcdHosts", "", "输入IP:PORT,IP:PORT指定配置中心etcd的host")
 
 	flag.StringVar(&port, "port", "", "http port")
 
@@ -57,9 +60,29 @@ func init() {
 
 	flag.StringVar(&svcEtcdHosts, "svc_etcd_hosts", "", "让服务可以用外部的注册中心地址，默认与zgo engine相同")
 
+	//====解析入参，并打印出来====
+	flag.CommandLine.AddGoFlagSet(goflag.CommandLine)
 	flag.Parse()
-	if os.Getenv("ENV") != "" { //从os的env取得ENV，用来在yaml文件中的配置
+	goflag.CommandLine.Parse([]string{})
+	var inParams = make(map[string]string)
+	flag.VisitAll(func(f *flag.Flag) {
+		inParams[f.Name] = f.Value.String()
+	})
+	fmt.Println("Input args:", inParams)
+	//====结束入参处理====
+
+	if os.Getenv("ENV") != "" { //从os的env取得ENV，用来在yaml文件中的配置，决定使用哪个*.json配置
 		env = os.Getenv("ENV")
+	}
+
+	// 显示runtime信息
+	if runtime.GOOS != "windows" && env != "local" {
+		c := exec.Command("sh", "-c", "sh ./entrypoint.sh")
+		output, err := c.CombinedOutput()
+		if err != nil {
+			fmt.Println(err)
+		}
+		fmt.Println(string(output))
 	}
 
 	//load config from dev/qa/pro
@@ -124,9 +147,13 @@ func init() {
 		config.Conf.ServiceInfo.SvcGrpcPort = config.Conf.RpcPort
 	}
 
-	if env == "local" && config.Conf.CPath == "" {
-		panic("请输入配置所在路径")
+	if (env == "local" || env == "container") && config.Conf.CPath == "" {
+		panic("请输入配置文件所在路径,必须提供cpath参数值")
 	}
+	fmt.Println()
+	fmt.Printf("Apply config: %+v", zgo.Utils.StructToMap(&config.Conf))
+	fmt.Println()
+	fmt.Println()
 }
 
 func main() {
@@ -148,7 +175,7 @@ func main() {
 
 	app.HandleDir("/", "./public") //static
 
-	app.RegisterView(iris.HTML(pre, ".html").Reload(true)) // select the html engine to serve templates
+	app.RegisterView(iris.HTML(pre, ".html").Reload(config.Conf.IrisMod)) // select the html engine to serve templates
 
 	//集中调用路由
 	routes.Index(app)

@@ -3,6 +3,7 @@
   "env": "k8s",
   "project": "origin",
   "loglevel": "error",
+  "irisMode": false,
   "rpcHost": "localhost",
   "rpcPort": "50051",
   "pprofPort": 8181,

@@ -28,4 +28,4 @@ EXPOSE 80
 #设置GRPC端口，一般不用更改
 EXPOSE 50051
 
-ENTRYPOINT ["./entrypoint.sh"]
+ENTRYPOINT ["./origin","--env=container"]

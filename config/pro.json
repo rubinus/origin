@@ -3,6 +3,7 @@
   "env": "pro",
   "project": "origin",
   "loglevel": "error",
+  "irisMode": false,
   "rpcHost": "localhost",
   "rpcPort": "50051",
   "pprofPort": 8181,

@@ -4,6 +4,9 @@
 make image
 通过makefile，运行dockerfile，制作包含git版本的image
 
+#### 在本地执行打包好的镜像origin并使用etcd
+docker run --rm -e ENV=dev -e ETCDHOSTS=10.10.13.3:2379 -p 8081:80 -p 8181:8181 -d --name origin rubinus/origin:1.0.0
+
 ##how to use the zgo engine
 
 ##deploy文件目录是用运维用来部署k8s和istio的，其中的yaml文件需要由开发人员编写
