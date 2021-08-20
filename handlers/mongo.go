@@ -1,0 +1,91 @@
+package handlers
+
+import (
+	"context"
+	"github.com/kataras/iris/v12"
+	"github.com/rubinus/zgo"
+	"time"
+)
+
+type User struct {
+	Id       zgo.MgoObjectId `json:"id,omitempty" bson:"_id,omitempty"`
+	Username string          `json:"username" bson:"username" `
+	Age      int             `json:"age" bson:"age"`
+	Address  string          `json:"address" bson:"address"`
+}
+
+// MongoGet MongoGet接口四板斧，这仅仅是一个例子
+func MongoGet(ctx iris.Context) {
+	// 第一：定义错误返回变量，请求上下文，通过defer来最后响应
+	var errStr string
+
+	cotx, cancel := context.WithTimeout(context.Background(), 5*time.Second) //you can change this time number
+	defer cancel()
+
+	defer func() {
+		if errStr != "" {
+			zgo.Http.JsonpErr(ctx, errStr)
+		}
+	}()
+
+	// 第二：解析请求参数
+	name := ctx.URLParam("name")
+	if name == "" {
+		errStr = "必须输入query参数name"
+		return
+	}
+
+	// 第三：调用zgo engine来处理业务逻辑
+	result, err := FindOne(cotx, name)
+	if err != nil {
+		errStr = err.Error()
+		zgo.Log.Error(err)
+		return
+	}
+
+	// 第四：使用select来响应处理结果与超时
+	select {
+	case <-cotx.Done():
+		errStr = "call mongo get string timeout"
+		zgo.Log.Error(errStr) //通过zgo.Log统计日志
+	default:
+		zgo.Http.JsonpOK(ctx, result)
+	}
+
+}
+
+func FindOne(ctx context.Context, username string) (*User, error) {
+	var collection = zgo.Mgo.GetCollection("profile", "bj", "mgo_label_bj")
+
+	filter := make(map[string]interface{}) //查询username是且age >= 30的
+	filter["username"] = username
+	filter["age"] = map[string]interface{}{
+		"$gte": 30,
+	}
+
+	sort := make(map[string]interface{})
+	sort["_id"] = -1 //-1降序，1升序
+
+	//返回错误：Projection cannot have a mix of inclusion and exclusion; 要么是1，要么是0
+	fields := make(map[string]interface{})
+	fields["age"] = 1 //要么全是1，要么全是0
+	fields["address"] = 1
+	fields["username"] = 1
+
+	r := &User{}
+
+	//组织args
+	args := &zgo.MgoArgs{
+		Filter: filter, //查询条件
+		Fields: fields, //对查询出的结果项，筛选字段
+		Sort:   sort,   //排序
+		Result: r,      //传入 &User{} ,结果
+	}
+
+	_, err := zgo.Mgo.FindOne(ctx, collection, args)
+	if err != nil {
+		return nil, err
+	}
+
+	return r, nil
+}

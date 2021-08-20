@@ -221,6 +221,7 @@ func normalStart(app *iris.Application) {
 		defer cancel()
 		fmt.Println("######origin, this grpcserver is normal shutdown by Iris, you can do something from here ...######")
 		// 关闭所有主机
+		config.Goodbye()
 		_ = app.Shutdown(ctx)
 	})
 	_ = app.Run(iris.Addr(":"+strconv.Itoa(config.Conf.HttpPort), func(h *iris.Supervisor) {
@@ -318,6 +319,7 @@ func useServiceRegistryDiscover(app *iris.Application) {
 		}
 		fmt.Println("######origin, this grpcserver use the register/discover shutdown by Iris, you can do something from here ...######")
 		// 关闭所有主机
+		config.Goodbye()
 		_ = app.Shutdown(ctx)
 	})
 	_ = app.Run(iris.Addr(":"+strconv.Itoa(config.Conf.HttpPort), func(h *iris.Supervisor) {

@@ -184,6 +184,20 @@ docker-compose up -d
 
 27019
 
+use admin
+db.auth('admin','admin')
+
+### 插入测试数据
+use profiles
+
+for(var i=100;i<=200;i++){
+    db.bj.insert({
+    username: 'zhangsan',
+    age:Math.round(Math.random() * 100),
+    address:Math.round(Math.random() * 100),
+    });
+}
+
 ####Mongo管理页面
 http://localhost:8081
 

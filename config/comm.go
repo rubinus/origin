@@ -1,6 +1,9 @@
 package config
 
-import "github.com/rubinus/zgo"
+import (
+	"fmt"
+	"github.com/rubinus/zgo"
+)
 
 /*
 @Time : 2019-09-04 19:07
@@ -14,3 +17,28 @@ import "github.com/rubinus/zgo"
 var (
 	ComMap = zgo.Map.New()
 )
+
+func Goodbye() {
+	goodbye := `
+                ##### | #####
+Oh we finish ? # _ _ #|# _ _ #
+               #      |      #
+         |       ############
+                     # #
+  |                  # #
+                    #   #
+         |     |    #   #      |        |
+  |  |             #     #               |
+         | |   |   # .-. #         |
+                   #( O )#    |    |     |
+  |  ################. .###############  |
+   ##  _ _|____|     ###     |_ __| _  ##
+  #  |                                |  #
+  #  |    |    |    |   |    |    |   |  #
+   ######################################
+                   #     #
+                    #####
+`
+
+	fmt.Println(goodbye)
+}
