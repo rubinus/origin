@@ -188,7 +188,7 @@ use admin
 db.auth('admin','admin')
 
 ### 插入测试数据
-use profiles
+use profile
 
 for(var i=100;i<=200;i++){
     db.bj.insert({

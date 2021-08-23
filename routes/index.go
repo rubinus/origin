@@ -31,6 +31,9 @@ func Index(app *iris.Application) {
 		//这是一个mongo get的例子，可以直接copy或是更改
 		v1.Get("/mongo/get", handlers.MongoGet)
 
+		//这是一个mongo list的例子，可以直接copy或是更改
+		v1.Get("/mongo/list", handlers.MongoList)
+
 		//这是一个Post的例子，请按照结构，更改结构体与请求参数
 		v1.Post("/pay/do", handlers.DoPay)
 

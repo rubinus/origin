@@ -11,7 +11,7 @@ require (
 	github.com/golang/protobuf v1.5.2
 	github.com/kataras/iris/v12 v12.1.8
 	github.com/op/go-logging v0.0.0-20160315200505-970db520ece7 // indirect
-	github.com/rubinus/zgo v1.2.2
+	github.com/rubinus/zgo v1.2.3
 	github.com/ryanuber/columnize v2.1.2+incompatible // indirect
 	github.com/spf13/pflag v1.0.5
 	golang.org/x/crypto v0.0.0-20210817164053-32db794688a5 // indirect

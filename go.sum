@@ -381,6 +381,8 @@ github.com/rogpeppe/go-internal v1.2.2/go.mod h1:M8bDsm7K2OlrFYOpmOWEs/qY81heoFR
 github.com/rogpeppe/go-internal v1.3.0/go.mod h1:M8bDsm7K2OlrFYOpmOWEs/qY81heoFRclV5y23lUDJ4=
 github.com/rubinus/zgo v1.2.2 h1:LbtzVUl+Ei2Hsb1KXwk6BiqiVSXtpzx5Etw0hIA4sR8=
 github.com/rubinus/zgo v1.2.2/go.mod h1:daER5F1oCmVBvcLh+FeXi964SbQOI96Md/r7XR1EW6E=
+github.com/rubinus/zgo v1.2.3 h1:mm5qRYr+crLqWE2P0v35xCwSDH2BloDfjvVPjQACxIc=
+github.com/rubinus/zgo v1.2.3/go.mod h1:daER5F1oCmVBvcLh+FeXi964SbQOI96Md/r7XR1EW6E=
 github.com/russross/blackfriday v1.5.2/go.mod h1:JO/DiYxRf+HjHt06OyowR9PTA263kcR/rfWxYHBV53g=
 github.com/ryanuber/columnize v2.1.0+incompatible/go.mod h1:sm1tb6uqfes/u+d4ooFouqFdy9/2g9QGwK3SQygK0Ts=
 github.com/ryanuber/columnize v2.1.2+incompatible h1:C89EOx/XBWwIXl8wm8OPJBd7kPF25UfsK2X7Ph/zCAk=
