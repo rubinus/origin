@@ -1,8 +1,9 @@
-.PHONY: build image image-all release release-all proto
+.PHONY: build build-debug image image-all release release-all proto
 
 TARGETOS_LINUX = linux
 TARGETARCH_AMD64 = amd64
 TARGETARCH_ARM64 = arm64
+TARGETMOD = debug
 
 VERSION_TAG = 1.0.0
 MILESTONE_TAG = 08.2021
@@ -27,9 +28,24 @@ build:
 	go build -p 8  -o $(OUTPUT)/origin
 	@echo "Compile Done !!!"
 
+build-debug:
+	@echo "... build debug mod binary ..."
+	go build -p 8 -gcflags="all=-N -l"  -o $(OUTPUT)/origin-debug
+	@echo "Compile Done !!!"
+
 image: linux-amd64	# make image只编译并制作amd64的镜像
 
+image-debug: linux-amd64-debug	# make image-debug只编译并制作amd64的镜像
+
 image-all: linux-amd64 linux-arm64
+
+linux-amd64-debug:
+	@echo "Build debug image of version $(VERSION)"
+	@echo "Build origin debug for $(TARGETOS_LINUX) $(TARGETARCH_AMD64)"
+	@GOOS=$(TARGETOS_LINUX) GOARCH=$(TARGETARCH_AMD64) go build -p 8 -gcflags="all=-N -l" -o $(OUTPUT)/origin-$(TARGETOS_LINUX)-$(TARGETARCH_AMD64)
+	@echo "Build image $(REGISTRY)/origin-$(TARGETOS_LINUX)-$(TARGETARCH_AMD64)-$(TARGETMOD):$(VERSION)"
+	@docker build -f $(PROJECT_ROOT)/Dockerfile.debug --build-arg BUILD=$(BUILD) -t $(REGISTRY)/origin-$(TARGETOS_LINUX)-$(TARGETARCH_AMD64)-$(TARGETMOD):$(VERSION) . >/dev/null
+	@echo "Done"
 
 linux-amd64:
 	@echo "Build image of version $(VERSION)"
