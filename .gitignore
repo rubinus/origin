@@ -10,3 +10,4 @@ lua/lib/*.so
 *.test
 *.DS_Store
 _output/
+./origin
