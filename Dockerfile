@@ -1,5 +1,5 @@
 #使用朱大仙儿 build的带有curl的apline
-FROM rubinus/alpine-curl:v1.0
+FROM rubinus/alpine-nb:v1.0
 LABEL maintainer="rubinus.chu@mail.com"
 
 #接受参数,把源代码git commitid放到镜像内
