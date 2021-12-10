@@ -9,7 +9,7 @@ package routes
 
 import (
 	"github.com/kataras/iris/v12"
-	"github.com/rubinus/origin/handlers"
+	"github.com/gitcpu-io/origin/handlers"
 )
 
 //前端ajax-->main.go(Run)-->routes-->(实际业务处理handler)-->services-->zgo.组件(mysql/mongo/redis/pika)-->models(库)

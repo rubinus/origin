@@ -2,7 +2,7 @@ package config
 
 import (
 	"fmt"
-	"github.com/rubinus/zgo"
+	"github.com/gitcpu-io/zgo"
 )
 
 /*

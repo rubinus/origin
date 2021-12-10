@@ -3,7 +3,7 @@ package demo_redis
 import (
 	"context"
 	"fmt"
-	"github.com/rubinus/zgo"
+	"github.com/gitcpu-io/zgo"
 )
 
 func Subscribe() {

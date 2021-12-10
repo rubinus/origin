@@ -2,7 +2,7 @@ package demo_pay
 
 import (
 	"fmt"
-	"github.com/rubinus/zgo"
+	"github.com/gitcpu-io/zgo"
 	"strconv"
 	"time"
 )

@@ -2,7 +2,7 @@ package demo_rabbitmq
 
 import (
 	"fmt"
-	"github.com/rubinus/zgo"
+	"github.com/gitcpu-io/zgo"
 )
 
 /*

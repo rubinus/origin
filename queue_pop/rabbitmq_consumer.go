@@ -1,7 +1,7 @@
 package queue_pop
 
 import (
-	"github.com/rubinus/zgo"
+	"github.com/gitcpu-io/zgo"
 )
 
 /*

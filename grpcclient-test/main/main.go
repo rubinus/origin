@@ -3,10 +3,10 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/rubinus/origin/config"
-	"github.com/rubinus/origin/grpcclients"
-	"github.com/rubinus/origin/pb/helloworld"
-	"github.com/rubinus/zgo"
+	"github.com/gitcpu-io/origin/config"
+	"github.com/gitcpu-io/origin/grpcclients"
+	"github.com/gitcpu-io/origin/pb/helloworld"
+	"github.com/gitcpu-io/zgo"
 	"time"
 )
 

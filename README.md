@@ -3,7 +3,7 @@
 ## config/local.json
 local.json适合本地调试开发，仍然使用原生的方式来连接各种db，部署以配置文件的方式在ECS机器上，在此以redis为例
 如果使用
-dev.josn/qa.json/pro.json就会使用etcd做为库，其中的数据存储格式就是local.json中redis部分的实例，当然真实的
+dev.json/qa.json/pro.json就会使用etcd做为库，其中的数据存储格式就是local.json中redis部分的实例，当然真实的
 etcd中还存有其它mysql/mongo/kafka等等的配置文件
 
 当使用local.json本地开发时，还需要在 engine/zgo.go中指定使用的中间件的key
@@ -147,20 +147,6 @@ docker run -d --restart always -p 8282:80 -p 52052:50051 -e SVC_HOST=localhost -
 docker logs -f --tail=20 origin
 
 
-服务器build (exampleprod是生产，exampledev是qa，各自2个版本)
-docker build -t registry.cn-beijing.aliyuncs.com/exampleprod/origin:v1.0.0.1 .
-docker build -t registry.cn-beijing.aliyuncs.com/exampledev/origin:v1.0.0.1 .
-
-docker build -t registry.cn-beijing.aliyuncs.com/exampleprod/origin:v1.0.0.2 .
-docker build -t registry.cn-beijing.aliyuncs.com/exampledev/origin:v1.0.0.2 .
-
-push到阿里云的私有镜像仓库
-docker push registry.cn-beijing.aliyuncs.com/exampleprod/origin:v1.0.0.1
-docker push registry.cn-beijing.aliyuncs.com/exampledev/origin:v1.0.0.1
-
-docker push registry.cn-beijing.aliyuncs.com/exampleprod/origin:v1.0.0.2
-docker push registry.cn-beijing.aliyuncs.com/exampledev/origin:v1.0.0.2
-
 ###======================
 #本地运行docker-compose
 执行
@@ -170,19 +156,7 @@ docker-compose up -d
 
 ##origin 本机使用local时测试环境，测试服务器IP地址
 
-##Mysql
-2个mysql
-
-3307
-
-3308
-
 ##Mongo
-2个mongo
-
-27018
-
-27019
 
 use admin
 db.auth('admin','admin')
@@ -197,126 +171,3 @@ for(var i=100;i<=200;i++){
     address:Math.round(Math.random() * 100),
     });
 }
-
-####Mongo管理页面
-http://localhost:8081
-
-##Redis
-2个redis
-
-6380
-
-6381
-
-##Postgres
-2个postgres
-
-5433
-
-5434
-
-##Etcd
-1个etcd
-
-2381
-
-####Etcd管理页面
-http://47.93.163.209:9097
-
-##Neo4j
-1个neo4j
-
-7687
-
-####Neo4j操作页面
-http://localhost:7474
-
-连接：bolt://localhost:7687
-
-账号：neo4j
-
-密码：12345678
-
-##ClickHouse
-1个clickhouse
-
-http端口 8123
-
-tcp端口 9019
-
-####ClickHouse管理操作页面
-
-http://localhost:9020
-
-输入：http://localhost:8123
-
-login: default
-
-password: 空
-
-##Rabbitmq
-5672
-
-集群：25672
-
-####rabbitmq管理页面
-
-http://localhost:8672
-
-管理账号/密码：admin/admin
-
-##Kafka
-1个kafka
-
-生产：9202
-
-消费：2081
-
-####Kafka管理页面
-http://localhost:9093
-
-管理账号/密码：admin/admin
-
-##Nsq
-1个nsq
-
-4150
-
-####Nsq管理页面
-http://localhost:4171
-
-
-##ES
-1个es
-
-9200
-####ES管理页面--打开localhost:9800后，输入http://es:9200 connect
-http://localhost:9800
-
-#####管理页面--打开http://localhost:1358，输入http://localhost:9200
-后面输入index，connect
-
-http://localhost:1358
-
-####Kibana
-http://localhost:5601
-
-####redis 集群，任意节点支持读写
-localhost:7001
-
-localhost:7002
-
-localhost:7003
-
-localhost:7004
-
-localhost:7005
-
-localhost:7006
-
-####1个portainer--用于查看所有docker中的资源
-http://localhost:9000
-
-账号: admin
-
-密码: 12345678

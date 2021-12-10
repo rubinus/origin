@@ -1,6 +1,6 @@
 package services
 
-import "github.com/rubinus/origin/models"
+import "github.com/gitcpu-io/origin/models"
 
 /*
 @Time : 2019-03-06 19:02

@@ -2,7 +2,7 @@ package demo_postgres
 
 import (
 	"fmt"
-	"github.com/rubinus/zgo"
+	"github.com/gitcpu-io/zgo"
 	"sync"
 	"time"
 )

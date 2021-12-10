@@ -1,9 +1,9 @@
 package demo_log
 
 import (
-	"github.com/rubinus/origin/config"
-	"github.com/rubinus/origin/engine"
-	"github.com/rubinus/zgo"
+	"github.com/gitcpu-io/origin/config"
+	"github.com/gitcpu-io/origin/engine"
+	"github.com/gitcpu-io/zgo"
 )
 
 const (

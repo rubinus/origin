@@ -1,4 +1,4 @@
-module github.com/rubinus/origin
+module github.com/gitcpu-io/origin
 
 go 1.16
 
@@ -7,11 +7,11 @@ require (
 	github.com/BurntSushi/toml v0.4.1 // indirect
 	github.com/coreos/go-semver v0.3.0 // indirect
 	github.com/fiorix/go-eventsocket v0.0.0-20180331081222-a4a0ee7bd315
+	github.com/gitcpu-io/zgo v1.0.1
 	github.com/gogo/protobuf v1.3.2
 	github.com/golang/protobuf v1.5.2
 	github.com/kataras/iris/v12 v12.1.8
 	github.com/op/go-logging v0.0.0-20160315200505-970db520ece7 // indirect
-	github.com/rubinus/zgo v1.2.3
 	github.com/ryanuber/columnize v2.1.2+incompatible // indirect
 	github.com/spf13/pflag v1.0.5
 	golang.org/x/crypto v0.0.0-20210817164053-32db794688a5 // indirect
@@ -26,5 +26,5 @@ require (
 replace (
 	github.com/coreos/bbolt => go.etcd.io/bbolt v1.3.2
 	google.golang.org/grpc v1.40.0 => google.golang.org/grpc v1.26.0
-//github.com/rubinus/zgo => ../zgo
+//github.com/gitcpu-io/zgo => ../zgo
 )

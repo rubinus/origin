@@ -3,7 +3,7 @@ package demo_nsq
 import (
 	"context"
 	"fmt"
-	"github.com/rubinus/zgo/zgonsq"
+	"github.com/gitcpu-io/zgo/zgonsq"
 	"time"
 )
 
