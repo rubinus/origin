@@ -9,8 +9,8 @@ package main
 
 import (
 	"context"
-	"github.com/rubinus/origin/config"
-	"github.com/rubinus/zgo"
+	"github.com/gitcpu-io/origin/config"
+	"github.com/gitcpu-io/zgo"
 	pb "google.golang.org/grpc/examples/helloworld/helloworld"
 	"log"
 	"os"

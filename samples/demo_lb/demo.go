@@ -2,8 +2,8 @@ package demo_lb
 
 import (
 	"fmt"
-	"github.com/rubinus/origin/config"
-	"github.com/rubinus/zgo"
+	"github.com/gitcpu-io/origin/config"
+	"github.com/gitcpu-io/zgo"
 )
 
 /*

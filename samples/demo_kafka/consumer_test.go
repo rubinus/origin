@@ -2,7 +2,7 @@ package demo_kafka
 
 import (
 	"fmt"
-	"github.com/rubinus/zgo"
+	"github.com/gitcpu-io/zgo"
 	"testing"
 	"time"
 )

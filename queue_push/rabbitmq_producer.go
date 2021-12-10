@@ -2,7 +2,7 @@ package queue_push
 
 import (
 	"context"
-	"github.com/rubinus/zgo"
+	"github.com/gitcpu-io/zgo"
 	"time"
 )
 

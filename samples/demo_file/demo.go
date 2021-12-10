@@ -1,7 +1,7 @@
 package demo_file
 
 import (
-	"github.com/rubinus/zgo"
+	"github.com/gitcpu-io/zgo"
 	"os"
 	"strings"
 )

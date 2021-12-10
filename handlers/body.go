@@ -2,8 +2,8 @@ package handlers
 
 import (
   "github.com/kataras/iris/v12"
-  "github.com/rubinus/origin/models"
-  "github.com/rubinus/zgo"
+  "github.com/gitcpu-io/origin/models"
+  "github.com/gitcpu-io/zgo"
   "strings"
 )
 

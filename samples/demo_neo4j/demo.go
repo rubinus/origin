@@ -2,7 +2,7 @@ package demo_neo4j
 
 import (
 	"fmt"
-	"github.com/rubinus/zgo"
+	"github.com/gitcpu-io/zgo"
 )
 
 /*

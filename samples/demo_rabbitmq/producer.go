@@ -3,7 +3,7 @@ package demo_rabbitmq
 import (
 	"context"
 	"fmt"
-	"github.com/rubinus/zgo"
+	"github.com/gitcpu-io/zgo"
 	"time"
 )
 

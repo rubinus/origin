@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/kataras/iris/v12"
-	"github.com/rubinus/zgo"
+	"github.com/gitcpu-io/zgo"
 	"time"
 )
 

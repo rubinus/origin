@@ -4,7 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/rubinus/origin/pb/helloworld"
+	"github.com/gitcpu-io/origin/pb/helloworld"
 )
 
 /*

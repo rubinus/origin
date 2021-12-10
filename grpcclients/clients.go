@@ -3,9 +3,9 @@ package grpcclients
 import (
 	"context"
 	"fmt"
-	"github.com/rubinus/origin/config"
-	"github.com/rubinus/origin/pb/helloworld"
-	"github.com/rubinus/zgo"
+	"github.com/gitcpu-io/origin/config"
+	"github.com/gitcpu-io/origin/pb/helloworld"
+	"github.com/gitcpu-io/zgo"
 	"time"
 )
 

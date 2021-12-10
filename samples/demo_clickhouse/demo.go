@@ -2,7 +2,7 @@ package demo_clickhouse
 
 import (
 	"fmt"
-	"github.com/rubinus/zgo"
+	"github.com/gitcpu-io/zgo"
 	"log"
 	"time"
 )

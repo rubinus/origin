@@ -3,8 +3,8 @@ package handlers
 import (
 	"fmt"
 	"github.com/kataras/iris/v12"
-	"github.com/rubinus/origin/config"
-	"github.com/rubinus/zgo"
+	"github.com/gitcpu-io/origin/config"
+	"github.com/gitcpu-io/zgo"
 	"os"
 )
 

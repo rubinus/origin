@@ -1,8 +1,8 @@
 package demo_rabbitmq
 
 import (
-	"github.com/rubinus/origin/queue_push"
-	"github.com/rubinus/zgo"
+	"github.com/gitcpu-io/origin/queue_push"
+	"github.com/gitcpu-io/zgo"
 	"testing"
 	"time"
 )

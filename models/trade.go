@@ -1,7 +1,7 @@
 package models
 
 import (
-	"github.com/rubinus/zgo"
+	"github.com/gitcpu-io/zgo"
 )
 
 /*

@@ -112,6 +112,10 @@ github.com/fsnotify/fsnotify v1.4.7/go.mod h1:jwhsz4b93w/PPRr/qN1Yymfu8t87LnFCMo
 github.com/gavv/httpexpect v2.0.0+incompatible h1:1X9kcRshkSKEjNJJxX9Y9mQ5BRfbxU5kORdjhlA1yX8=
 github.com/gavv/httpexpect v2.0.0+incompatible/go.mod h1:x+9tiU1YnrOvnB725RkpoLv1M62hOWzwo5OXotisrKc=
 github.com/ghodss/yaml v1.0.0/go.mod h1:4dBDuWmgqj2HViK6kFavaiC9ZROes6MMH2rRYeMEF04=
+github.com/gitcpu-io/zgo v1.0.0 h1:lS6sF48Mg84Cc8hLbkKztlWd0stRzR83naoNXTB0rMQ=
+github.com/gitcpu-io/zgo v1.0.0/go.mod h1:zk+6aIhOu6z+w4KKbXSL9trwcVeJFHu20M4UkPl15Y4=
+github.com/gitcpu-io/zgo v1.0.1 h1:TfdmpI6ePFMI3NLgwoci4zlmHmJ0y1gBqYQ3K6Zy3wg=
+github.com/gitcpu-io/zgo v1.0.1/go.mod h1:zk+6aIhOu6z+w4KKbXSL9trwcVeJFHu20M4UkPl15Y4=
 github.com/globalsign/mgo v0.0.0-20181015135952-eeefdecb41b8 h1:DujepqpGd1hyOd7aW59XpK7Qymp8iy83xq74fLr21is=
 github.com/globalsign/mgo v0.0.0-20181015135952-eeefdecb41b8/go.mod h1:xkRDCp4j0OGD1HRkm4kmhM+pmpv3AKq5SU7GMg4oO/Q=
 github.com/go-check/check v0.0.0-20180628173108-788fd7840127 h1:0gkP6mzaMqkmpcJYCFOLkIBwI7xFExG03bbkOkCvUPI=
@@ -379,10 +383,6 @@ github.com/rogpeppe/go-charset v0.0.0-20180617210344-2471d30d28b4/go.mod h1:qgYe
 github.com/rogpeppe/go-internal v1.1.0/go.mod h1:M8bDsm7K2OlrFYOpmOWEs/qY81heoFRclV5y23lUDJ4=
 github.com/rogpeppe/go-internal v1.2.2/go.mod h1:M8bDsm7K2OlrFYOpmOWEs/qY81heoFRclV5y23lUDJ4=
 github.com/rogpeppe/go-internal v1.3.0/go.mod h1:M8bDsm7K2OlrFYOpmOWEs/qY81heoFRclV5y23lUDJ4=
-github.com/rubinus/zgo v1.2.2 h1:LbtzVUl+Ei2Hsb1KXwk6BiqiVSXtpzx5Etw0hIA4sR8=
-github.com/rubinus/zgo v1.2.2/go.mod h1:daER5F1oCmVBvcLh+FeXi964SbQOI96Md/r7XR1EW6E=
-github.com/rubinus/zgo v1.2.3 h1:mm5qRYr+crLqWE2P0v35xCwSDH2BloDfjvVPjQACxIc=
-github.com/rubinus/zgo v1.2.3/go.mod h1:daER5F1oCmVBvcLh+FeXi964SbQOI96Md/r7XR1EW6E=
 github.com/russross/blackfriday v1.5.2/go.mod h1:JO/DiYxRf+HjHt06OyowR9PTA263kcR/rfWxYHBV53g=
 github.com/ryanuber/columnize v2.1.0+incompatible/go.mod h1:sm1tb6uqfes/u+d4ooFouqFdy9/2g9QGwK3SQygK0Ts=
 github.com/ryanuber/columnize v2.1.2+incompatible h1:C89EOx/XBWwIXl8wm8OPJBd7kPF25UfsK2X7Ph/zCAk=
