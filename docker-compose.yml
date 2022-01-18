@@ -139,10 +139,10 @@ services:
     ports:
       - 7474:7474
       - 7687:7687
-#      - 2004:2004
-#    environment:
-#      - metrics-prometheus-enabled=true
-#      - metrics.prometheus.endpoint=mock.com:2004
+    #      - 2004:2004
+    #    environment:
+    #      - metrics-prometheus-enabled=true
+    #      - metrics.prometheus.endpoint=mock.com:2004
     volumes:
       - ~/docker-data/neo4j:/data
     networks:
@@ -378,7 +378,7 @@ services:
     restart: always
     ports:
       - 3000:3000
-    environment:  #安装其它panel
+    environment: #安装其它panel
       GF_INSTALL_PLUGINS: grafana-clock-panel,grafana-piechart-panel,satellogic-3d-globe-panel,grafana-worldmap-panel,grafana-simple-json-datasource
     volumes:
       - ~/docker-data/grafana:/var/lib/grafana

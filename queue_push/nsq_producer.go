@@ -1,9 +1,9 @@
 package queue_push
 
 import (
-	"context"
-	"github.com/gitcpu-io/zgo"
-	"time"
+  "context"
+  "github.com/gitcpu-io/zgo"
+  "time"
 )
 
 /*
@@ -15,26 +15,26 @@ import (
 
 func NsqProducer(topic string, body interface{}) chan uint8 {
 
-	out := make(chan uint8, 1)
+  out := make(chan uint8, 1)
 
-	bytes, err := zgo.Utils.Marshal(body)
-	if err != nil {
-		zgo.Log.Error(err)
-		out <- 0
-		return out
-	}
-	//zgo.Log.Info(string(bytes))
+  bytes, err := zgo.Utils.Marshal(body)
+  if err != nil {
+    zgo.Log.Error(err)
+    out <- 0
+    return out
+  }
+  //zgo.Log.Info(string(bytes))
 
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	defer cancel()
-	//输入参数：上下文ctx，nsqClientChan里面是client的连接，args具体的查询操作参数
+  ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+  defer cancel()
+  //输入参数：上下文ctx，nsqClientChan里面是client的连接，args具体的查询操作参数
 
-	out, err = zgo.Nsq.Producer(ctx, topic, bytes)
+  out, err = zgo.Nsq.Producer(ctx, topic, bytes)
 
-	if err != nil {
-		zgo.Log.Error(err)
-		out <- 0
-		return out
-	}
-	return out
+  if err != nil {
+    zgo.Log.Error(err)
+    out <- 0
+    return out
+  }
+  return out
 }

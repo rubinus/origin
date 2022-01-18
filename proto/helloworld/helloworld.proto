@@ -1,4 +1,3 @@
-
 syntax = "proto3";
 
 package pb.helloworld;  //可以改名为你的 pb.XXXXX
@@ -15,21 +14,21 @@ option (gogoproto.sizer_all) = true;
 option (gogoproto.populate_all) = true;
 option (gogoproto.goproto_getters_all) = false;
 
-service HelloWorldService {   //HellWorldService 可以改名为你的 XXXXXService
+service HelloWorldService {//HellWorldService 可以改名为你的 XXXXXService
   //HelloRequest 改名为你的 XXXXXRequest
   //HelloResponse 改名为你的 XXXXXResponse
   rpc SayHello (HelloRequest) returns (HelloResponse) {}
 
 }
 
-message HelloRequest {  //起名技巧请带上Request后缀
+message HelloRequest {//起名技巧请带上Request后缀
   string name = 1;
   uint32 age = 2;
 
-  message Request {  //请求参数，内嵌类型
-                     string url = 1;
-                     string title = 2;
-                     repeated string ins = 3;
+  message Request {//请求参数，内嵌类型
+    string url = 1;
+    string title = 2;
+    repeated string ins = 3;
   }
   repeated Request requests = 3;
 }
@@ -41,7 +40,7 @@ message Info {
 
 // gogoproto.jsontag 当序列化为json时，如果是默认的值，同时返回这个字段
 
-message HelloResponse { //起名技巧请带上Response后缀
+message HelloResponse {//起名技巧请带上Response后缀
   string message = 1  [(gogoproto.jsontag) = "message"];
   repeated Info Infos = 2; //自定义数组[]
   repeated string ans = 3; //string类型数组

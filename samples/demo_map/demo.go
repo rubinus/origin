@@ -1,10 +1,10 @@
 package demo_map
 
 import (
-	"fmt"
-	"github.com/gitcpu-io/origin/config"
-	"github.com/gitcpu-io/zgo"
-	"time"
+  "fmt"
+  "github.com/gitcpu-io/origin/config"
+  "github.com/gitcpu-io/zgo"
+  "time"
 )
 
 /*
@@ -15,48 +15,48 @@ import (
 */
 
 func Demo() {
-	config.InitConfig("local", "", "", "", "")
+  config.InitConfig("local", "", "", "", "")
 
-	err := zgo.Engine(&zgo.Options{
-		Env:      config.Conf.Env,
-		Project:  config.Conf.Project,
-		Loglevel: config.Conf.Loglevel,
-	})
-	if err != nil {
-		panic(err)
-	}
+  err := zgo.Engine(&zgo.Options{
+    Env:      config.Conf.Env,
+    Project:  config.Conf.Project,
+    Loglevel: config.Conf.Loglevel,
+  })
+  if err != nil {
+    panic(err)
+  }
 
-	//zgo中的map是并发安全的
-	sm := zgo.Map.New()
+  //zgo中的map是并发安全的
+  sm := zgo.Map.New()
 
-	for i := 0; i < 100; i++ {
-		go func(i int) {
-			sm.Set(i, i)
-		}(i)
+  for i := 0; i < 100; i++ {
+    go func(i int) {
+      sm.Set(i, i)
+    }(i)
 
-	}
-	for i := 0; i < 100; i++ {
-		go func(i int) {
-			fmt.Println(sm.Get(i))
-		}(i)
-	}
+  }
+  for i := 0; i < 100; i++ {
+    go func(i int) {
+      fmt.Println(sm.Get(i))
+    }(i)
+  }
 
-	time.Sleep(1 * time.Second)
-	for v := range sm.Range() {
-		fmt.Println(v.Key, "range map == ", v.Val)
-	}
+  time.Sleep(1 * time.Second)
+  for v := range sm.Range() {
+    fmt.Println(v.Key, "range map == ", v.Val)
+  }
 
-	//不安全的map
-	//sm := make(map[int]int)
-	//for i := 0; i < 100; i++ {
-	//	go func(i int) {
-	//		sm[i] = i
-	//	}(i)
-	//}
-	//for i := 0; i < 100; i++ {
-	//	go func(i int) {
-	//		fmt.Println(sm[i])
-	//	}(i)
-	//}
+  //不安全的map
+  //sm := make(map[int]int)
+  //for i := 0; i < 100; i++ {
+  //	go func(i int) {
+  //		sm[i] = i
+  //	}(i)
+  //}
+  //for i := 0; i < 100; i++ {
+  //	go func(i int) {
+  //		fmt.Println(sm[i])
+  //	}(i)
+  //}
 
 }

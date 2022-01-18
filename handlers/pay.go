@@ -1,11 +1,11 @@
 package handlers
 
 import (
-	"github.com/kataras/iris/v12"
-	"github.com/gitcpu-io/origin/models"
-	"github.com/gitcpu-io/origin/services"
-	"github.com/gitcpu-io/zgo"
-	"strings"
+  "github.com/gitcpu-io/origin/models"
+  "github.com/gitcpu-io/origin/services"
+  "github.com/gitcpu-io/zgo"
+  "github.com/kataras/iris/v12"
+  "strings"
 )
 
 /*
@@ -17,34 +17,34 @@ import (
 
 // DoPay 使用MVC模式
 func DoPay(ctx iris.Context) {
-	request := &models.PayRequest{}
-	if strings.Contains(ctx.GetContentTypeRequested(), "json") {
-		if err := ctx.ReadJSON(request); err != nil {
-			zgo.Http.JsonpErr(ctx, "json body is error，"+err.Error())
-			return
-		}
-	} else {
-		zgo.Http.JsonpErr(ctx, "pls send application/json")
-		return
-	}
+  request := &models.PayRequest{}
+  if strings.Contains(ctx.GetContentTypeRequested(), "json") {
+    if err := ctx.ReadJSON(request); err != nil {
+      zgo.Http.JsonpErr(ctx, "json body is error，"+err.Error())
+      return
+    }
+  } else {
+    zgo.Http.JsonpErr(ctx, "pls send application/json")
+    return
+  }
 
-	if request.Bid == "" || request.Aid == 0 {
-		zgo.Http.JsonpErr(ctx, "业务线和事件名不能为空")
-		return
-	}
+  if request.Bid == "" || request.Aid == 0 {
+    zgo.Http.JsonpErr(ctx, "业务线和事件名不能为空")
+    return
+  }
 
-	pay := services.NewPay()
-	tcb, err := pay.Insert(request)
-	if err != nil {
-		zgo.Log.Error(err)
-		zgo.Http.JsonpErr(ctx, err.Error())
-		return
-	}
+  pay := services.NewPay()
+  tcb, err := pay.Insert(request)
+  if err != nil {
+    zgo.Log.Error(err)
+    zgo.Http.JsonpErr(ctx, err.Error())
+    return
+  }
 
-	r := make(map[string]interface{})
-	r["status"] = "done"
-	r["id"] = tcb.Id
+  r := make(map[string]interface{})
+  r["status"] = "done"
+  r["id"] = tcb.Id
 
-	zgo.Http.JsonpOK(ctx, r)
+  zgo.Http.JsonpOK(ctx, r)
 
 }

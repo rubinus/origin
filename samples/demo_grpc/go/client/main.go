@@ -8,46 +8,46 @@
 package main
 
 import (
-	"context"
-	"github.com/gitcpu-io/origin/config"
-	"github.com/gitcpu-io/zgo"
-	pb "google.golang.org/grpc/examples/helloworld/helloworld"
-	"log"
-	"os"
-	"time"
+  "context"
+  "github.com/gitcpu-io/origin/config"
+  "github.com/gitcpu-io/zgo"
+  pb "google.golang.org/grpc/examples/helloworld/helloworld"
+  "log"
+  "os"
+  "time"
 )
 
 const (
-	address     = "localhost"
-	defaultName = "world"
+  address     = "localhost"
+  defaultName = "world"
 )
 
 func main() {
-	config.InitConfig("local", "", "", "", "")
+  config.InitConfig("local", "", "", "", "")
 
-	err := zgo.Engine(&zgo.Options{
-		Env:      config.Conf.Env,
-		Loglevel: config.Conf.Loglevel,
-		Project:  config.Conf.Project,
-	})
-	conn, err := zgo.Grpc.Client(context.TODO(), address, "", zgo.Grpc.WithInsecure())
-	if err != nil {
-		log.Fatalf("did not connect: %v", err)
-	}
-	defer conn.Close()
+  err := zgo.Engine(&zgo.Options{
+    Env:      config.Conf.Env,
+    Loglevel: config.Conf.Loglevel,
+    Project:  config.Conf.Project,
+  })
+  conn, err := zgo.Grpc.Client(context.TODO(), address, "", zgo.Grpc.WithInsecure())
+  if err != nil {
+    log.Fatalf("did not connect: %v", err)
+  }
+  defer conn.Close()
 
-	c := pb.NewGreeterClient(conn)
+  c := pb.NewGreeterClient(conn)
 
-	// Contact the grpcserver and print out its response.
-	name := defaultName
-	if len(os.Args) > 1 {
-		name = os.Args[1]
-	}
-	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
-	defer cancel()
-	r, err := c.SayHello(ctx, &pb.HelloRequest{Name: name})
-	if err != nil {
-		log.Fatalf("could not greet: %v", err)
-	}
-	log.Printf("Greeting: %s", r.Message)
+  // Contact the grpcserver and print out its response.
+  name := defaultName
+  if len(os.Args) > 1 {
+    name = os.Args[1]
+  }
+  ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+  defer cancel()
+  r, err := c.SayHello(ctx, &pb.HelloRequest{Name: name})
+  if err != nil {
+    log.Fatalf("could not greet: %v", err)
+  }
+  log.Printf("Greeting: %s", r.Message)
 }

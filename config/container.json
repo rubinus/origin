@@ -10,7 +10,6 @@
   "pprofPort": 8181,
   "httpPort": 8081,
   "usePreAbsPath": 0,
-
   "file": {
     "type": "local",
     "home": "/tmp"

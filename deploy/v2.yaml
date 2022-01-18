@@ -12,12 +12,12 @@ spec:
     spec:
       restartPolicy: Always
       ##########################如果需要在docker中添加hosts#########################
-#      hostAliases:
-#        - ip: "172.16.2.37"
-#          hostnames:
-#          - "grpc-smsbffp.example.com"
-#          - "grpc-wxcbbffp.example.com"
-#          - "grpc-timerbffp.example.com"
+      #      hostAliases:
+      #        - ip: "172.16.2.37"
+      #          hostnames:
+      #          - "grpc-smsbffp.example.com"
+      #          - "grpc-wxcbbffp.example.com"
+      #          - "grpc-timerbffp.example.com"
       ###########################################################################
       imagePullSecrets:
         - name: bffp-key  #使用镜像密钥,在阿里云后台提前创建

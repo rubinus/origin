@@ -10,33 +10,33 @@ import "github.com/gitcpu-io/origin/models"
 */
 
 type Payer interface {
-	Insert(req *models.PayRequest) (*models.Trade, error)
-	//请在此处添加其它方法
+  Insert(req *models.PayRequest) (*models.Trade, error)
+  //请在此处添加其它方法
 }
 
 func NewPay() Payer {
-	return &svc{
-		repo: models.NewTradeRepo(),
-	}
+  return &svc{
+    repo: models.NewTradeRepo(),
+  }
 }
 
 type svc struct {
-	repo models.Trader
+  repo models.Trader
 }
 
 // Insert保存方法
 func (svc *svc) Insert(req *models.PayRequest) (*models.Trade, error) {
 
-	//todo something
+  //todo something
 
-	//todo 通过传入的参数payReq 来构造Trade
-	trade := &models.Trade{}
+  //todo 通过传入的参数payReq 来构造Trade
+  trade := &models.Trade{}
 
-	err := svc.repo.Insert(trade)
-	if err != nil {
-		return nil, err
-	}
-	return trade, nil
+  err := svc.repo.Insert(trade)
+  if err != nil {
+    return nil, err
+  }
+  return trade, nil
 }
 
 //todo add other func
