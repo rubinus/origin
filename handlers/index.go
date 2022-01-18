@@ -1,11 +1,11 @@
 package handlers
 
 import (
-	"fmt"
-	"github.com/kataras/iris/v12"
-	"github.com/gitcpu-io/origin/config"
-	"github.com/gitcpu-io/zgo"
-	"os"
+  "fmt"
+  "github.com/gitcpu-io/origin/config"
+  "github.com/gitcpu-io/zgo"
+  "github.com/kataras/iris/v12"
+  "os"
 )
 
 /*
@@ -16,54 +16,54 @@ import (
 */
 
 type indexPage struct {
-	Title    string
-	Message  string
-	Version  string
-	HostName string
-	IP       string
+  Title    string
+  Message  string
+  Version  string
+  HostName string
+  IP       string
 }
 
 func IndexPage(ctx iris.Context) {
-	project := config.Conf.Project
-	hostName, _ := os.Hostname()
-	ctx.ViewData("", indexPage{
-		Title:    project,
-		Message:  fmt.Sprintf("%s welcome by zgo engine %s ...", project, zgo.Version),
-		Version:  config.Conf.Version,
-		HostName: hostName,
-		IP:       zgo.Utils.GetIntranetIP(),
-	})
-	ctx.View("index.html")
+  project := config.Conf.Project
+  hostName, _ := os.Hostname()
+  ctx.ViewData("", indexPage{
+    Title:    project,
+    Message:  fmt.Sprintf("%s welcome by zgo engine %s ...", project, zgo.Version),
+    Version:  config.Conf.Version,
+    HostName: hostName,
+    IP:       zgo.Utils.GetIntranetIP(),
+  })
+  ctx.View("index.html")
 }
 
 func FourZeroFourPage(ctx iris.Context) {
-	project := config.Conf.Project
-	hostName, _ := os.Hostname()
-	ctx.ViewData("", indexPage{
-		Title:    project,
-		Message:  fmt.Sprintf("%d -- %s by zgo engine %s ...", 404, project, zgo.Version),
-		Version:  config.Conf.Version,
-		HostName: hostName,
-		IP:       zgo.Utils.GetIntranetIP(),
-	})
-	ctx.View("404.html")
+  project := config.Conf.Project
+  hostName, _ := os.Hostname()
+  ctx.ViewData("", indexPage{
+    Title:    project,
+    Message:  fmt.Sprintf("%d -- %s by zgo engine %s ...", 404, project, zgo.Version),
+    Version:  config.Conf.Version,
+    HostName: hostName,
+    IP:       zgo.Utils.GetIntranetIP(),
+  })
+  ctx.View("404.html")
 }
 
 func FiveZeroZeroPage(ctx iris.Context) {
-	project := config.Conf.Project
-	hostName, _ := os.Hostname()
-	ctx.ViewData("", indexPage{
-		Title:    project,
-		Message:  fmt.Sprintf("%d -- %s by zgo engine %s ...", 500, project, zgo.Version),
-		Version:  config.Conf.Version,
-		HostName: hostName,
-		IP:       zgo.Utils.GetIntranetIP(),
-	})
-	ctx.View("500.html")
+  project := config.Conf.Project
+  hostName, _ := os.Hostname()
+  ctx.ViewData("", indexPage{
+    Title:    project,
+    Message:  fmt.Sprintf("%d -- %s by zgo engine %s ...", 500, project, zgo.Version),
+    Version:  config.Conf.Version,
+    HostName: hostName,
+    IP:       zgo.Utils.GetIntranetIP(),
+  })
+  ctx.View("500.html")
 }
 
 func Health(ctx iris.Context) {
-	ctx.JSONP(map[string]string{
-		"health": "true",
-	})
+  ctx.JSONP(map[string]string{
+    "health": "true",
+  })
 }

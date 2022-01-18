@@ -10,5 +10,5 @@ import "testing"
 */
 
 func TestLB(t *testing.T) {
-	CallLb()
+  CallLb()
 }

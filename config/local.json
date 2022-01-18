@@ -10,7 +10,6 @@
   "pprofPort": 8181,
   "httpPort": 8081,
   "usePreAbsPath": 0,
-
   "file": {
     "type": "local",
     "home": "/tmp"
@@ -22,7 +21,6 @@
     "label": "/tmp",
     "loglevel": 0
   },
-
   "redis": [
     {
       "key": "redis_label_bj",
@@ -127,5 +125,4 @@
       ]
     }
   ]
-
 }

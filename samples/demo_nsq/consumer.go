@@ -1,44 +1,44 @@
 package demo_nsq
 
 import (
-	"fmt"
-	"github.com/gitcpu-io/origin/config"
-	"github.com/gitcpu-io/zgo"
+  "fmt"
+  "github.com/gitcpu-io/origin/config"
+  "github.com/gitcpu-io/zgo"
 )
 
 type chat struct {
-	Topic   string
-	Channel string
+  Topic   string
+  Channel string
 }
 
 func (c *chat) Consumer() {
 
-	//n, err := zgo.Nsq.New("nsq_label_bj")
-	n, err := zgo.Nsq.New()
-	if err != nil {
-		panic(err)
-	}
-	n.Consumer(c.Topic, c.Channel, c.Deal)
+  //n, err := zgo.Nsq.New("nsq_label_bj")
+  n, err := zgo.Nsq.New()
+  if err != nil {
+    panic(err)
+  }
+  n.Consumer(c.Topic, c.Channel, c.Deal)
 
 }
 
 //处理消息
 func (c *chat) Deal(msg zgo.NsqMessage) error {
 
-	fmt.Println("接收到NSQ", msg.NSQDAddress, ",message:", string(msg.Body))
+  fmt.Println("接收到NSQ", msg.NSQDAddress, ",message:", string(msg.Body))
 
-	//todo something for u work
+  //todo something for u work
 
-	return nil
+  return nil
 }
 
 func Consumer() {
 
-	go func() {
-		c := chat{
-			Topic:   config.Conf.Project,
-			Channel: config.Conf.Project,
-		}
-		c.Consumer()
-	}()
+  go func() {
+    c := chat{
+      Topic:   config.Conf.Project,
+      Channel: config.Conf.Project,
+    }
+    c.Consumer()
+  }()
 }

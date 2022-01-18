@@ -6,11 +6,8 @@ proto文件夹生成的proto源文件
 
 protoc --proto_path=proto --gofast_out=plugins=grpc:pb helloworld/helloworld.proto
 
+## 使用 gogo插件 any.proto 或更多 替换下面的 jgpush/jgpush.proto
 
-
-
-
-##使用 gogo插件  any.proto 或更多 替换下面的 jgpush/jgpush.proto
 protoc -I=. -I=$GOPATH/src -I=$GOPATH/src/github.com/gogo/protobuf/protobuf --gofast_out=\
 Mgoogle/protobuf/any.proto=github.com/gogo/protobuf/types,\
 Mgoogle/protobuf/duration.proto=github.com/gogo/protobuf/types,\

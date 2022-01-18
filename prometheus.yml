@@ -1,6 +1,6 @@
 # my global config
 global:
-  scrape_interval:     15s # Set the scrape interval to every 15 seconds. Default is every 1 minute.
+  scrape_interval: 15s # Set the scrape interval to every 15 seconds. Default is every 1 minute.
   evaluation_interval: 15s # Evaluate rules every 15 seconds. The default is every 1 minute.
   # scrape_timeout is set to the global default (10s).
 
@@ -25,52 +25,52 @@ scrape_configs:
     # metrics_path defaults to '/metrics'
     # scheme defaults to 'http'.
     static_configs:
-      - targets: ['mock.com:9090'] #这里一定要是所在宿主机的ip，不能是docker内容器的ip
+      - targets: [ 'mock.com:9090' ] #这里一定要是所在宿主机的ip，不能是docker内容器的ip
 
   - job_name: 'linux'
     static_configs:
-      - targets: ['mock.com:9100'] #这里一定要是所在宿主机的ip，不能是docker内容器的ip
+      - targets: [ 'mock.com:9100' ] #这里一定要是所在宿主机的ip，不能是docker内容器的ip
         labels:
           instance: node
 
   - job_name: 'cadvisor-container'
     static_configs:
-      - targets: ['mock.com:8070'] #这里一定要是所在宿主机的ip，不能是docker内容器的ip
+      - targets: [ 'mock.com:8070' ] #这里一定要是所在宿主机的ip，不能是docker内容器的ip
         labels:
           instance: cadvisor-container
 
   - job_name: 'redis'
     static_configs:
-      - targets: ['mock.com:9121'] #这里一定要是所在宿主机的ip，不能是docker内容器的ip
+      - targets: [ 'mock.com:9121' ] #这里一定要是所在宿主机的ip，不能是docker内容器的ip
         labels:
           instance: redis
 
   - job_name: 'mongodb'
     static_configs:
-      - targets: ['mock.com:9216'] #这里一定要是所在宿主机的ip，不能是docker内容器的ip
+      - targets: [ 'mock.com:9216' ] #这里一定要是所在宿主机的ip，不能是docker内容器的ip
         labels:
           instance: mongodb
 
   - job_name: 'postgres'
     static_configs:
-      - targets: ['mock.com:9187'] #这里一定要是所在宿主机的ip，不能是docker内容器的ip
+      - targets: [ 'mock.com:9187' ] #这里一定要是所在宿主机的ip，不能是docker内容器的ip
         labels:
           instance: postgres
 
   - job_name: 'mysql'
     static_configs:
-      - targets: ['mock.com:9104'] #这里一定要是所在宿主机的ip，不能是docker内容器的ip
+      - targets: [ 'mock.com:9104' ] #这里一定要是所在宿主机的ip，不能是docker内容器的ip
         labels:
           instance: mysql
 
   - job_name: 'elasticsearch'
     static_configs:
-      - targets: ['mock.com:9108'] #这里一定要是所在宿主机的ip，不能是docker内容器的ip
+      - targets: [ 'mock.com:9108' ] #这里一定要是所在宿主机的ip，不能是docker内容器的ip
         labels:
           instance: elasticsearch
 
   - job_name: 'kafka'
     static_configs:
-      - targets: ['mock.com:9308'] #这里一定要是所在宿主机的ip，不能是docker内容器的ip
+      - targets: [ 'mock.com:9308' ] #这里一定要是所在宿主机的ip，不能是docker内容器的ip
         labels:
           instance: kafka

@@ -1,7 +1,7 @@
 package queue_pop
 
 import (
-	"github.com/gitcpu-io/zgo"
+  "github.com/gitcpu-io/zgo"
 )
 
 /*
@@ -12,29 +12,29 @@ import (
 */
 
 type nsqer struct {
-	Topic   string
-	Channel string
+  Topic   string
+  Channel string
 }
 
 func (c *nsqer) Consumer() {
 
-	n, err := zgo.Nsq.New()
-	if err != nil {
-		panic(err)
-	}
-	n.Consumer(c.Topic, c.Channel, c.Deal)
+  n, err := zgo.Nsq.New()
+  if err != nil {
+    panic(err)
+  }
+  n.Consumer(c.Topic, c.Channel, c.Deal)
 
 }
 
 func (c *nsqer) Deal(msg zgo.NsqMessage) error {
 
-	//fmt.Println("接收到NSQ", msg.NSQDAddress, ",message:", string(msg.Body))
+  //fmt.Println("接收到NSQ", msg.NSQDAddress, ",message:", string(msg.Body))
 
-	//todo something for u work
+  //todo something for u work
 
-	deal(msg.Body)
+  deal(msg.Body)
 
-	return nil
+  return nil
 }
 
 func deal(body []byte) {
@@ -42,14 +42,14 @@ func deal(body []byte) {
 }
 
 func NsqConsumer() {
-	zgo.Log.Info("---------------启动消费Nsq---------------")
+  zgo.Log.Info("---------------启动消费Nsq---------------")
 
-	go func() {
-		c := nsqer{
-			Topic:   "topic",
-			Channel: "topic",
-		}
-		c.Consumer()
-	}()
+  go func() {
+    c := nsqer{
+      Topic:   "topic",
+      Channel: "topic",
+    }
+    c.Consumer()
+  }()
 
 }
