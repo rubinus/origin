@@ -14,10 +14,10 @@ func main() {
   config.InitConfig("local", "", "", "", "")
 
   err := zgo.Engine(&zgo.Options{
+    CPath:    config.Conf.CPath,
     Env:      config.Conf.Env,
     Loglevel: config.Conf.Loglevel,
     Project:  config.Conf.Project,
-    CPath:    config.Conf.CPath,
   })
   if err != nil {
     zgo.Log.Error(err)
