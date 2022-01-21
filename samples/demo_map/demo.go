@@ -18,6 +18,7 @@ func Demo() {
   config.InitConfig("local", "", "", "", "")
 
   err := zgo.Engine(&zgo.Options{
+    CPath: config.Conf.CPath,
     Env:      config.Conf.Env,
     Project:  config.Conf.Project,
     Loglevel: config.Conf.Loglevel,

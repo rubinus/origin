@@ -22,6 +22,7 @@ func (m CacheDemo) run() {
 
   //查询参数
   zgo.Engine(&zgo.Options{
+    CPath: config.Conf.CPath,
     Env:     config.Conf.Env,
     Project: config.Conf.Project,
     Pika: []string{
