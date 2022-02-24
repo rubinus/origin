@@ -90,6 +90,11 @@ func init() {
 
   if cpath != "" {
     config.Conf.CPath = cpath
+  }else{
+    pwd, err := os.Getwd()
+    if err == nil {
+      config.Conf.CPath = fmt.Sprintf("%s/%s",pwd,"config")
+    }
   }
 
   //输入覆盖配置中的.json中的

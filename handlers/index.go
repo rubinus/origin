@@ -11,9 +11,21 @@ import (
 /*
 @Time : 2019-03-06 19:46
 @Author : rubinus.chu
-@File : demoHandler
+@File : index
 @project: origin
 */
+
+var commitOld = "latest"
+var commit = "latest"
+
+func init() {
+  if os.Getenv("COMMIT") != "" {
+    commit = os.Getenv("COMMIT")
+  }
+  if os.Getenv("COMMIT_OLD") != "" {
+    commitOld = os.Getenv("COMMIT_OLD")
+  }
+}
 
 type indexPage struct {
   Title    string
@@ -21,6 +33,8 @@ type indexPage struct {
   Version  string
   HostName string
   IP       string
+  Commit string
+  CommitOld string
 }
 
 func IndexPage(ctx iris.Context) {
@@ -32,6 +46,8 @@ func IndexPage(ctx iris.Context) {
     Version:  config.Conf.Version,
     HostName: hostName,
     IP:       zgo.Utils.GetIntranetIP(),
+    Commit: commit,
+    CommitOld: commitOld,
   })
   ctx.View("index.html")
 }
@@ -45,6 +61,8 @@ func FourZeroFourPage(ctx iris.Context) {
     Version:  config.Conf.Version,
     HostName: hostName,
     IP:       zgo.Utils.GetIntranetIP(),
+    Commit: commit,
+    CommitOld: commitOld,
   })
   ctx.View("404.html")
 }
@@ -58,6 +76,8 @@ func FiveZeroZeroPage(ctx iris.Context) {
     Version:  config.Conf.Version,
     HostName: hostName,
     IP:       zgo.Utils.GetIntranetIP(),
+    Commit: commit,
+    CommitOld: commitOld,
   })
   ctx.View("500.html")
 }
