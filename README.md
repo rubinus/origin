@@ -2,8 +2,11 @@
 
 ## config/local.json
 
-local.json适合本地调试开发，仍然使用原生的方式来连接各种db，部署以配置文件的方式在ECS机器上，在此以redis为例 如果使用
-dev.json/qa.json/pro.json就会使用etcd做为库，其中的数据存储格式就是local.json中redis部分的实例，当然真实的 etcd中还存有其它mysql/mongo/kafka等等的配置文件
+local.json适合本地调试开发，仍然使用原生的方式来连接各种db，部署以配置文件的方式在ECS机器上，在此以redis为例
+
+如果使用 dev.json/qa.json/pro.json就会使用etcd做为库，其中的数据存储格式就是local.json中redis部分的实例，
+
+当然真实的 etcd中还存有其它mysql/mongo/kafka等等的配置文件
 
 当使用local.json本地开发时，还需要在 engine/zgo.go中指定使用的中间件的key
 
@@ -134,13 +137,13 @@ CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o origin
 
 ### 本机build
 
-docker build -t dck.example.test/origin:v0.0.1 .
+docker build -t cr.gitcpu-io/origin:v0.0.1 .
 
-docker push dck.example.test/origin:v0.0.1
+docker push cr.gitcpu-io/origin:v0.0.1
 
 ### 在服务器上执行
 
-docker pull dck.example.test/origin:v0.0.1
+docker pull cr.gitcpu-io/origin:v0.0.1
 
 docker rm -f origin
 
@@ -148,31 +151,31 @@ docker rm -f origin
 
 #### 下面一行非服务注册模式
 
-docker run -d --restart always -p 8080:80 -p 50051:50051 --name origin dck.example.test/origin:v0.0.1
+docker run -d --restart always -p 8080:80 -p 50051:50051 --name origin cr.gitcpu-io/origin:v0.0.1
 
 ### 作为服务注册(本地)
 
 docker run -d --restart always -p 8081:80 -p 51051:50051 -e SVC_HOST=192.168.100.19 -e SVC_HTTP_PORT=8081 -e
-SVC_GRPC_PORT=51051 --name origin1 dck.example.test/origin:v0.0.1
+SVC_GRPC_PORT=51051 --name origin1 cr.gitcpu-io/origin:v0.0.1
 
 ### 再启动一个（仅更换端口号）模拟正式环境
 
 docker run -d --restart always -p 8082:80 -p 51052:50051 -e SVC_HOST=192.168.100.19 -e SVC_HTTP_PORT=8082 -e
-SVC_GRPC_PORT=51052 --name origin2 dck.example.test/origin:v0.0.1
+SVC_GRPC_PORT=51052 --name origin2 cr.gitcpu-io/origin:v0.0.1
 
 # ====服务器上运行====
 
 ## 正常运行
 
-docker run -d --restart always -p 8080:80 -p 50051:50051 --name origin dck.example.test/origin:v0.0.1
+docker run -d --restart always -p 8080:80 -p 50051:50051 --name origin cr.gitcpu-io/origin:v0.0.1
 
 ## 在开发服务器上启动docker并指定 svc 服务的访问host及port(服务器上使用服务注册模式)
 
 docker run -d --restart always -p 8281:80 -p 52051:50051 -e SVC_HOST=localhost -e SVC_HTTP_PORT=8281 -e
-SVC_GRPC_PORT=52051 --name origin1 dck.example.test/origin:v0.0.1
+SVC_GRPC_PORT=52051 --name origin1 cr.gitcpu-io/origin:v0.0.1
 
 docker run -d --restart always -p 8282:80 -p 52052:50051 -e SVC_HOST=localhost -e SVC_HTTP_PORT=8282 -e
-SVC_GRPC_PORT=52052 --name origin2 dck.example.test/origin:v0.0.1
+SVC_GRPC_PORT=52052 --name origin2 cr.gitcpu-io/origin:v0.0.1
 
 docker logs -f --tail=20 origin
 
