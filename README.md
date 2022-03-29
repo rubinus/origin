@@ -53,7 +53,7 @@ make image 通过makefile，运行dockerfile，制作包含git版本的image
 
 #### 在本地执行打包好的镜像origin并使用etcd
 
-docker run --rm -p 8081:80 -p 8181:8181 -d --name origin gitcpu-io/origin:v1.0
+docker run --rm -p 8081:8081 -p 8181:8181 -d --name origin rubinus/origin:v1.0
 
 ## how to use the zgo engine
 
