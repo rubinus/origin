@@ -27,7 +27,7 @@
         {
           "c": "北京主库1-----etcd redis",
           "host": "localhost",
-          "port": 6381,
+          "port": 6380,
           "connSize": 10,
           "poolSize": 5000,
           "username": "",
@@ -38,7 +38,7 @@
         {
           "c": "北京主库2-----etcd redis",
           "host": "localhost",
-          "port": 6381,
+          "port": 6380,
           "connSize": 10,
           "poolSize": 5000,
           "username": "",
@@ -63,7 +63,7 @@
           "cluster": 0
         },
         {
-          "c": "上海从库3=====redis",
+          "c": "上海从库2=====redis",
           "host": "localhost",
           "port": 6379,
           "connSize": 50,
@@ -83,7 +83,7 @@
         {
           "c": "北京从库1=====dev mgo",
           "host": "localhost",
-          "port": 27017,
+          "port": 27018,
           "username": "admin",
           "password": "admin",
           "connSize": 5,
@@ -92,7 +92,7 @@
         {
           "c": "北京从库2=====dev mgo",
           "host": "localhost",
-          "port": 27017,
+          "port": 27018,
           "username": "admin",
           "password": "admin",
           "connSize": 5,
@@ -106,7 +106,7 @@
         {
           "c": "上海从库1=====dev mgo",
           "host": "localhost",
-          "port": 27018,
+          "port": 27017,
           "username": "",
           "password": "",
           "connSize": 5,
@@ -115,7 +115,7 @@
         {
           "c": "上海从库2=====dev mgo",
           "host": "localhost",
-          "port": 27018,
+          "port": 27017,
           "username": "",
           "password": "",
           "connSize": 5,

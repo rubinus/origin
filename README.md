@@ -1,5 +1,42 @@
 # origin
 
+# 本地运行docker-compose
+
+执行 docker-compose up 或 docker-compose up -d
+
+docker-compose ps
+
+## redis默认使用6379端口
+
+## origin 本机使用local时测试环境，测试服务器IP地址
+
+## Mongo
+
+docker exec -it mongo27018 sh
+
+mongo
+
+use admin
+
+```javascript
+db.createUser(
+  {
+    user: "admin",
+    pwd: "admin",
+    roles: [ { role: "root", db: "admin" } ]
+  }
+)
+```
+
+db.auth('admin','admin')
+
+### 插入测试数据
+
+use profile
+
+for(var i=100;i<=200;i++){ db.bj.insert({ username: 'zhangsan', age:Math.round(Math.random() * 100), address:Math.round(
+Math.random() * 100), }); }
+
 ## config/local.json
 
 local.json适合本地调试开发，仍然使用原生的方式来连接各种db，部署以配置文件的方式在ECS机器上，在此以redis为例
@@ -181,19 +218,4 @@ docker logs -f --tail=20 origin
 
 ### ======================
 
-# 本地运行docker-compose
 
-执行 docker-compose up 或 docker-compose up -d
-
-## origin 本机使用local时测试环境，测试服务器IP地址
-
-## Mongo
-
-use admin db.auth('admin','admin')
-
-### 插入测试数据
-
-use profile
-
-for(var i=100;i<=200;i++){ db.bj.insert({ username: 'zhangsan', age:Math.round(Math.random() * 100), address:Math.round(
-Math.random() * 100), }); }

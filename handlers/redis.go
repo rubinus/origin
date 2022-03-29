@@ -29,7 +29,10 @@ func RedisGet(ctx iris.Context) {
     return
   }
 
-  key := fmt.Sprintf("%s:%s:%s", "zgo", "start", name)
+  key := fmt.Sprintf("%s:%s:%s", "zgo", "origin", name)
+
+  //先写入
+  zgo.Redis.Set(cotx, key, fmt.Sprintf("写入时间戳 %v", zgo.Utils.NowUnix()))
 
   // 第三：调用zgo engine来处理业务逻辑
   val, err := zgo.Redis.Get(cotx, key)
@@ -40,6 +43,12 @@ func RedisGet(ctx iris.Context) {
   }
 
   result := zgo.Utils.StringToMap(val.(string))
+
+  if result == nil {
+    m := make(map[string]interface{})
+    m[name] = val
+    result = m
+  }
 
   // 第四：使用select来响应处理结果与超时
   select {
