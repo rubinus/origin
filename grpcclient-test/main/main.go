@@ -14,7 +14,7 @@ func main() {
   config.InitConfig("local", "", "", "", "")
 
   err := zgo.Engine(&zgo.Options{
-    CPath:    config.Conf.CPath,
+    CPath:    "/Users/rubinus/app/origin/config",
     Env:      config.Conf.Env,
     Loglevel: config.Conf.Loglevel,
     Project:  config.Conf.Project,

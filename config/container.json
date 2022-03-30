@@ -8,7 +8,7 @@
   "rpcHost": "localhost",
   "rpcPort": "50051",
   "pprofPort": 8181,
-  "httpPort": 8081,
+  "httpPort": 80,
   "usePreAbsPath": 0,
   "file": {
     "type": "local",

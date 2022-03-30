@@ -8,8 +8,6 @@ docker-compose ps
 
 ## redis默认使用6379端口
 
-## origin 本机使用local时测试环境，测试服务器IP地址
-
 ## Mongo
 
 docker exec -it mongo27018 sh
@@ -37,25 +35,29 @@ use profile
 for(var i=100;i<=200;i++){ db.bj.insert({ username: 'zhangsan', age:Math.round(Math.random() * 100), address:Math.round(
 Math.random() * 100), }); }
 
-## config/local.json
+## config/local.json与container.json
 
-local.json适合本地调试开发，仍然使用原生的方式来连接各种db，部署以配置文件的方式在ECS机器上，在此以redis为例
+> local.json适合本地调试开发 8081端口，仍然使用原生的方式来连接各种db，部署以配置文件的方式在ECS机器上，在此以redis为例
 
-如果使用 dev.json/qa.json/pro.json就会使用etcd做为库，其中的数据存储格式就是local.json中redis部分的实例，
+> 如果使用 dev.json/qa.json/pro.json就会使用etcd做为库，其中的数据存储格式就是local.json中redis部分的实例，
 
-当然真实的 etcd中还存有其它mysql/mongo/kafka等等的配置文件
+> 当然真实的 etcd中还存有其它mysql/mongo/kafka等等的配置文件
 
-当使用local.json本地开发时，还需要在 engine/zgo.go中指定使用的中间件的key
+> 当使用local.json本地开发时，还需要在 engine/zgo.go中指定使用的中间件的key
 
-## auto build image
+> container.json打包测试image时 默认是80端口
+
+> 如果不使用etcd做为配置中心，最好的方式是使用container.json进行相应的参数变更
+
+# auto build image 将会使用container模式
 
 make image 通过makefile，运行dockerfile，制作包含git版本的image
 
-#### 在本地执行打包好的镜像origin并使用etcd
+## 在本地执行打包好的镜像origin
 
-docker run --rm -p 8081:8081 -p 8181:8181 -d --name origin rubinus/origin:v1.0
+docker run --rm -p 8081:80 -p 8181:8181 -p 50051:50051 -d --name origin rubinus/origin:v1.0
 
-## how to use the zgo engine
+# How to use the zgo engine
 
 ## deploy文件目录是用运维用来部署k8s和istio的，其中的yaml文件需要由开发人员编写
 
@@ -188,31 +190,31 @@ docker rm -f origin
 
 #### 下面一行非服务注册模式
 
-docker run -d --restart always -p 8080:80 -p 50051:50051 --name origin cr.gitcpu-io/origin:v0.0.1
+docker run -d --restart always -p 8081:80 -p 50051:50051 --name origin cr.gitcpu-io/origin:v0.0.1
 
 ### 作为服务注册(本地)
 
-docker run -d --restart always -p 8081:80 -p 51051:50051 -e SVC_HOST=192.168.100.19 -e SVC_HTTP_PORT=8081 -e
-SVC_GRPC_PORT=51051 --name origin1 cr.gitcpu-io/origin:v0.0.1
+docker run -d --restart always -p 8081:8081 -p 50051:50051 -e SVC_HOST=192.168.100.19 -e SVC_HTTP_PORT=8081 -e
+SVC_GRPC_PORT=50051 --name origin1 cr.gitcpu-io/origin:v0.0.1
 
 ### 再启动一个（仅更换端口号）模拟正式环境
 
-docker run -d --restart always -p 8082:80 -p 51052:50051 -e SVC_HOST=192.168.100.19 -e SVC_HTTP_PORT=8082 -e
-SVC_GRPC_PORT=51052 --name origin2 cr.gitcpu-io/origin:v0.0.1
+docker run -d --restart always -p 8082:8082 -p 50052:50051 -e SVC_HOST=192.168.100.19 -e SVC_HTTP_PORT=8082 -e
+SVC_GRPC_PORT=50052 --name origin2 cr.gitcpu-io/origin:v0.0.1
 
 # ====服务器上运行====
 
 ## 正常运行
 
-docker run -d --restart always -p 8080:80 -p 50051:50051 --name origin cr.gitcpu-io/origin:v0.0.1
+docker run -d --restart always -p 8081:80 -p 50051:50051 --name origin cr.gitcpu-io/origin:v0.0.1
 
 ## 在开发服务器上启动docker并指定 svc 服务的访问host及port(服务器上使用服务注册模式)
 
-docker run -d --restart always -p 8281:80 -p 52051:50051 -e SVC_HOST=localhost -e SVC_HTTP_PORT=8281 -e
-SVC_GRPC_PORT=52051 --name origin1 cr.gitcpu-io/origin:v0.0.1
+docker run -d --restart always -p 8281:8281 -p 50051:50051 -e SVC_HOST=localhost -e SVC_HTTP_PORT=8281 -e
+SVC_GRPC_PORT=50051 --name origin1 cr.gitcpu-io/origin:v0.0.1
 
-docker run -d --restart always -p 8282:80 -p 52052:50051 -e SVC_HOST=localhost -e SVC_HTTP_PORT=8282 -e
-SVC_GRPC_PORT=52052 --name origin2 cr.gitcpu-io/origin:v0.0.1
+docker run -d --restart always -p 8282:8282 -p 50052:50051 -e SVC_HOST=localhost -e SVC_HTTP_PORT=8282 -e
+SVC_GRPC_PORT=50052 --name origin2 cr.gitcpu-io/origin:v0.0.1
 
 docker logs -f --tail=20 origin
 
