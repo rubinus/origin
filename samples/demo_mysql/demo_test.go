@@ -51,7 +51,7 @@ func TestCreate(t *testing.T) {
 func TestMysqlDemo_Get(t *testing.T) {
 
   //查询参数
-  zgo.Engine(&zgo.Options{
+  err := zgo.Engine(&zgo.Options{
     Env:     "dev",
     Project: "1553240759",
 
@@ -59,6 +59,9 @@ func TestMysqlDemo_Get(t *testing.T) {
       "mysql_sell_2",
     },
   })
+  if err != nil {
+    zgo.Log.Error(err)
+  }
   time.Sleep(1 * time.Second)
 
   ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
@@ -81,7 +84,11 @@ func TestMysqlDemo_Get(t *testing.T) {
       args["query"] = " id = ? "      //  用问号作为占位符
       args["args"] = []interface{}{1} // 参数 放入interface的slice里面
       args["obj"] = obj               // 输出对象
-      zgo.Mysql.Get(ctx, args)
+      err := zgo.Mysql.Get(ctx, args)
+      if err != nil {
+        zgo.Log.Error(err)
+        return
+      }
 
       fmt.Println(obj)
 

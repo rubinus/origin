@@ -32,6 +32,9 @@ func TestProducer(t *testing.T) {
   time.Sleep(2 * time.Second)
 
   clientBj, err := zgo.Nsq.New()
+  if err != nil {
+    zgo.Log.Error(err)
+  }
   clientSh, err := zgo.Nsq.New()
   if err != nil {
     panic(err)
@@ -87,9 +90,7 @@ func TestProducer(t *testing.T) {
 
   for {
     if len(count) == l {
-      var timeLen time.Duration
-      timeLen = time.Now().Sub(stime)
-
+      var timeLen = time.Since(stime)
       fmt.Printf("总消耗时间：%s, 成功：%d, 总共开出来的goroutine：%d\n", timeLen, len(count), len(total))
       break
     }
@@ -97,6 +98,7 @@ func TestProducer(t *testing.T) {
     select {
     case <-time.Tick(time.Duration(1000 * time.Millisecond)):
       fmt.Println("处理进度每1000毫秒", len(count))
+    default:
 
     }
   }

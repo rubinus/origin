@@ -35,11 +35,11 @@ func TestConsumer(t *testing.T) {
   }
   c2.Consumer()
 
-  for {
-    select {
-    case <-time.Tick(time.Duration(3 * time.Second)):
-      fmt.Println("一直在消费着")
-    }
+  interval := time.Duration(3) * time.Second
+  ticker := time.NewTicker(interval)
+  for val := range ticker.C {
+    fmt.Println("一直在消费着",val)
+    ticker.Reset(interval)
   }
 }
 
@@ -72,9 +72,14 @@ func TestConsumer2(t *testing.T) {
   c.Consumer()
 
   for {
+    if false {
+      fmt.Println(111)
+    }
     select {
-    case <-time.Tick(time.Duration(1 * time.Minute)):
+    case <-time.NewTicker(time.Duration(1 * time.Minute)).C:
       fmt.Println("一直在消费着")
+    default:
+
     }
   }
 }

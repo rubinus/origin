@@ -21,14 +21,18 @@ func (m CacheDemo) run() {
   defer cancel()
 
   //查询参数
-  zgo.Engine(&zgo.Options{
-    CPath: config.Conf.CPath,
+  err := zgo.Engine(&zgo.Options{
+    CPath:   config.Conf.CPath,
     Env:     config.Conf.Env,
     Project: config.Conf.Project,
     Pika: []string{
       "pika_label_rw", // 需要一个pika的配置
     },
   })
+  if err != nil {
+    zgo.Log.Error(err)
+    return
+  }
   param := make(map[string]interface{})
   param["ceshi1"] = 1
   param["ceshi2"] = 2
@@ -40,7 +44,10 @@ func (m CacheDemo) run() {
   h := make(map[string]interface{})
   // 无缓存
   start := time.Now().UnixNano()
-  m.GetData(ctx, param, &h)
+  err = m.GetData(ctx, param, &h)
+  if err != nil {
+    zgo.Log.Error(err)
+  }
   fmt.Println(h)
   fmt.Println("正常用时", (time.Now().UnixNano()-start-2000000000)/1000)
   fmt.Println("")
@@ -48,7 +55,11 @@ func (m CacheDemo) run() {
   // 正常缓存
   h1 := make(map[string]interface{})
   start = time.Now().UnixNano()
-  zgo.Cache.Decorate(m.GetData, 1)(ctx, param, &h1)
+  err = zgo.Cache.Decorate(m.GetData, 1)(ctx, param, &h1)
+  if err != nil {
+    zgo.Log.Error(err)
+    return
+  }
   fmt.Println(h1)
   fmt.Println("第一次请求用时", (time.Now().UnixNano()-start-2000000000)/1000)
 
@@ -57,7 +68,11 @@ func (m CacheDemo) run() {
   fmt.Println("-------第二次请求开始-----")
   start = time.Now().UnixNano()
   h2 := make(map[string]interface{})
-  zgo.Cache.Decorate(m.GetData, 10000000)(ctx, param, &h2)
+  err = zgo.Cache.Decorate(m.GetData, 10000000)(ctx, param, &h2)
+  if err != nil {
+    zgo.Log.Error(err)
+    return
+  }
   fmt.Println(h2)
   fmt.Println("第二次请求用时", (time.Now().UnixNano()-start)/1000)
 
@@ -68,7 +83,10 @@ func (m CacheDemo) run() {
   fmt.Println("降级缓存测试：")
   // 降级缓存正常情况
   h3 := make(map[string]interface{})
-  zgo.Cache.TimeOutDecorate(m.GetData1, 10)(ctx, param, &h3)
+  err = zgo.Cache.TimeOutDecorate(m.GetData1, 10)(ctx, param, &h3)
+  if err != nil {
+    zgo.Log.Error(err)
+  }
   fmt.Println(h3)
   fmt.Println("正常降级缓存用时", (time.Now().UnixNano()-start-2000000000)/1000)
   fmt.Println("")
@@ -76,7 +94,10 @@ func (m CacheDemo) run() {
   start = time.Now().UnixNano()
   // 超时情况
   h4 := make(map[string]interface{})
-  zgo.Cache.TimeOutDecorate(m.GetData1, 1)(ctx, param, &h4)
+  err = zgo.Cache.TimeOutDecorate(m.GetData1, 1)(ctx, param, &h4)
+  if err != nil {
+    zgo.Log.Error(err)
+  }
   fmt.Println(h4)
   fmt.Println("超时降级缓存用时", (time.Now().UnixNano()-start-1000000000)/1000)
 }

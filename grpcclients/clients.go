@@ -25,8 +25,8 @@ var HelloworldClient pb_helloworld.HelloWorldServiceClient
 func RPCClientsRun(ch chan string) {
   ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
   defer cancel()
-  if config.Conf.StartService == true &&
-    config.Conf.StartServiceDiscover == true { //使用服务发现模式
+  if config.Conf.StartService &&
+    config.Conf.StartServiceDiscover { //使用服务发现模式
     go func() {
       for value := range ch {
         lbRes, err := zgo.Service.LB(value) //变化的服务

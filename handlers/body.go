@@ -12,14 +12,26 @@ func DoPostBody(ctx iris.Context) {
   request := &models.PayRequest{}
   if strings.Contains(ctx.GetContentTypeRequested(), "json") {
     if err := ctx.ReadJSON(request); err != nil {
-      zgo.Http.JsonpErr(ctx, "json body is error，"+err.Error())
+      _, err := zgo.Http.JsonpErr(ctx, "json body is error，"+err.Error())
+      if err != nil {
+        zgo.Log.Error(err)
+        return
+      }
       return
     }
   } else {
-    zgo.Http.JsonpErr(ctx, "pls send application/json")
+    _, err := zgo.Http.JsonpErr(ctx, "pls send application/json")
+    if err != nil {
+      zgo.Log.Error(err)
+      return
+    }
     return
   }
 
-  zgo.Http.JsonpOK(ctx, "OK")
+  _, err := zgo.Http.JsonpOK(ctx, "OK")
+  if err != nil {
+    zgo.Log.Error(err)
+    return
+  }
 
 }

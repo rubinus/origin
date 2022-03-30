@@ -41,7 +41,6 @@ func TestSelectAccount(t *testing.T) {
   dbch, err := zgo.Postgres.GetConnChan() //有多个时，需要指定label
   if err != nil {
     panic(err)
-    return
   }
   db := <-dbch
 

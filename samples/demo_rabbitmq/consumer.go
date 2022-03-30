@@ -50,6 +50,9 @@ func ConsumerMuLabel() {
   }
 
   ch, err := zgorabbitmq.Consumer("exchangeName", "topic", "routingKey", "queueName")
+  if err != nil {
+    zgo.Log.Error(err)
+  }
   for val := range ch {
     fmt.Printf("ID: %s, 消息：%s, 类型:%s, 路由: %s, 交换机名: %s\n", val.MessageId, val.Body, val.Type, val.RoutingKey, val.Exchange)
   }

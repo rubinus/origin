@@ -134,8 +134,6 @@ func doAsrResult(client *goesl.Client, asrResult *ASRResult, transferUUID string
     playbackInfo(client, asrResult.SessionID, "http://pdlolj1mi.bkt.clouddn.com/2a620201809181847422822.wav")
   } else if strings.Contains(text, "转接") {
     transferCall(client, transferUUID, asrResult.SessionID)
-  } else {
-
   }
 }
 
@@ -153,8 +151,10 @@ func main() {
 
   go client.Handle()
 
-  client.Send("events json PLAYBACK_STOP CHANNEL_ANSWER CHANNEL_HANGUP_COMPLETE CUSTOM asr::answer ai::stop")
-
+  err = client.Send("events json PLAYBACK_STOP CHANNEL_ANSWER CHANNEL_HANGUP_COMPLETE CUSTOM asr::answer ai::stop")
+  if err != nil {
+    panic(err)
+  }
   // generate uuid
   //sessionUUID := uuid.NewV4().String()
   sessionUUID := "1111"

@@ -49,7 +49,11 @@ func IndexPage(ctx iris.Context) {
     Commit: commit,
     CommitOld: commitOld,
   })
-  ctx.View("index.html")
+  err := ctx.View("index.html")
+  if err != nil {
+    zgo.Log.Error(err)
+    return
+  }
 }
 
 func FourZeroFourPage(ctx iris.Context) {
@@ -64,7 +68,11 @@ func FourZeroFourPage(ctx iris.Context) {
     Commit: commit,
     CommitOld: commitOld,
   })
-  ctx.View("404.html")
+  err := ctx.View("404.html")
+  if err != nil {
+    zgo.Log.Error(err)
+    return
+  }
 }
 
 func FiveZeroZeroPage(ctx iris.Context) {
@@ -79,11 +87,19 @@ func FiveZeroZeroPage(ctx iris.Context) {
     Commit: commit,
     CommitOld: commitOld,
   })
-  ctx.View("500.html")
+  err := ctx.View("500.html")
+  if err != nil {
+    zgo.Log.Error(err)
+    return
+  }
 }
 
 func Health(ctx iris.Context) {
-  ctx.JSONP(map[string]string{
+  _, err := ctx.JSONP(map[string]string{
     "health": "true",
   })
+  if err != nil {
+    zgo.Log.Error(err)
+    return
+  }
 }

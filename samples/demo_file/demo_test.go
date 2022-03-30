@@ -44,6 +44,9 @@ func TestF(t *testing.T) {
 
   //F()
   fd, err := os.OpenFile("shoujihao.txt", os.O_CREATE|os.O_WRONLY, 0600)
+  if err != nil {
+    panic(err)
+  }
 
   output := bufio.NewWriter(fd)
 
@@ -59,8 +62,16 @@ func TestF(t *testing.T) {
     }
     o := "10100" + s
     ch <- o
-    output.WriteString(o)
-    output.WriteString("\n")
+    _, err := output.WriteString(o)
+    if err != nil {
+      zgo.Log.Error(err)
+      return
+    }
+    _, err = output.WriteString("\n")
+    if err != nil {
+      zgo.Log.Error(err)
+      return
+    }
   }
   t2 := time.Now()
   output.Flush()

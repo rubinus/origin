@@ -67,7 +67,7 @@ func (m MysqlDemo) Get(id uint32) (*House, error) {
   defer cancel()
 
   //查询参数
-  zgo.Engine(&zgo.Options{
+  err := zgo.Engine(&zgo.Options{
     Env:     "dev",
     Project: config.Conf.Project,
     Mysql: []string{
@@ -75,7 +75,9 @@ func (m MysqlDemo) Get(id uint32) (*House, error) {
       //"mysql_sell_2",
     },
   })
-
+  if err != nil {
+    panic(err)
+  }
   args := make(map[string]interface{})
   obj := &House{}
   // 拼接dbname   如果不随城市变化，固定城市只用写表名即可
@@ -105,7 +107,7 @@ func (m MysqlDemo) Create(name string) (*House, error) {
   defer cancel()
 
   //查询参数
-  zgo.Engine(&zgo.Options{
+  err := zgo.Engine(&zgo.Options{
     Env:     config.Conf.Env,
     Project: config.Conf.Project,
     Mysql: []string{
@@ -113,6 +115,10 @@ func (m MysqlDemo) Create(name string) (*House, error) {
       "mysql_sell_2",
     },
   })
+  if err != nil {
+    zgo.Log.Error(err)
+  }
+
   for {
     if zgo.Mysql != nil {
       fmt.Println(zgo.Mysql)
@@ -147,7 +153,7 @@ func (m MysqlDemo) List() (*[]House, error) {
   defer cancel()
 
   //查询参数
-  zgo.Engine(&zgo.Options{
+  err := zgo.Engine(&zgo.Options{
     Env:     config.Conf.Env,
     Project: config.Conf.Project,
     Mysql: []string{
@@ -155,7 +161,9 @@ func (m MysqlDemo) List() (*[]House, error) {
       "mysql_sell_2",
     },
   })
-
+  if err != nil {
+    zgo.Log.Error(err)
+  }
   args := make(map[string]interface{})
   obj := &[]House{}
   // 拼接dbname   如果不随城市变化，固定城市只用写表名即可。
@@ -191,7 +199,7 @@ func (m MysqlDemo) Count() (int, error) {
   defer cancel()
 
   //查询参数
-  zgo.Engine(&zgo.Options{
+  err := zgo.Engine(&zgo.Options{
     Env:     config.Conf.Env,
     Project: config.Conf.Project,
     Mysql: []string{
@@ -199,7 +207,9 @@ func (m MysqlDemo) Count() (int, error) {
       "mysql_sell_2",
     },
   })
-
+  if err != nil {
+    zgo.Log.Error(err)
+  }
   args := make(map[string]interface{})
   a := &House{}
   args["table"] = a.TableName()
@@ -233,7 +243,7 @@ func (m MysqlDemo) UpdateOne(id uint32, name string) (int, error) {
   defer cancel()
 
   //查询参数
-  zgo.Engine(&zgo.Options{
+  err := zgo.Engine(&zgo.Options{
     Env:     config.Conf.Env,
     Project: config.Conf.Project,
     Mysql: []string{
@@ -241,7 +251,9 @@ func (m MysqlDemo) UpdateOne(id uint32, name string) (int, error) {
       "mysql_sell_2",
     },
   })
-
+  if err != nil {
+    zgo.Log.Error(err)
+  }
   obj := House{}
   obj.Id = id
   obj.Name = name
@@ -268,7 +280,7 @@ func (m MysqlDemo) UpdateByData(id uint32, name string) (int, error) {
   defer cancel()
 
   //查询参数
-  zgo.Engine(&zgo.Options{
+  err := zgo.Engine(&zgo.Options{
     Env:     config.Conf.Env,
     Project: config.Conf.Project,
     Mysql: []string{
@@ -276,7 +288,9 @@ func (m MysqlDemo) UpdateByData(id uint32, name string) (int, error) {
       "mysql_sell_2",
     },
   })
-
+  if err != nil {
+    zgo.Log.Error(err)
+  }
   obj := House{}
   obj.Id = id
   obj.Name = name
@@ -303,7 +317,7 @@ func (m MysqlDemo) UpdateByObj(id uint32, name string) (int, error) {
   defer cancel()
 
   //查询参数
-  zgo.Engine(&zgo.Options{
+  err := zgo.Engine(&zgo.Options{
     Env:     config.Conf.Env,
     Project: config.Conf.Project,
     Mysql: []string{
@@ -311,7 +325,9 @@ func (m MysqlDemo) UpdateByObj(id uint32, name string) (int, error) {
       "mysql_sell_2",
     },
   })
-
+  if err != nil {
+    zgo.Log.Error(err)
+  }
   obj := House{}
   obj.Id = id
   obj.Name = name
@@ -336,7 +352,7 @@ func (m MysqlDemo) DeleteOne(id uint32) (int64, error) {
   defer cancel()
 
   //查询参数
-  zgo.Engine(&zgo.Options{
+  err := zgo.Engine(&zgo.Options{
     Env:     config.Conf.Env,
     Project: config.Conf.Project,
     Mysql: []string{
@@ -344,7 +360,9 @@ func (m MysqlDemo) DeleteOne(id uint32) (int64, error) {
       "mysql_sell_2",
     },
   })
-
+  if err != nil {
+    zgo.Log.Error(err)
+  }
   // 也可以直接通过label获取
   c, err := zgo.Mysql.New(label)
   if err != nil {

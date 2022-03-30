@@ -65,6 +65,9 @@ func ProducerMuLabel() {
 
   body := []byte(`{"name":"朱大仙儿","label":"多个label--mq_label_bj"}`)
   ch, err := zgorabbitmq.Producer(ctx, "exchangeName", "topic", "routingKey", body)
+  if err != nil {
+    zgo.Log.Error(err)
+  }
   <-ch
 
 }

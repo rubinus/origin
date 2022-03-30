@@ -30,6 +30,9 @@ func main() {
     Loglevel: config.Conf.Loglevel,
     Project:  config.Conf.Project,
   })
+  if err != nil {
+    panic(err)
+  }
   conn, err := zgo.Grpc.Client(context.TODO(), address, "", zgo.Grpc.WithInsecure())
   if err != nil {
     log.Fatalf("did not connect: %v", err)

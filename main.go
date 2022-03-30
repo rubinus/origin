@@ -63,7 +63,10 @@ func init() {
   //====解析入参，并打印出来====
   flag.CommandLine.AddGoFlagSet(goflag.CommandLine)
   flag.Parse()
-  goflag.CommandLine.Parse([]string{})
+  err := goflag.CommandLine.Parse([]string{})
+  if err != nil {
+    panic(err)
+  }
   var inParams = make(map[string]string)
   flag.VisitAll(func(f *flag.Flag) {
     inParams[f.Name] = f.Value.String()
@@ -200,10 +203,14 @@ func main() {
   //用于pprof server分析性能
   go func() {
     fmt.Printf("Now listening pprof Server on: http://%s:%d/debug/pprof\n", zgo.Utils.GetIntranetIP(), config.Conf.PprofPort)
-    http.ListenAndServe(fmt.Sprintf("0.0.0.0:%v", config.Conf.PprofPort), nil)
+    err := http.ListenAndServe(fmt.Sprintf("0.0.0.0:%v", config.Conf.PprofPort), nil)
+    if err != nil {
+      zgo.Log.Error(err)
+      return
+    }
   }()
 
-  if config.Conf.StartService == false {
+  if !config.Conf.StartService {
     //正常启动服务，不使用服务注册与发现，标准模式
     normalStart(app)
   } else {
@@ -255,7 +262,7 @@ func useServiceRegistryDiscover(app *iris.Application) {
   //第二步 配置文件决定是否开启使用，这一步很重要，一定要注册外部可以访问当前服务的，尤其用docker时要注意
   //***********************************************************
   //todo 请确认下面三项 host httpport grpcport 使其它服务可访问到
-  if config.Conf.StartServiceRegistry == true {
+  if config.Conf.StartServiceRegistry {
     var host string
     if config.Conf.ServiceInfo.SvcHost == "" { //默认为空使用宿主机内部IP
       host = zgo.Utils.GetIntranetIP()
@@ -274,7 +281,7 @@ func useServiceRegistryDiscover(app *iris.Application) {
   //***********************************************************
   //第三步 配置文件决定是否开启使用，这是服务发现的监听，必须与第四步同时使用
   //***********************************************************
-  if config.Conf.StartServiceDiscover == true {
+  if config.Conf.StartServiceDiscover {
     watch := zgo.Service.Watch()
     httpChan := make(chan string, 1000)
     grpcChan := make(chan string, 1000)

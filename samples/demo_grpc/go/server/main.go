@@ -20,11 +20,14 @@ import (
 func main() {
   config.InitConfig("local", "", "", "", "")
 
-  zgo.Engine(&zgo.Options{
+  err := zgo.Engine(&zgo.Options{
     Env:      config.Conf.Env,
     Loglevel: config.Conf.Loglevel,
     Project:  config.Conf.Project,
   })
+  if err != nil {
+    panic(err)
+  }
 
   server, _ := zgo.Grpc.Server(context.TODO())
 

@@ -8,19 +8,20 @@ import (
 
 func Subscribe() {
   //ch,err := zgo.Redis.Subscribe(context.TODO(),"__keyevent@0__:expired") //订阅过期key的事件通知，用于定时执行任务
-  ch, err := zgo.Redis.PSubscribe(context.TODO(), "my*")
-  if err != nil {
-    zgo.Log.Error(err)
-    return
-  }
-
-  for {
-    select {
-    case msg := <-ch:
-      fmt.Println(msg.Channel)
-      fmt.Println(string(msg.Message))
-    }
-  }
+  //var ch string
+  //err := zgo.Redis.PSubscribe(context.TODO(), ch,"my*")
+  //if err != nil {
+  //  zgo.Log.Error(err)
+  //  return
+  //}
+  //
+  //for {
+  //  select {
+  //  case msg := <-ch:
+  //    fmt.Println(msg.Channel)
+  //    fmt.Println(string(msg.Message))
+  //  }
+  //}
 
 }
 
@@ -87,55 +88,55 @@ func Xack() {
 
 func Read() {
 
-  streams := []string{
-    "lol",
-  }
-  streamReader, err := zgo.Redis.NewStreamReader(streams, "group-101", "101")
-  if err != nil {
-    zgo.Log.Error(err)
-    return
-  }
-
-  if streamReader.Err() != nil {
-    zgo.Log.Error(streamReader.Err())
-    return
-  }
-
-  for {
-    if _, entries, ok := streamReader.Next(); ok == true {
-      if len(entries) > 0 {
-        fmt.Println("-----", entries)
-      }
-    }
-  }
+  //streams := []string{
+  //  "lol",
+  //}
+  //streamReader, err := zgo.Redis.NewStreamReader(streams, "group-101", "101")
+  //if err != nil {
+  //  zgo.Log.Error(err)
+  //  return
+  //}
+  //
+  //if streamReader.Err() != nil {
+  //  zgo.Log.Error(streamReader.Err())
+  //  return
+  //}
+  //
+  //for {
+  //  if _, entries, ok := streamReader.Next(); ok == true {
+  //    if len(entries) > 0 {
+  //      fmt.Println("-----", entries)
+  //    }
+  //  }
+  //}
 }
 
 func ReadNew() {
-  var streamName = "key-101"
-  var groupName = "group-102"
-
-  zgo.Redis.XGroupCreate(context.TODO(), streamName, groupName, "0") //从0开始
-
-  streams := []string{
-    //streamName,
-    //"lol",
-  }
-  streamReader, err := zgo.Redis.NewStreamReader(streams, groupName, "101")
-  if err != nil {
-    zgo.Log.Error(err)
-    return
-  }
-
-  if streamReader.Err() != nil {
-    zgo.Log.Error(streamReader.Err())
-    return
-  }
-
-  for {
-    if _, entries, ok := streamReader.Next(); ok == true {
-      if len(entries) > 0 {
-        fmt.Println(groupName, "===", entries)
-      }
-    }
-  }
+  //var streamName = "key-101"
+  //var groupName = "group-102"
+  //
+  //zgo.Redis.XGroupCreate(context.TODO(), streamName, groupName, "0") //从0开始
+  //
+  //streams := []string{
+  //  //streamName,
+  //  //"lol",
+  //}
+  //streamReader, err := zgo.Redis.NewStreamReader(streams, groupName, "101")
+  //if err != nil {
+  //  zgo.Log.Error(err)
+  //  return
+  //}
+  //
+  //if streamReader.Err() != nil {
+  //  zgo.Log.Error(streamReader.Err())
+  //  return
+  //}
+  //
+  //for {
+  //  if _, entries, ok := streamReader.Next(); ok == true {
+  //    if len(entries) > 0 {
+  //      fmt.Println(groupName, "===", entries)
+  //    }
+  //  }
+  //}
 }

@@ -17,7 +17,7 @@ func CallFun() {
   config.InitConfig("local", "", "", "", "")
 
   err := zgo.Engine(&zgo.Options{
-    CPath: config.Conf.CPath,
+    CPath: "/Users/rubinus/app/origin/config",
     Env:      config.Conf.Env,
     Project:  config.Conf.Project,
     Loglevel: config.Conf.Loglevel,
@@ -84,18 +84,33 @@ func CallFun() {
     B string
   }{}
   var str2 = `{"B":"456"}`
-  zgo.Utils.Unmarshal([]byte(str), st)
+  err = zgo.Utils.Unmarshal([]byte(str), st)
+  if err != nil {
+    panic(err)
+  }
   fmt.Println(st)
   fmt.Println(str2)
   fmt.Println("==================")
 
   timeString := zgo.Utils.FormatStringToStandTimeString("20190724151558")
-  pt, err := zgo.Utils.ParseTime(timeString)
+  time, err := zgo.Utils.ParseTime(timeString)
+  if err != nil {
+    zgo.Log.Error(err)
+  }
+  pt := time
   short := zgo.Utils.FormatFromUnixTimeShort(pt.Unix())
 
   fmt.Println(short)
 
-  GetIPv4ByInterface("en0")
+  byInterface, err := GetIPv4ByInterface("en0")
+  if err != nil {
+    fmt.Println(err)
+    return
+  }
+  fmt.Println("byInterface:",byInterface)
+
+  duration := zgo.Utils.NextDayDuration()
+  fmt.Println("duration: ",duration)
 }
 func GetIPv4ByInterface(name string) (string, error) {
   var ips string

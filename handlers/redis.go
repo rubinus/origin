@@ -18,7 +18,10 @@ func RedisGet(ctx iris.Context) {
 
   defer func() {
     if errStr != "" {
-      zgo.Http.JsonpErr(ctx, errStr)
+      _, err := zgo.Http.JsonpErr(ctx, errStr)
+      if err != nil {
+        zgo.Log.Error(err)
+      }
     }
   }()
 
@@ -32,7 +35,11 @@ func RedisGet(ctx iris.Context) {
   key := fmt.Sprintf("%s:%s:%s", "zgo", "origin", name)
 
   //先写入
-  zgo.Redis.Set(cotx, key, fmt.Sprintf("写入时间戳 %v", zgo.Utils.NowUnix()))
+  _, err := zgo.Redis.Set(cotx, key, fmt.Sprintf("写入时间戳 %v", zgo.Utils.NowUnix()))
+  if err != nil {
+    zgo.Log.Error(err)
+    return
+  }
 
   // 第三：调用zgo engine来处理业务逻辑
   val, err := zgo.Redis.Get(cotx, key)
@@ -56,7 +63,10 @@ func RedisGet(ctx iris.Context) {
     errStr = "call redis get string timeout"
     zgo.Log.Error(errStr) //通过zgo.Log统计日志
   default:
-    zgo.Http.JsonpOK(ctx, result)
+    _, err := zgo.Http.JsonpOK(ctx, result)
+    if err != nil {
+      zgo.Log.Error(err)
+    }
   }
 
 }
