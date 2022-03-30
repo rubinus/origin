@@ -18,12 +18,15 @@ func init() {
 }
 
 func Call() {
-  engine.Run()
+  err := engine.Run()
+  if err != nil {
+    panic(err)
+  }
 
-  zgo.Log.Debug("debug")
-  zgo.Log.Info("info")
-  zgo.Log.Warn("warn")
-  zgo.Log.Error("error")
+  zgo.Log.Debug(debug)
+  zgo.Log.Info(info)
+  zgo.Log.Warn(warn)
+  zgo.Log.Error(error)
 
   //l.Info(222)
 

@@ -9,10 +9,6 @@ import (
   "time"
 )
 
-const (
-  label_bj = "redis_label_bj"
-)
-
 func TestGet(t *testing.T) {
 
   err := zgo.Engine(&zgo.Options{
@@ -67,6 +63,9 @@ func TestSubscribe(t *testing.T) {
 
   go func() {
     for {
+      if false {
+        fmt.Println(111)
+      }
       select {
       case <-time.Tick(1 * time.Second):
         ch, err := zgo.Redis.Publish(context.TODO(), "mychan", "lalala")
@@ -75,15 +74,28 @@ func TestSubscribe(t *testing.T) {
         r, _ := zgo.Redis.Hgetall(context.TODO(), "aaa")
         fmt.Printf("%+v====\n", r)
         bytes, err := zgo.Utils.Marshal(r)
+        if err != nil {
+          zgo.Log.Error(err)
+        }
         re := result{}
-        zgo.Utils.Unmarshal(bytes, &re)
+        err = zgo.Utils.Unmarshal(bytes, &re)
+        if err != nil {
+          zgo.Log.Error(err)
+        }
         fmt.Printf("%+v---------\n", re)
 
         get, err := zgo.Redis.Get(context.TODO(), "zgo:start:niubi:6")
+        if err != nil {
+          zgo.Log.Error(err)
+        }
         fmt.Println("get==", get.(string))
 
         zrangebyscore, err := zgo.Redis.Zrangebyscore(context.TODO(), "za", 0, 1000, true, 0, 101)
+        if err != nil {
+          zgo.Log.Error(err)
+        }
         fmt.Println("zrange--", zrangebyscore)
+      default:
 
       }
     }

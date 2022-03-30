@@ -39,8 +39,10 @@ func TestConsumer(t *testing.T) {
 
   for {
     select {
-    case <-time.Tick(3 * time.Second):
+    case <-time.NewTicker(3 * time.Second).C:
       fmt.Println("一直在消费着")
+    default:
+      time.Sleep(1*time.Millisecond)
     }
   }
 }

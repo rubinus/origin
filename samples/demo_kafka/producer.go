@@ -18,7 +18,7 @@ func Producer(label string, kafkaClient zgokafka.Kafkaer, i int, b bool) chan in
   bodyMulti := []byte(fmt.Sprintf("msg-multi-%s--%d", label, i))
   var rch chan uint8
   var err error
-  if b == true { //一次发送多条
+  if b { //一次发送多条
     bodyMutil := [][]byte{
       body,
       bodyMulti,

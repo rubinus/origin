@@ -37,7 +37,9 @@ func CallK8s() {
     cof.WithMasterUrl("https://kubernetes.docker.internal:6443"),
     cof.WithKubeConfig("/Users/rubinus/.kube/config"),
   )
-
+  if err != nil {
+    panic(err)
+  }
   //2-1.为另一个赋值
   kco_1, err := zgo.K8s.ConfigOption().Build(
    cof.WithMasterUrl("https://install-prow-dns-809743c1.hcp.eastasia.azmk8s.io:443"),

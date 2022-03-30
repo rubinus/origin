@@ -24,8 +24,8 @@ type ASRResult struct {
 var (
   fshost   = flag.String("fshost", "testwsssip.example.com", "Freeswitch hostname. Default: localhost")
   fsport   = flag.Uint("fsport", 8021, "Freeswitch port. Default: 8021")
-  password = flag.String("pass", "ClueCon", "Freeswitch password. Default: ClueCon")
-  timeout  = flag.Int("timeout", 10, "Freeswitch conneciton timeout in seconds. Default: 10")
+  //password = flag.String("pass", "ClueCon", "Freeswitch password. Default: ClueCon")
+  //timeout  = flag.Int("timeout", 10, "Freeswitch conneciton timeout in seconds. Default: 10")
 )
 
 // ACCBizdata 指定header
@@ -37,7 +37,7 @@ func doClientAPI(client *eventsocket.Connection, jsonArgs interface{}) {
     fmt.Printf("Error while parsing json object: %s", err)
   }
 
-  fmt.Sprintf("%s\n", jsonMarshal)
+  fmt.Printf("%s\n", jsonMarshal)
 
   _, err = client.Send(fmt.Sprintf("bgapi lua lua/aiapi.lua %s", jsonMarshal))
   if err != nil {
@@ -132,8 +132,6 @@ func doAsrResult(client *eventsocket.Connection, asrResult *ASRResult, transferU
     playbackInfo(client, asrResult.SessionID, "http://pdlolj1mi.bkt.clouddn.com/2a620201809181847422822.wav")
   } else if strings.Contains(text, "转接") {
     transferCall(client, transferUUID, asrResult.SessionID)
-  } else {
-
   }
 }
 
@@ -150,7 +148,10 @@ func main() {
 
   //go client.Handle()
 
-  client.Send("events json PLAYBACK_STOP CHANNEL_ANSWER CHANNEL_HANGUP_COMPLETE CUSTOM asr::answer ai::stop")
+  _, err = client.Send("events json PLAYBACK_STOP CHANNEL_ANSWER CHANNEL_HANGUP_COMPLETE CUSTOM asr::answer ai::stop")
+  if err != nil {
+    fmt.Println(err)
+  }
   //client.Send("events json ALL")
 
   // generate uuid
@@ -193,7 +194,7 @@ func main() {
         playbackHello(client, sessionUUID)
       }
     case "CUSTOM":
-      fmt.Sprintf("%s\n", msg)
+      fmt.Printf("%s\n", msg)
       switch msg.Get("Event-Subclass") {
       case "ai::stop":
         fmt.Println("ai::stop")
@@ -220,8 +221,5 @@ func main() {
       default:
       }
     }
-    // fmt.Printf("%s\n", msg)
   }
-
-  fmt.Println("execute end")
 }

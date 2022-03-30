@@ -3,7 +3,6 @@ package grpcclients
 import (
   "context"
   "errors"
-  "fmt"
   "github.com/gitcpu-io/origin/pb/helloworld"
 )
 
@@ -32,7 +31,7 @@ func RpcHelloWorld(ctx context.Context, request *pb_helloworld.HelloRequest) (*p
 
   select {
   case <-ctx.Done():
-    errStr := fmt.Sprintf("RpcHelloWorld timeout")
+    errStr := "RpcHelloWorld timeout"
     return nil, errors.New(errStr)
 
   case err := <-errCh:

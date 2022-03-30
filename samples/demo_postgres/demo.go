@@ -276,18 +276,18 @@ func ExampleDB_Model() {
   // Story<1 Cool story User<1 admin [admin1@admin admin2@admin]>>
 }
 
-func createShareAndWxuserSchema(db *zgo.PostgresDB) error {
-  for _, model := range []interface{}{(*Wxuser)(nil), (*Share)(nil)} {
-    fmt.Println(model)
-    err := db.CreateTable(model, &zgo.PostgresCreateTableOptions{
-      //Temp: true,
-    })
-    if err != nil {
-      return err
-    }
-  }
-  return nil
-}
+//func createShareAndWxuserSchema(db *zgo.PostgresDB) error {
+//  for _, model := range []interface{}{(*Wxuser)(nil), (*Share)(nil)} {
+//    fmt.Println(model)
+//    err := db.CreateTable(model, &zgo.PostgresCreateTableOptions{
+//      //Temp: true,
+//    })
+//    if err != nil {
+//      return err
+//    }
+//  }
+//  return nil
+//}
 
 func createSchema(db *zgo.PostgresDB) error {
   for _, model := range []interface{}{(*User)(nil), (*Story)(nil)} {
@@ -302,21 +302,21 @@ func createSchema(db *zgo.PostgresDB) error {
   return nil
 }
 
-func createAccountSchema(db *zgo.PostgresDB) error {
-  for _, model := range []interface{}{(*Account)(nil)} {
-    err := db.CreateTable(model, &zgo.PostgresCreateTableOptions{
-      //Temp: true,
-    })
-    if err != nil {
-      return err
-    }
-  }
-  return nil
-}
+//func createAccountSchema(db *zgo.PostgresDB) error {
+//  for _, model := range []interface{}{(*Account)(nil)} {
+//    err := db.CreateTable(model, &zgo.PostgresCreateTableOptions{
+//      //Temp: true,
+//    })
+//    if err != nil {
+//      return err
+//    }
+//  }
+//  return nil
+//}
 
 func ExampleDB_Insert_dynamicTableName(db *zgo.PostgresDB) {
   type NamelessModel struct {
-    tableName struct{} `sql:"_"` // "_" means no name
+    //tableName struct{} `sql:"_"` // "_" means no name
     Id        int
   }
 

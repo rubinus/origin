@@ -21,14 +21,15 @@ func TestGet(t *testing.T) {
     Loglevel: config.Conf.Loglevel,
     Project:  config.Conf.Project,
     Es: []string{
-      "new_write",
+      new_write,
     },
   })
 
   if err != nil {
     panic(err)
   }
-  ctx, _ := context.WithTimeout(context.Background(), 5*time.Second)
+  ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+  defer cancel()
   args := map[string]interface{}{}
   index := "active_bj_house_sell"
   table := "spider"
@@ -37,7 +38,9 @@ func TestGet(t *testing.T) {
   //sellR, _ := zgo.Es.New(new_write)
 
   res, err := zgo.Es.SearchDsl(ctx, index, table, dsl, args)
-
+  if err != nil {
+    panic(err)
+  }
   fmt.Print(res)
   //result, err := sellR.Search(ctx, args)
 

@@ -20,16 +20,25 @@ func DoPay(ctx iris.Context) {
   request := &models.PayRequest{}
   if strings.Contains(ctx.GetContentTypeRequested(), "json") {
     if err := ctx.ReadJSON(request); err != nil {
-      zgo.Http.JsonpErr(ctx, "json body is error，"+err.Error())
+      _, err := zgo.Http.JsonpErr(ctx, "json body is error，"+err.Error())
+      if err != nil {
+        zgo.Log.Error(err)
+      }
       return
     }
   } else {
-    zgo.Http.JsonpErr(ctx, "pls send application/json")
+    _, err := zgo.Http.JsonpErr(ctx, "pls send application/json")
+    if err != nil {
+      zgo.Log.Error(err)
+    }
     return
   }
 
   if request.Bid == "" || request.Aid == 0 {
-    zgo.Http.JsonpErr(ctx, "业务线和事件名不能为空")
+    _, err := zgo.Http.JsonpErr(ctx, "业务线和事件名不能为空")
+    if err != nil {
+      zgo.Log.Error(err)
+    }
     return
   }
 
@@ -37,7 +46,10 @@ func DoPay(ctx iris.Context) {
   tcb, err := pay.Insert(request)
   if err != nil {
     zgo.Log.Error(err)
-    zgo.Http.JsonpErr(ctx, err.Error())
+    _, err := zgo.Http.JsonpErr(ctx, err.Error())
+    if err != nil {
+      zgo.Log.Error(err)
+    }
     return
   }
 
@@ -45,6 +57,8 @@ func DoPay(ctx iris.Context) {
   r["status"] = "done"
   r["id"] = tcb.Id
 
-  zgo.Http.JsonpOK(ctx, r)
-
+  _, err = zgo.Http.JsonpOK(ctx, r)
+  if err != nil {
+    zgo.Log.Error(err)
+  }
 }

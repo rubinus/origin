@@ -37,9 +37,11 @@ func CallLimiter() {
   go func() {
     for {
       select {
-      case <-time.Tick(200 * time.Millisecond):
+      case <-time.NewTicker(200 * time.Millisecond).C:
         b.Resize(10, 0)
         fmt.Println("============================重置长度10", b.Cap(), b.Len())
+      default:
+        time.Sleep(1*time.Millisecond)
       }
     }
   }()
@@ -47,9 +49,11 @@ func CallLimiter() {
   go func() {
     for {
       select {
-      case <-time.Tick(100 * time.Millisecond):
+      case <-time.NewTicker(100 * time.Millisecond).C:
         b.Resize(6, 0)
         fmt.Println("------------------------------重置长度6", b.Cap(), b.Len())
+      default:
+        time.Sleep(1*time.Millisecond)
       }
     }
   }()
@@ -57,27 +61,31 @@ func CallLimiter() {
   go func() {
     for {
       select {
-      case <-time.Tick(100 * time.Millisecond):
+      case <-time.NewTicker(100 * time.Millisecond).C:
         b.Release(1) //每1秒释放一次token
         fmt.Println("容量:", b.Cap(), "长度:", b.Len())
+      default:
+        time.Sleep(1*time.Millisecond)
       }
     }
   }()
 
   for {
+    if false {
+      fmt.Println(111)
+    }
     select {
-    case <-time.Tick(100 * time.Millisecond):
+    case <-time.NewTicker(100 * time.Millisecond).C:
       token := b.Get(1)
       if token > 0 {
         fmt.Println(b.Cap(), b.Len(), "取到token，可以继续业务。b.GetToken()==", token)
       } else {
-        //fmt.Println(b.Len(), "no token，can't continue。b.GetToken()==", token)
+        fmt.Println(b.Len(), "no token，can't continue。b.GetToken()==", token)
       }
+    default:
 
     }
-
   }
-
 }
 
 func CallLimiter2() {
@@ -154,7 +162,7 @@ func CallLimiter3() {
       if token > 0 {
         fmt.Println(b.Cap(), b.Len(), "取到token，可以继续业务。b.GetToken()==", token)
       } else {
-        //fmt.Println(b.Len(), "no token，can't continue。b.GetToken()==", token)
+        fmt.Println(b.Len(), "no token，can't continue。b.GetToken()==", token)
       }
     }
   }()
@@ -167,10 +175,15 @@ func CallLimiter3() {
   }()
 
   for {
+    if false {
+      fmt.Println(111)
+    }
     select {
-    case <-time.Tick(500 * time.Millisecond):
+    case <-time.NewTicker(500 * time.Millisecond).C:
       b.Resize(10, 0)
       fmt.Println("============================重置长度10", b.Cap(), b.Len())
+    default:
+
     }
   }
 
