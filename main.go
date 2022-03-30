@@ -37,9 +37,9 @@ var (
 )
 
 func init() {
-  flag.StringVar(&cpath, "cpath", "", "不使用etcd配置中心时，通过配置文件cpath和env=local一起使用")
+  flag.StringVar(&cpath, "cpath", "", "当不使用etcd作为配置中心时，通过配置文件cpath和env=local一起使用")
 
-  flag.StringVar(&env, "env", "local", "start local/dev/qa/pro env config")
+  flag.StringVar(&env, "env", "local", "start local/dev/qa/pro env config，本机开发使用local，打包容器后使用container")
 
   flag.StringVar(&project, "project", "", "create project id by zgo engine admin")
 
@@ -69,6 +69,7 @@ func init() {
     inParams[f.Name] = f.Value.String()
   })
   fmt.Println("Input args:", inParams)
+  fmt.Println()
   //====结束入参处理====
 
   if os.Getenv("ENV") != "" { //从os的env取得ENV，用来在yaml文件中的配置，决定使用哪个*.json配置
@@ -95,23 +96,6 @@ func init() {
     if err == nil {
       config.Conf.CPath = fmt.Sprintf("%s/%s",pwd,"config")
     }
-  }
-
-  //输入覆盖配置中的.json中的
-  if svcName != "" {
-    config.Conf.ServiceInfo.SvcName = svcName
-  }
-  if svcHost != "" {
-    config.Conf.ServiceInfo.SvcHost = svcHost
-  }
-  if svcHttpPort != "" {
-    config.Conf.ServiceInfo.SvcHttpPort = svcHttpPort
-  }
-  if svcGrpcPort != "" {
-    config.Conf.ServiceInfo.SvcGrpcPort = svcGrpcPort
-  }
-  if svcEtcdHosts != "" {
-    config.Conf.ServiceInfo.SvcEtcdHosts = svcEtcdHosts
   }
 
   if os.Getenv("PROJECT") != "" {
@@ -145,6 +129,23 @@ func init() {
     config.Conf.ServiceInfo.SvcEtcdHosts = os.Getenv("SVC_ETCD_HOSTS") //来os的env，用来在yaml文件中的配置
   }
 
+  //Args输入会覆盖ENV及配置中的xxxx.json中的变量
+  if svcName != "" {
+    config.Conf.ServiceInfo.SvcName = svcName
+  }
+  if svcHost != "" {
+    config.Conf.ServiceInfo.SvcHost = svcHost
+  }
+  if svcHttpPort != "" {
+    config.Conf.ServiceInfo.SvcHttpPort = svcHttpPort
+  }
+  if svcGrpcPort != "" {
+    config.Conf.ServiceInfo.SvcGrpcPort = svcGrpcPort
+  }
+  if svcEtcdHosts != "" {
+    config.Conf.ServiceInfo.SvcEtcdHosts = svcEtcdHosts
+  }
+
   if config.Conf.ServiceInfo.SvcHttpPort == "" {
     config.Conf.ServiceInfo.SvcHttpPort = fmt.Sprintf("%d", config.Conf.HttpPort)
   }
@@ -156,7 +157,7 @@ func init() {
     panic("请输入配置文件所在路径,必须提供cpath参数值")
   }
   fmt.Println()
-  fmt.Printf("Apply config: %+v", zgo.Utils.StructToMap(&config.Conf))
+  fmt.Printf("Apply config: %#v", zgo.Utils.StructToMap(&config.Conf))
   fmt.Println()
   fmt.Println()
 }
@@ -198,7 +199,7 @@ func main() {
 
   //用于pprof server分析性能
   go func() {
-    fmt.Printf("Now listening pprof Serv on: http://%s:%d/debug/pprof\n", zgo.Utils.GetIntranetIP(), config.Conf.PprofPort)
+    fmt.Printf("Now listening pprof Server on: http://%s:%d/debug/pprof\n", zgo.Utils.GetIntranetIP(), config.Conf.PprofPort)
     http.ListenAndServe(fmt.Sprintf("0.0.0.0:%v", config.Conf.PprofPort), nil)
   }()
 
@@ -219,12 +220,13 @@ func normalStart(app *iris.Application) {
   grpcclients.RPCClientsRun(nil) //start grpc client
 
   //run起自己
-  //****change four*****
   iris.RegisterOnInterrupt(func() { //优雅的退出 -- 使用iris框架中的退出
     timeout := 5 * time.Second
     ctx, cancel := context.WithTimeout(context.Background(), timeout)
     defer cancel()
+    fmt.Println()
     fmt.Println("######origin, this grpcserver is normal shutdown by Iris, you can do something from here ...######")
+    fmt.Println()
     // 关闭所有主机
     config.Goodbye()
     _ = app.Shutdown(ctx)
@@ -233,7 +235,6 @@ func normalStart(app *iris.Application) {
     h.RegisterOnShutdown(func() {
 
     })
-
   }), iris.WithoutInterruptHandler)
 }
 
@@ -307,9 +308,6 @@ func useServiceRegistryDiscover(app *iris.Application) {
 
   }
 
-  //这是测试可取消
-  //TestLB()
-
   //***********************************************************
   //第五步 run起服务自己并监听当服务down之前，执行某些操作
   //***********************************************************
@@ -322,7 +320,9 @@ func useServiceRegistryDiscover(app *iris.Application) {
     if err != nil {
       zgo.Log.Error(err)
     }
+    fmt.Println()
     fmt.Println("######origin, this grpcserver use the register/discover shutdown by Iris, you can do something from here ...######")
+    fmt.Println()
     // 关闭所有主机
     config.Goodbye()
     _ = app.Shutdown(ctx)
@@ -335,33 +335,5 @@ func useServiceRegistryDiscover(app *iris.Application) {
         zgo.Log.Error(err)
       }
     })
-
   }), iris.WithoutInterruptHandler)
-}
-
-func TestLB() {
-  //以下为测试使用，通过内部负载均衡使用其它服务
-  go func() {
-    for {
-      //每次LB会动态改变config.Conf中的host变量
-      fmt.Println("DemoHostForPayCanChangeAnyName: ", config.Conf.DemoHostForPayCanChangeAnyName)
-
-      time.Sleep(1 * time.Second)
-      //lbRes, err := zgo.Service.LB(config.Conf.ServiceInfo.SvcName)
-      lbRes, err := zgo.Service.LB("timer.bffp")
-      if err != nil {
-        zgo.Log.Error(err)
-        return
-      }
-      //fmt.Printf("host: %s, HttpPort: %s, GrpcPort: %s\n", lbRes.SvcHost, lbRes.SvcHttpPort, lbRes.SvcGrpcPort)
-      //ul := fmt.Sprintf("http://%s:%s", lbRes.SvcHost, lbRes.SvcHttpPort)
-      _, err = zgo.Http.Get(lbRes.SimpleHttpHost)
-      if err != nil {
-        zgo.Log.Error(err)
-        continue
-      }
-      zgo.Log.Infof("请求http: %s, 200\n", lbRes.SimpleHttpHost)
-
-    }
-  }()
 }

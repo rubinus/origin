@@ -69,6 +69,7 @@ func initConfig(e, project, etcdHosts, port, rpcPort string) {
 
   bf, err := ioutil.ReadFile(cf)
   if err != nil {
+    fmt.Println("报错: ",cf)
     panic(err)
   }
 
