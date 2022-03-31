@@ -9,7 +9,7 @@ import (
 )
 
 type User struct {
-  Id       zgo.MgoObjectId `json:"id,omitempty" bson:"_id,omitempty"`
+  Id       zgo.MongoObjectId `json:"id,omitempty" bson:"_id,omitempty"`
   Username string          `json:"username" bson:"username" `
   Age      int             `json:"age" bson:"age"`
   Address  int             `json:"address" bson:"address"`
@@ -128,7 +128,7 @@ func FindOne(ctx context.Context, username string) (*User, error) {
   r := &User{}
 
   //组织args
-  args := &zgo.MgoArgs{
+  args := &zgo.MongoArgs{
     Filter: filter, //查询条件
     Fields: fields, //对查询出的结果项，筛选字段
     Sort:   sort,   //排序
@@ -162,7 +162,7 @@ func Find(ctx context.Context, username string) ([]*User, error) {
   fields["username"] = 1
 
   //组织args
-  args := &zgo.MgoArgs{
+  args := &zgo.MongoArgs{
     Filter: filter, //查询条件
     Fields: fields, //对查询出的结果项，筛选字段
     Sort:   sort,   //排序
