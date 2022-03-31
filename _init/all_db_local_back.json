@@ -178,12 +178,12 @@
       ]
     }
   ],
-  "mgo": [
+  "mongo": [
     {
-      "key": "mgo_label_bj",
+      "key": "mongo_label_bj",
       "values": [
         {
-          "c": "北京主库 mgo",
+          "c": "北京主库 mongo",
           "host": "localhost",
           "port": 27018,
           "username": "admin",
@@ -192,7 +192,7 @@
           "poolSize": 789
         },
         {
-          "c": "北京从库 mgo",
+          "c": "北京从库 mongo",
           "host": "localhost",
           "port": 27018,
           "username": "admin",
@@ -203,10 +203,10 @@
       ]
     },
     {
-      "key": "mgo_label_sh",
+      "key": "mongo_label_sh",
       "values": [
         {
-          "c": "上海主库 mgo",
+          "c": "上海主库 mongo",
           "host": "localhost",
           "port": 27017,
           "username": "",
@@ -215,7 +215,7 @@
           "poolSize": 789
         },
         {
-          "c": "上海从库 mgo",
+          "c": "上海从库 mongo",
           "host": "localhost",
           "port": 27017,
           "username": "",

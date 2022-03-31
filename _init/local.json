@@ -66,12 +66,12 @@
       ]
     }
   ],
-  "mgo": [
+  "mongo": [
     {
-      "key": "mgo_label_bj",
+      "key": "mongo_label_bj",
       "values": [
         {
-          "c": "北京主库 mgo",
+          "c": "北京主库 mongo",
           "host": "localhost",
           "port": 27018,
           "username": "admin",
@@ -80,7 +80,7 @@
           "poolSize": 789
         },
         {
-          "c": "北京从库 mgo",
+          "c": "北京从库 mongo",
           "host": "localhost",
           "port": 27018,
           "username": "admin",
