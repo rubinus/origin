@@ -28,6 +28,9 @@ db.createUser(
 
 db.auth('admin','admin')
 
+### 创建天气的db，准备测试
+use weather
+
 ### 插入测试数据
 
 use profile
@@ -79,6 +82,21 @@ docker run --rm -p 8081:80 -p 8181:8181 -p 50051:50051 -d --name origin rubinus/
 ## 如果使用了etcd为配置中心，需要带上参数 etcdHosts，同时env的取值需要是dev级别以上，不能再用local，如下所示
 
 go run main.go --env dev --etcdHosts localhost:3379
+
+# 访问
+
+## Post保存天气信息
+```shell
+curl -l -H "Content-type: application/json" -X POST -d '{"query":"深圳市"}' "http://localhost:8081/v1/weather/put"
+
+```
+
+## 查询天气列表
+
+```shell
+curl -l "http://localhost:8081/v1/weather/list?city=深圳市"
+
+```
 
 # How to use the zgo engine
 
