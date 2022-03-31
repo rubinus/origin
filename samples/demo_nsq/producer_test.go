@@ -41,7 +41,7 @@ func TestProducer(t *testing.T) {
   }
   //map[string][]map[string]string
 
-  //测试读取nsq数据，wait for sdk init connection
+  //测试读取nsq数据，wait for sdk _init connection
   time.Sleep(2 * time.Second)
 
   var replyChan = make(chan int)

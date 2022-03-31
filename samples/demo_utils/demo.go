@@ -5,6 +5,7 @@ import (
   "github.com/gitcpu-io/origin/config"
   "github.com/gitcpu-io/zgo"
   "net"
+  "os"
 )
 
 var st = &struct {
@@ -16,8 +17,12 @@ var st = &struct {
 func CallFun() {
   config.InitConfig("local", "", "", "", "")
 
-  err := zgo.Engine(&zgo.Options{
-    CPath: "/Users/rubinus/app/origin/config",
+  getwd, err := os.Getwd()
+  if err != nil {
+    panic(err)
+  }
+  err = zgo.Engine(&zgo.Options{
+    CPath: fmt.Sprintf("%s/%s",getwd,"config"),
     Env:      config.Conf.Env,
     Project:  config.Conf.Project,
     Loglevel: config.Conf.Loglevel,

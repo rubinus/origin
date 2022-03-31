@@ -1,14 +1,14 @@
 # origin
 
-# 本地运行docker-compose
+# 本地运行docker-compose 启动中间件db/cache/queue等
 
 执行 docker-compose up 或 docker-compose up -d
 
 docker-compose ps
 
-## redis默认使用6379端口
+## Redis默认使用 6379 端口
 
-## Mongo
+## Mongo默认使用 27018 端口
 
 docker exec -it mongo27018 sh
 
@@ -32,18 +32,33 @@ db.auth('admin','admin')
 
 use profile
 
+```javascript
 for(var i=100;i<=200;i++){ db.bj.insert({ username: 'zhangsan', age:Math.round(Math.random() * 100), address:Math.round(
 Math.random() * 100), }); }
+```
 
-## config/local.json与container.json
+# 关于配置文件 _init/xxxx.json 和 config/xxxx.json 的说明
+
+## _init目录，项目初始化（如果使用etcd作为配置中心的话运行下面的，如果是用本地配置文件的方式就不用）
+```shell
+cd origin/_init
+
+go run main.go
+```
+
+其中_init目录下 local.json 只有redis和mongodb
+
+### all_db_local_back.json 可以复制内容到 local.json 中，有全量的中间件可以使用，具体要看docker-compose运行了多少个
+
+## config目录中的local.json与container.json
 
 > local.json适合本地调试开发 8081端口，仍然使用原生的方式来连接各种db，部署以配置文件的方式在ECS机器上，在此以redis为例
 
-> 如果使用 dev.json/qa.json/pro.json就会使用etcd做为库，其中的数据存储格式就是local.json中redis部分的实例，
+> 如果使用 dev.json/qa.json/pro.json就会使用etcd做为库 默认80端口，其中的数据存储格式就是_init/local.json中部分的实例，
 
 > 当然真实的 etcd中还存有其它mysql/mongo/kafka等等的配置文件
 
-> 当使用local.json本地开发时，还需要在 engine/zgo.go中指定使用的中间件的key
+> 当使用local.json本地开发时，还需要在 engine/zgo.go中指定使用的中间件的key, 你可能使用一个或多个中间件
 
 > container.json打包测试image时 默认是80端口
 
@@ -51,19 +66,26 @@ Math.random() * 100), }); }
 
 # auto build image 将会使用container模式
 
-make image 通过makefile，运行dockerfile，制作包含git版本的image
+通过makefile，运行dockerfile，制作包含git版本的image
+
+```shell
+make image
+```
 
 ## 在本地执行打包好的镜像origin
 
 docker run --rm -p 8081:80 -p 8181:8181 -p 50051:50051 -d --name origin rubinus/origin:v1.0
 
-# How to use the zgo engine
+## 如果使用了etcd为配置中心，需要带上参数 etcdHosts，同时env的取值需要是dev级别以上，不能再用local，如下所示
 
-## deploy文件目录是用运维用来部署k8s和istio的，其中的yaml文件需要由开发人员编写
+go run main.go --env dev --etcdHosts localhost:3379
+
+# How to use the zgo engine
 
 ## Http
 
-//前端ajax-->main.go(Run)-->routes-->(实际业务处理handler)-->services-->zgo.组件(mysql/mongo/redis/pika)-->models(库)
+//前端ajax-->main.go(Run)-->routes-->(实际业务处理handler)-->services-->zgo.组件(mysql/mongo/redis)-->models(库)
+
 请参照：routes对应的handlers中的regis.go来写接口
 
 ## Grpc
@@ -124,31 +146,31 @@ make
 
 make install
 
-## =====启动go run main.go 查看web服务下的pprof输入web=====
+## =====启动 go run main.go 查看web服务下的pprof输入web=====
 
-#### 图形报告
+### 图形报告
 
 http://localhost:8181/debug/pprof/
 
-#### 使用pprof查看所有gorutines
+### 使用pprof查看所有gorutines
 
 go tool pprof http://localhost:8181/debug/pprof/goroutine?debug=1
 
-#### 使用pprof查看堆内存分配
+### 使用pprof查看堆内存分配
 
 go tool pprof http://localhost:8181/debug/pprof/heap
 
-#### 使用pprof查看10秒CPU使用
+### 使用pprof查看10秒CPU使用
 
 go tool pprof http://localhost:8181/debug/pprof/profile?seconds=10
 
-#### 使用go tool trace查看trace
+### 使用go tool trace查看trace
 
 wget -O trace.out http://localhost:8181/debug/pprof/trace?seconds=10
 
 go tool trace trace.out
 
-### ========
+## ========
 
 # 编译文件mac或linux
 
@@ -156,15 +178,15 @@ go tool trace trace.out
 
 go build -o origin
 
-#### 查看逃逸分析
+## 查看逃逸分析
 
 go build -gcflags '-m -l' -o origin
 
-#### 使用godebug查看
+## 使用godebug查看
 
 GODEBUG=scheddetail=1,schedtrace=1000,gctrace=1 ./origin
 
-#### 使用godebug 直接运行main.go
+## 使用godebug 直接运行main.go
 
 GODEBUG=scheddetail=1,schedtrace=1000,gctrace=1 go run main.go
 
@@ -172,17 +194,17 @@ GODEBUG=scheddetail=1,schedtrace=1000,gctrace=1 go run main.go
 
 CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o origin
 
-用docker制作image(dck.example.test是任意一个标识，如果愿意你可以改为你的名字，每一次v0.0.1需要递增)
+# 用docker制作image
 
 ### 本机build
 
-docker build -t cr.gitcpu-io/origin:v0.0.1 .
+docker build -t cr.gitcpu-io/origin:v1.0 .
 
-docker push cr.gitcpu-io/origin:v0.0.1
+docker push cr.gitcpu-io/origin:v1.0
 
 ### 在服务器上执行
 
-docker pull cr.gitcpu-io/origin:v0.0.1
+docker pull cr.gitcpu-io/origin:v1.0
 
 docker rm -f origin
 
@@ -190,34 +212,30 @@ docker rm -f origin
 
 #### 下面一行非服务注册模式
 
-docker run -d --restart always -p 8081:80 -p 50051:50051 --name origin cr.gitcpu-io/origin:v0.0.1
+docker run -d --restart always -p 8081:80 -p 50051:50051 --name origin cr.gitcpu-io/origin:v1.0
 
 ### 作为服务注册(本地)
 
 docker run -d --restart always -p 8081:8081 -p 50051:50051 -e SVC_HOST=192.168.100.19 -e SVC_HTTP_PORT=8081 -e
-SVC_GRPC_PORT=50051 --name origin1 cr.gitcpu-io/origin:v0.0.1
+SVC_GRPC_PORT=50051 --name origin1 cr.gitcpu-io/origin:v1.0
 
 ### 再启动一个（仅更换端口号）模拟正式环境
 
 docker run -d --restart always -p 8082:8082 -p 50052:50051 -e SVC_HOST=192.168.100.19 -e SVC_HTTP_PORT=8082 -e
-SVC_GRPC_PORT=50052 --name origin2 cr.gitcpu-io/origin:v0.0.1
+SVC_GRPC_PORT=50052 --name origin2 cr.gitcpu-io/origin:v1.0
 
 # ====服务器上运行====
 
 ## 正常运行
 
-docker run -d --restart always -p 8081:80 -p 50051:50051 --name origin cr.gitcpu-io/origin:v0.0.1
+docker run -d --restart always -p 8081:80 -p 50051:50051 --name origin cr.gitcpu-io/origin:v1.0
 
 ## 在开发服务器上启动docker并指定 svc 服务的访问host及port(服务器上使用服务注册模式)
 
 docker run -d --restart always -p 8281:8281 -p 50051:50051 -e SVC_HOST=localhost -e SVC_HTTP_PORT=8281 -e
-SVC_GRPC_PORT=50051 --name origin1 cr.gitcpu-io/origin:v0.0.1
+SVC_GRPC_PORT=50051 --name origin1 cr.gitcpu-io/origin:v1.0
 
 docker run -d --restart always -p 8282:8282 -p 50052:50051 -e SVC_HOST=localhost -e SVC_HTTP_PORT=8282 -e
-SVC_GRPC_PORT=50052 --name origin2 cr.gitcpu-io/origin:v0.0.1
+SVC_GRPC_PORT=50052 --name origin2 cr.gitcpu-io/origin:v1.0
 
 docker logs -f --tail=20 origin
-
-### ======================
-
-

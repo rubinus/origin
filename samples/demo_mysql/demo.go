@@ -61,7 +61,7 @@ func (h *House) DbName() string {
   return ""
 }
 
-//QueryMysql 测试读取Mysqldb数据，wait for sdk init connection
+//QueryMysql 测试读取Mysqldb数据，wait for sdk _init connection
 func (m MysqlDemo) Get(id uint32) (*House, error) {
   ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
   defer cancel()

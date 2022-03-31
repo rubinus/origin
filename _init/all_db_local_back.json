@@ -1,0 +1,398 @@
+{
+  "version": "1.0.0",
+  "env": "dev",
+  "etcdHosts": [
+    "0.0.0.0:3379"
+  ],
+  "file": {
+    "type": "local",
+    "home": "/tmp"
+  },
+  "project": "zgo",
+  "projectPrefix": "zgo/project/",
+  "redis": [
+    {
+      "key": "redis_label_bj",
+      "values": [
+        {
+          "c": "北京主库 redis",
+          "host": "localhost",
+          "port": 6379,
+          "connSize": 10,
+          "poolSize": 5000,
+          "username": "",
+          "password": "",
+          "db": 0,
+          "cluster": 0
+        },
+        {
+          "c": "北京从库 redis",
+          "host": "localhost",
+          "port": 6379,
+          "connSize": 10,
+          "poolSize": 5000,
+          "username": "",
+          "password": "",
+          "db": 0,
+          "cluster": 0
+        }
+      ]
+    },
+    {
+      "key": "redis_label_sh",
+      "values": [
+        {
+          "c": "上海主库 redis",
+          "host": "localhost",
+          "port": 6380,
+          "connSize": 1,
+          "poolSize": 100,
+          "username": "",
+          "password": "",
+          "db": 0,
+          "cluster": 0
+        },
+        {
+          "c": "上海从库 redis",
+          "host": "localhost",
+          "port": 6380,
+          "connSize": 50,
+          "poolSize": 222,
+          "username": "",
+          "password": "",
+          "db": 0,
+          "cluster": 0
+        }
+      ]
+    }
+  ],
+  "kafka": [
+    {
+      "key": "kafka_label_bj",
+      "values": [
+        {
+          "c": "北京主库 kafka",
+          "host": "localhost",
+          "port": 9092,
+          "connSize": 12,
+          "poolSize": 12
+        },
+        {
+          "c": "北京主库 kafka",
+          "host": "localhost",
+          "port": 9092,
+          "connSize": 10,
+          "poolSize": 10
+        }
+      ]
+    },
+    {
+      "key": "kafka_label_sh",
+      "values": [
+        {
+          "c": "上海主库 kafka",
+          "host": "localhost",
+          "port": 9092,
+          "connSize": 50,
+          "poolSize": 111
+        },
+        {
+          "c": "上海从库 kafka",
+          "host": "localhost",
+          "port": 9092,
+          "connSize": 50,
+          "poolSize": 222
+        }
+      ]
+    }
+  ],
+  "nsq": [
+    {
+      "key": "nsq_label_bj",
+      "values": [
+        {
+          "c": "北京主库 nsq",
+          "host": "localhost",
+          "port": 4150,
+          "connSize": 5,
+          "poolSize": 550
+        },
+        {
+          "c": "北京主库 nsq",
+          "host": "localhost",
+          "port": 4150,
+          "connSize": 5,
+          "poolSize": 500
+        }
+      ]
+    },
+    {
+      "key": "nsq_label_sh",
+      "values": [
+        {
+          "c": "上海主库 nsq",
+          "host": "localhost",
+          "port": 4150,
+          "connSize": 33,
+          "poolSize": 90
+        },
+        {
+          "c": "上海从库 nsq",
+          "host": "localhost",
+          "port": 4150,
+          "connSize": 22,
+          "poolSize": 11
+        }
+      ]
+    }
+  ],
+  "rabbitmq": [
+    {
+      "key": "mq_label_bj",
+      "values": [
+        {
+          "c": "北京-----rabbitmq",
+          "host": "localhost",
+          "port": 5672,
+          "username": "account",
+          "password": "account",
+          "connSize": 5,
+          "poolSize": 550,
+          "vhost": "/account"
+        }
+      ]
+    },
+    {
+      "key": "mq_label_sh",
+      "values": [
+        {
+          "c": "上海=====rabbitmq",
+          "host": "localhost",
+          "port": 5672,
+          "username": "guest",
+          "password": "guest",
+          "connSize": 33,
+          "poolSize": 90,
+          "vhost": "/"
+        }
+      ]
+    }
+  ],
+  "mgo": [
+    {
+      "key": "mgo_label_bj",
+      "values": [
+        {
+          "c": "北京主库 mgo",
+          "host": "localhost",
+          "port": 27018,
+          "username": "admin",
+          "password": "admin",
+          "connSize": 5,
+          "poolSize": 789
+        },
+        {
+          "c": "北京从库 mgo",
+          "host": "localhost",
+          "port": 27018,
+          "username": "admin",
+          "password": "admin",
+          "connSize": 5,
+          "poolSize": 456
+        }
+      ]
+    },
+    {
+      "key": "mgo_label_sh",
+      "values": [
+        {
+          "c": "上海主库 mgo",
+          "host": "localhost",
+          "port": 27017,
+          "username": "",
+          "password": "",
+          "connSize": 5,
+          "poolSize": 789
+        },
+        {
+          "c": "上海从库 mgo",
+          "host": "localhost",
+          "port": 27017,
+          "username": "",
+          "password": "",
+          "connSize": 5,
+          "poolSize": 456
+        }
+      ]
+    }
+  ],
+  "postgres": [
+    {
+      "key": "postgres_label_sh",
+      "values": [
+        {
+          "c": "上海主库1 postgres 5433",
+          "host": "localhost",
+          "port": 5433,
+          "username": "postgres",
+          "password": "postgres",
+          "dbName": "postgres",
+          "connSize": 5,
+          "poolSize": 100
+        }
+      ]
+    },
+    {
+      "key": "postgres_label_bj",
+      "values": [
+        {
+          "c": "北京主库1 postgres 5434",
+          "host": "localhost",
+          "port": 5434,
+          "username": "postgres",
+          "password": "postgres",
+          "dbName": "postgres",
+          "connSize": 5,
+          "poolSize": 100
+        }
+      ]
+    }
+  ],
+  "etcd": [
+    {
+      "key": "etcd_label",
+      "values": [
+        {
+          "c": "配置中心etcd 3379",
+          "host": "localhost",
+          "port": 3379,
+          "username": "",
+          "password": "",
+          "connSize": 10,
+          "poolSize": 100
+        }
+      ]
+    }
+  ],
+  "es": [
+    {
+      "key": "label_new",
+      "values": [
+        {
+          "c": "ES集群101",
+          "host": "localhost",
+          "port": 9900,
+          "connSize": 10,
+          "poolSize": 100
+        }
+      ]
+    },
+    {
+      "key": "label_sell",
+      "values": [
+        {
+          "c": "ES集群102",
+          "host": "localhost",
+          "port": 9200,
+          "connSize": 52,
+          "poolSize": 19998
+        }
+      ]
+    },
+    {
+      "key": "label_rent",
+      "values": [
+        {
+          "c": "ES集群103",
+          "uri": "http://localhost:9200",
+          "host": "localhost",
+          "port": 9200,
+          "connSize": 51,
+          "poolSize": 19999
+        }
+      ]
+    }
+  ],
+  "mysql": [
+    {
+      "key": "mysql_sell_1",
+      "values": [
+        {
+          "c": "北京二手房库 mysql-旧实例w",
+          "t": "w",
+          "host": "localhost",
+          "port": 3306,
+          "username": "root",
+          "password": "root",
+          "maxIdleSize": 5,
+          "maxOpenConn": 5,
+          "dbName": "mysql",
+          "LogMode": 0
+        }
+      ]
+    },
+    {
+      "key": "mysql_sell_2",
+      "values": [
+        {
+          "c": "北京写实例w",
+          "t": "w",
+          "host": "localhost",
+          "port": 3307,
+          "username": "root",
+          "password": "root",
+          "maxIdleSize": 5,
+          "maxOpenConn": 10,
+          "dbName": "mysql",
+          "LogMode": 1
+        },
+        {
+          "c": "北京读实例r",
+          "t": "r",
+          "host": "localhost",
+          "port": 3308,
+          "username": "root",
+          "password": "root",
+          "maxIdleSize": 5,
+          "maxOpenConn": 10,
+          "dbName": "mysql",
+          "LogMode": 1
+        }
+      ]
+    }
+  ],
+  "clickhouse": [
+    {
+      "key": "clickhouse",
+      "values": [
+        {
+          "c": "clickhouse实例",
+          "host": "localhost",
+          "port": 9019,
+          "username": "default",
+          "password": "",
+          "connSize": 10,
+          "poolSize": 100,
+          "dbName": "default",
+          "logMode": 0
+        }
+      ]
+    }
+  ],
+  "cache": {
+    "c": "cache",
+    "start": 0,
+    "dbType": "redis",
+    "label": "redis_label_bj",
+    "tcType": 1,
+    "rate": 1
+  },
+  "log": {
+    "c": "日志存储",
+    "start": 0,
+    "dbType": "file",
+    "label": "/tmp",
+    "loglevel": 0
+  }
+}
+
