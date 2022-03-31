@@ -1,0 +1,110 @@
+{
+  "version": "1.0.0",
+  "env": "dev",
+  "etcdHosts": [
+    "0.0.0.0:3379"
+  ],
+  "file": {
+    "type": "local",
+    "home": "/tmp"
+  },
+  "project": "zgo",
+  "projectPrefix": "zgo/project/",
+  "redis": [
+    {
+      "key": "redis_label_bj",
+      "values": [
+        {
+          "c": "北京主库 redis",
+          "host": "localhost",
+          "port": 6379,
+          "connSize": 10,
+          "poolSize": 5000,
+          "username": "",
+          "password": "",
+          "db": 0,
+          "cluster": 0
+        },
+        {
+          "c": "北京从库 redis",
+          "host": "localhost",
+          "port": 6379,
+          "connSize": 10,
+          "poolSize": 5000,
+          "username": "",
+          "password": "",
+          "db": 0,
+          "cluster": 0
+        }
+      ]
+    },
+    {
+      "key": "redis_label_sh",
+      "values": [
+        {
+          "c": "上海主库 redis",
+          "host": "localhost",
+          "port": 6380,
+          "connSize": 1,
+          "poolSize": 100,
+          "username": "",
+          "password": "",
+          "db": 0,
+          "cluster": 0
+        },
+        {
+          "c": "上海从库 redis",
+          "host": "localhost",
+          "port": 6380,
+          "connSize": 50,
+          "poolSize": 222,
+          "username": "",
+          "password": "",
+          "db": 0,
+          "cluster": 0
+        }
+      ]
+    }
+  ],
+  "mgo": [
+    {
+      "key": "mgo_label_bj",
+      "values": [
+        {
+          "c": "北京主库 mgo",
+          "host": "localhost",
+          "port": 27018,
+          "username": "admin",
+          "password": "admin",
+          "connSize": 5,
+          "poolSize": 789
+        },
+        {
+          "c": "北京从库 mgo",
+          "host": "localhost",
+          "port": 27018,
+          "username": "admin",
+          "password": "admin",
+          "connSize": 5,
+          "poolSize": 456
+        }
+      ]
+    }
+  ],
+  "cache": {
+    "c": "cache",
+    "start": 0,
+    "dbType": "redis",
+    "label": "redis_label_bj",
+    "tcType": 1,
+    "rate": 1
+  },
+  "log": {
+    "c": "日志存储",
+    "start": 0,
+    "dbType": "file",
+    "label": "/tmp",
+    "loglevel": 0
+  }
+}
+

@@ -28,7 +28,7 @@ func TestProducer(t *testing.T) {
     panic(err)
   }
 
-  //测试读取kafka数据，wait for sdk init connection
+  //测试读取kafka数据，wait for sdk _init connection
   time.Sleep(2 * time.Second)
 
   clientBj, err := zgo.Kafka.New()

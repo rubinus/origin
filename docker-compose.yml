@@ -2,18 +2,18 @@ version: '3'
 
 services:
 
-#  etcd:
-#    image: quay.io/coreos/etcd:v3.3.12
-#    container_name: etcd
-#    restart: always
-#    networks:
-#      - link-network
-#    volumes:
-#      - ~/docker-data/etcd-data:/etcd-data
-#    ports:
-#      - "2381:2379" #切记测试机 使用的是 2379
-#      - "2382:2380" #切记测试机 使用的是 2380
-#    command: /usr/local/bin/etcd --name s1 --data-dir /etcd-data --listen-client-urls http://0.0.0.0:2379 --advertise-client-urls http://0.0.0.0:2379 --listen-peer-urls http://0.0.0.0:2380 --initial-advertise-peer-urls http://0.0.0.0:2380 --initial-cluster s1=http://0.0.0.0:2380 --initial-cluster-token tkn --initial-cluster-state new
+  etcd:
+    image: quay.io/coreos/etcd:v3.3.12
+    container_name: etcd
+    restart: always
+    networks:
+      - link-network
+    volumes:
+      - ~/docker-data/etcd-data:/etcd-data
+    ports:
+      - "3379:2379"
+      - "3380:2380"
+    command: /usr/local/bin/etcd --name s1 --data-dir /etcd-data --listen-client-urls http://0.0.0.0:2379 --advertise-client-urls http://0.0.0.0:2379 --listen-peer-urls http://0.0.0.0:2380 --initial-advertise-peer-urls http://0.0.0.0:2380 --initial-cluster s1=http://0.0.0.0:2380 --initial-cluster-token tkn --initial-cluster-state new
 
   redis-6379:
     image: redis
