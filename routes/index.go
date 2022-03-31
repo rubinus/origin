@@ -36,8 +36,11 @@ func Index(app *iris.Application) {
     //这是一个mongo list的例子，可以直接copy或是更改
     v1.Get("/mongo/list", handlers.MongoList)
 
-    //这是一个Post的例子，请按照结构，更改结构体与请求参数
-    v1.Post("/pay/do", handlers.DoPay)
+    //这是一个典型的 MVC 模式的Post例子，请严格按照结构，更改结构体与请求参数（route->handler->service->models）
+    v1.Post("/weather/put", handlers.SaveWeather)
+
+    //这是一个典型的 MVC 模式的Get 列表的例子
+    v1.Get("/weather/list", handlers.ListWeather)
 
   }
 
