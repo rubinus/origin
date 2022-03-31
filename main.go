@@ -37,7 +37,7 @@ var (
 )
 
 func init() {
-  flag.StringVar(&cpath, "cpath", "", "当不使用etcd作为配置中心时，通过配置文件cpath和env=local一起使用")
+  flag.StringVar(&cpath, "cpath", "", "当不使用etcd作为配置中心时，通过配置文件cpath和env=local或env=container一起使用")
 
   flag.StringVar(&env, "env", "local", "start local/dev/qa/pro env config，本机开发使用local，打包容器后使用container")
 
@@ -90,16 +90,13 @@ func init() {
   }
 
   //load config from dev/qa/pro
-  config.InitConfig(env, project, etcdHosts, port, rpcPort)
-
-  if cpath != "" {
-    config.Conf.CPath = cpath
-  }else{
+  if cpath == "" {
     pwd, err := os.Getwd()
     if err == nil {
-      config.Conf.CPath = fmt.Sprintf("%s/%s",pwd,"config")
+      cpath = fmt.Sprintf("%s/%s",pwd,"config")
     }
   }
+  config.InitConfig(cpath, env, project, etcdHosts, port, rpcPort)
 
   if os.Getenv("PROJECT") != "" {
     config.Conf.Project = os.Getenv("PROJECT") //从os的env取得PROJECT，用来在yaml文件中的配置
@@ -156,9 +153,6 @@ func init() {
     config.Conf.ServiceInfo.SvcGrpcPort = config.Conf.RpcPort
   }
 
-  if (env == "local" || env == "container") && config.Conf.CPath == "" {
-    panic("请输入配置文件所在路径,必须提供cpath参数值")
-  }
   fmt.Println()
   fmt.Printf("Apply config: %#v", zgo.Utils.StructToMap(&config.Conf))
   fmt.Println()

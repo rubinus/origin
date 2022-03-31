@@ -15,7 +15,7 @@ var st = &struct {
 }
 
 func CallFun() {
-  config.InitConfig("local", "", "", "", "")
+  config.InitConfig("","local", "", "", "", "")
 
   getwd, err := os.Getwd()
   if err != nil {

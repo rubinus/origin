@@ -21,7 +21,7 @@ var (
 )
 
 func DemoGet() {
-  config.InitConfig("local", "", "", "", "")
+  config.InitConfig("","local", "", "", "", "")
 
   err := zgo.Engine(&zgo.Options{
     Env:      config.Conf.Env,
@@ -42,7 +42,7 @@ func DemoGet() {
 }
 
 func DemoPostJson() {
-  config.InitConfig("local", "", "", "", "")
+  config.InitConfig("","local", "", "", "", "")
 
   err := zgo.Engine(&zgo.Options{
     Env:      config.Conf.Env,

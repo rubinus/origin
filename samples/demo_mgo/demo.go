@@ -20,7 +20,7 @@ const (
 )
 
 type User struct {
-  Id       zgo.MgoObjectId `json:"id,omitempty" bson:"_id,omitempty"`
+  Id       zgo.MongoObjectId `json:"id,omitempty" bson:"_id,omitempty"`
   Username string          `json:"username" bson:"username" `
   Age      int             `json:"age" bson:"age"`
   Address  string          `json:"address" bson:"address"`
@@ -59,7 +59,7 @@ func FindOne(ctx context.Context, filter map[string]interface{}) {
   r := &User{}
 
   //组织args
-  args := &zgo.MgoArgs{
+  args := &zgo.MongoArgs{
     Filter: filter, //查询条件
     Fields: fields, //对查询出的结果项，筛选字段
     Sort:   sort,   //排序
@@ -96,7 +96,7 @@ func Find(ctx context.Context, username string) {
   fields["username"] = 1
 
   //组织args
-  args := &zgo.MgoArgs{
+  args := &zgo.MongoArgs{
     Filter: filter, //查询条件
     Fields: fields, //对查询出的结果项，筛选字段
     Sort:   sort,   //排序
@@ -136,7 +136,7 @@ func Count(ctx context.Context, username string) {
   }
 
   //组织args
-  args := &zgo.MgoArgs{
+  args := &zgo.MongoArgs{
     Filter: filter, //查询条件
     Limit:  0,      //查询结果数量 0表示所有数据 可选
     Skip:   0,      //从哪一条开始跳过 开区间，不包括skip的值 可选
@@ -244,7 +244,7 @@ func UpdateOne(ctx context.Context, filter map[string]interface{}) {
   }
 
   //组织args
-  args := &zgo.MgoArgs{
+  args := &zgo.MongoArgs{
     Filter: filter, //查询条件
     Update: update, //更新字段
     Upsert: true,   //查询不到时，是否插入
@@ -272,7 +272,7 @@ func ReplaceOne(ctx context.Context, username string) {
   update["username"] = username
 
   //组织args
-  args := &zgo.MgoArgs{
+  args := &zgo.MongoArgs{
     Filter: filter, //查询条件
     Update: update, //替换字段
     Upsert: true,   //查询不到时，是否插入
@@ -309,7 +309,7 @@ func UpdateMany(ctx context.Context, username string) {
   }
 
   //组织args
-  args := &zgo.MgoArgs{
+  args := &zgo.MongoArgs{
     Filter: filter, //查询条件
     Update: update, //更新字段
     Upsert: true,   //查询不到时，是否插入
@@ -350,7 +350,7 @@ func DeleteOne(ctx context.Context, username string) {
   }
 
   //组织args
-  args := &zgo.MgoArgs{
+  args := &zgo.MongoArgs{
     Filter: filter, //查询条件
   }
 
@@ -375,7 +375,7 @@ func DeleteMany(ctx context.Context, username string) {
   }
 
   //组织args
-  args := &zgo.MgoArgs{
+  args := &zgo.MongoArgs{
     Filter: filter, //查询条件
   }
 
@@ -405,7 +405,7 @@ func FindOneAndUpdate(ctx context.Context, filter, update map[string]interface{}
   r := &User{}
 
   //组织args
-  args := &zgo.MgoArgs{
+  args := &zgo.MongoArgs{
     Filter:       filter, //查询条件
     ArrayFilters: arrayFilters,
     Fields:       fields, //对查询出的结果项，筛选字段
@@ -442,7 +442,7 @@ func FindOneAndReplace(ctx context.Context, filter map[string]interface{}) {
   r := &User{}
 
   //组织args
-  args := &zgo.MgoArgs{
+  args := &zgo.MongoArgs{
     Filter: filter, //查询条件
     Fields: fields, //对查询出的结果项，筛选字段
     Update: update, //替换项
@@ -478,7 +478,7 @@ func FindOneAndDelete(ctx context.Context, username string) {
   r := &User{}
 
   //组织args
-  args := &zgo.MgoArgs{
+  args := &zgo.MongoArgs{
     Filter: filter, //查询条件
     Fields: fields, //对查询出的结果项，筛选字段
     Sort:   sort,   //排序
@@ -497,7 +497,7 @@ func FindOneAndDelete(ctx context.Context, username string) {
 func BulkWrite(ctx context.Context) {
   var collection = zgo.Mongo.GetCollection("profiles", "bj", label_bj)
 
-  var bulkWrites []*zgo.MgoBulkWriteOperation
+  var bulkWrites []*zgo.MongoBulkWriteOperation
 
   //******************************************************insertOne operation
   document := &User{
@@ -505,9 +505,9 @@ func BulkWrite(ctx context.Context) {
     Age:      zgo.Utils.RandRangeInt(20, 30),
     Address:  "北京",
   }
-  bwInsertOne := &zgo.MgoBulkWriteOperation{
-    Operation: zgo.MgoBulkWriteOperation_InsertOne,
-    MgoArgs: &zgo.MgoArgs{
+  bwInsertOne := &zgo.MongoBulkWriteOperation{
+    Operation: zgo.MongoBWOInsertOne,
+    MongoArgs: &zgo.MongoArgs{
       Document: document,
     },
   }
@@ -519,18 +519,18 @@ func BulkWrite(ctx context.Context) {
     Age:      zgo.Utils.RandRangeInt(20, 30),
     Address:  "北京 朝阳",
   }
-  bwInsertOne2 := &zgo.MgoBulkWriteOperation{
-    Operation: zgo.MgoBulkWriteOperation_InsertOne,
-    MgoArgs: &zgo.MgoArgs{
+  bwInsertOne2 := &zgo.MongoBulkWriteOperation{
+    Operation: zgo.MongoBWOInsertOne,
+    MongoArgs: &zgo.MongoArgs{
       Document: document2,
     },
   }
   bulkWrites = append(bulkWrites, bwInsertOne2)
 
   //******************************************************updateOne operation
-  bwUpdateOne := &zgo.MgoBulkWriteOperation{
-    Operation: zgo.MgoBulkWriteOperation_UpdateOne,
-    MgoArgs: &zgo.MgoArgs{
+  bwUpdateOne := &zgo.MongoBulkWriteOperation{
+    Operation: zgo.MongoBWOUpdateOne,
+    MongoArgs: &zgo.MongoArgs{
       Filter: map[string]interface{}{
         "_id": "5d81ec82ada5f1088cb1d77c",
         //"username": "zhudaxian",
@@ -549,9 +549,9 @@ func BulkWrite(ctx context.Context) {
   bulkWrites = append(bulkWrites, bwUpdateOne)
 
   //******************************************************updateOne operation again
-  bwUpdateOne2 := &zgo.MgoBulkWriteOperation{
-    Operation: zgo.MgoBulkWriteOperation_UpdateOne,
-    MgoArgs: &zgo.MgoArgs{
+  bwUpdateOne2 := &zgo.MongoBulkWriteOperation{
+    Operation: zgo.MongoBWOUpdateOne,
+    MongoArgs: &zgo.MongoArgs{
       Filter: map[string]interface{}{
         //"_id": "5d81ec82ada5f1088cb1d77c",
         "username": "没有这个用户时直接插入:" + zgo.Utils.RandomString(4),
@@ -571,9 +571,9 @@ func BulkWrite(ctx context.Context) {
   bulkWrites = append(bulkWrites, bwUpdateOne2)
 
   //******************************************************replaceOne operation
-  bwReplaceOne := &zgo.MgoBulkWriteOperation{
-    Operation: zgo.MgoBulkWriteOperation_ReplaceOne,
-    MgoArgs: &zgo.MgoArgs{
+  bwReplaceOne := &zgo.MongoBulkWriteOperation{
+    Operation: zgo.MongoBWOReplaceOne,
+    MongoArgs: &zgo.MongoArgs{
       Filter: map[string]interface{}{
         "_id": "5d832d133c4da8b1f1580f6f",
         //"username": "没有这个用户时直接插入",
@@ -591,9 +591,9 @@ func BulkWrite(ctx context.Context) {
   bulkWrites = append(bulkWrites, bwReplaceOne)
 
   //******************************************************deleteOne operation
-  bwDeleteOne := &zgo.MgoBulkWriteOperation{
-    Operation: zgo.MgoBulkWriteOperation_DeleteOne,
-    MgoArgs: &zgo.MgoArgs{
+  bwDeleteOne := &zgo.MongoBulkWriteOperation{
+    Operation: zgo.MongoBWODeleteOne,
+    MongoArgs: &zgo.MongoArgs{
       Filter: map[string]interface{}{
         "_id": "5d8332725bcdd1230bf4d007",
         //"username": "没有这个用户时直接插入",
@@ -603,9 +603,9 @@ func BulkWrite(ctx context.Context) {
   bulkWrites = append(bulkWrites, bwDeleteOne)
 
   //******************************************************updateMany operation
-  bwUpdateMany := &zgo.MgoBulkWriteOperation{
-    Operation: zgo.MgoBulkWriteOperation_UpdateMany,
-    MgoArgs: &zgo.MgoArgs{
+  bwUpdateMany := &zgo.MongoBulkWriteOperation{
+    Operation: zgo.MongoBWOUpdateMany,
+    MongoArgs: &zgo.MongoArgs{
       Filter: map[string]interface{}{
         //"_id": "5d8332725bcdd1230bf4d007",
         "username": "朱大仙儿",
@@ -623,9 +623,9 @@ func BulkWrite(ctx context.Context) {
 
   //******************************************************deleteMany operation
   /**
-  bwDeleteMany := &zgo.MgoBulkWriteOperation{
-  	Operation: zgo.MgoBulkWriteOperation_DeleteMany,
-  	MgoArgs: &zgo.MgoArgs{
+  bwDeleteMany := &zgo.MongoBulkWriteOperation{
+  	Operation: zgo.MongoBWODeleteMany,
+  	MongoArgs: &zgo.MongoArgs{
   		Filter: map[string]interface{}{
   			//"_id": "5d8332725bcdd1230bf4d007",
   			"username": "zhudaxian",

@@ -15,7 +15,7 @@ import (
 */
 
 func Demo() {
-  config.InitConfig("local", "", "", "", "")
+  config.InitConfig("","local", "", "", "", "")
 
   err := zgo.Engine(&zgo.Options{
     CPath: config.Conf.CPath,
