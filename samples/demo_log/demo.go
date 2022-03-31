@@ -14,7 +14,7 @@ const (
 )
 
 func init() {
-  config.InitConfig("dev", "1553240759", "", "", "")
+  config.InitConfig("","dev", "1553240759", "", "", "")
 }
 
 func Call() {

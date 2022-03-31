@@ -14,7 +14,7 @@ type MysqlDemo struct {
 
 func init() {
 
-  config.InitConfig("local", "", "", "", "")
+  config.InitConfig("","local", "", "", "", "")
 
 }
 

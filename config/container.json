@@ -1,5 +1,4 @@
 {
-  "cpath": "/opt/origin/config",
   "version": "1.0.0",
   "env": "container",
   "project": "origin",

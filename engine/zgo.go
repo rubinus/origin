@@ -31,7 +31,7 @@ func Run() error {
       //"redis_label_sh",	//测试时可以放开注释，通过配置文件来调试连接中间件redis
     },
     Mongo: []string{
-      "mongo_label_bj",	//测试时可以放开注释，通过配置文件来调试连接中间件mongodb
+      //"mongo_label_bj",	//测试时可以放开注释，通过配置文件来调试连接中间件mongodb
     },
     Mysql: []string{
       //"mysql_sell_1",

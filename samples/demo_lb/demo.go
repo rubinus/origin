@@ -14,7 +14,7 @@ import (
 */
 
 func CallLb() {
-  config.InitConfig("local", "", "", "", "")
+  config.InitConfig("","local", "", "", "", "")
 
   err := zgo.Engine(&zgo.Options{
     Env:      config.Conf.Env,

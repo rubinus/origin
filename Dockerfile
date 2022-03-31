@@ -17,7 +17,6 @@ COPY entrypoint.sh /opt/origin/
 COPY config /opt/origin/config
 COPY views /opt/origin/views
 COPY public /opt/origin/public
-COPY deploy /opt/origin/deploy
 
 RUN ["chmod", "+x", "origin-linux-amd64"]
 RUN ["chmod", "+x", "entrypoint.sh"]

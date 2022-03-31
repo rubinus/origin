@@ -1,12 +1,9 @@
 package config
 
 import (
-  "errors"
   "fmt"
   "github.com/gitcpu-io/zgo"
   "io/ioutil"
-  "path/filepath"
-  "runtime"
   "strconv"
 )
 
@@ -50,23 +47,12 @@ type allConfig struct {
   DemoHostForPayCanChangeAnyName string `json:"demo_host_for_pay_can_change_any_name"`
 }
 
-func InitConfig(e, project, etcdHosts, port, rpcPort string) {
-  initConfig(e, project, etcdHosts, port, rpcPort)
+func InitConfig(cpath, env, project, etcdHosts, port, rpcPort string) {
+  initConfig(cpath,env, project, etcdHosts, port, rpcPort)
 }
 
-func initConfig(e, project, etcdHosts, port, rpcPort string) {
-  var cf string
-  if e == "local" {
-    _, f, _, ok := runtime.Caller(1)
-    if !ok {
-      panic(errors.New("Can not get current file info"))
-    }
-    cf = fmt.Sprintf("%s/%s.json", filepath.Dir(f), e)
-
-  } else {
-    cf = fmt.Sprintf("./config/%s.json", e)
-  }
-
+func initConfig(cpath,env, project, etcdHosts, port, rpcPort string) {
+  var cf = fmt.Sprintf("%s/%s.json", cpath, env)
   bf, err := ioutil.ReadFile(cf)
   if err != nil {
     fmt.Println("报错: ",cf)
@@ -77,6 +63,10 @@ func initConfig(e, project, etcdHosts, port, rpcPort string) {
   err = zgo.Utils.Unmarshal(bf, &Conf)
   if err != nil {
     panic(err)
+  }
+
+  if Conf.CPath == "" { //cpath没有，就用默认的项目所在路径
+    Conf.CPath = cpath
   }
 
   if project != "" {
