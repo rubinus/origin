@@ -55,10 +55,10 @@ func main() {
     fmt.Println(res)
   }
 
-  for _, v := range config.Conf.Mgo {
+  for _, v := range config.Conf.Mongo {
     k := v.Key
     value := v.Values
-    key := "zgo/project/origin/mgo/" + k
+    key := "zgo/project/origin/mongo/" + k
     val, _ := json.Marshal(value)
     _, err := cli.KV.Put(context.TODO(), key, string(val))
     if err != nil {

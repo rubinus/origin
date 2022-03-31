@@ -108,7 +108,7 @@ func MongoList(ctx iris.Context) {
 }
 
 func FindOne(ctx context.Context, username string) (*User, error) {
-  var collection = zgo.Mgo.GetCollection("profile", "bj", "mgo_label_bj")
+  var collection = zgo.Mongo.GetCollection("profile", "bj", "mongo_label_bj")
 
   filter := make(map[string]interface{}) //查询username是且age >= 30的
   filter["username"] = username
@@ -135,7 +135,7 @@ func FindOne(ctx context.Context, username string) (*User, error) {
     Result: r,      //传入 &User{} ,结果
   }
 
-  _, err := zgo.Mgo.FindOne(ctx, collection, args)
+  _, err := zgo.Mongo.FindOne(ctx, collection, args)
   if err != nil {
     return nil, err
   }
@@ -144,7 +144,7 @@ func FindOne(ctx context.Context, username string) (*User, error) {
 }
 
 func Find(ctx context.Context, username string) ([]*User, error) {
-  var collection = zgo.Mgo.GetCollection("profile", "bj", "mgo_label_bj")
+  var collection = zgo.Mongo.GetCollection("profile", "bj", "mongo_label_bj")
 
   filter := make(map[string]interface{}) //查询username是且age >= 30的
   filter["username"] = username
@@ -170,7 +170,7 @@ func Find(ctx context.Context, username string) ([]*User, error) {
     Skip:   0,      //从哪一条开始跳过 开区间，不包括skip的值
   }
 
-  results, err := zgo.Mgo.Find(ctx, collection, args)
+  results, err := zgo.Mongo.Find(ctx, collection, args)
   if err != nil {
     return nil, err
   }

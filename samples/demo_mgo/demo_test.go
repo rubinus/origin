@@ -34,7 +34,7 @@ func TestGet(t *testing.T) {
   defer cancel()
 
   //++++++++++++++++++++++++++使用原生连接++++++++++++++++++++++++++++
-  connChan, err := zgo.Mgo.GetConnChan(label_bj)
+  connChan, err := zgo.Mongo.GetConnChan(label_bj)
   if err != nil {
     zgo.Log.Error(err)
     return

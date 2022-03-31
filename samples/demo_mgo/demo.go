@@ -28,10 +28,10 @@ type User struct {
 
 ////////*******************FindById 按id
 func FindById(ctx context.Context, id string) {
-  var collection = zgo.Mgo.GetCollection("profiles", "bj", label_bj)
+  var collection = zgo.Mongo.GetCollection("profiles", "bj", label_bj)
 
   r := &User{}
-  err := zgo.Mgo.FindById(ctx, collection, r, id)
+  err := zgo.Mongo.FindById(ctx, collection, r, id)
   if err != nil {
     fmt.Println(err)
     return
@@ -45,7 +45,7 @@ func FindById(ctx context.Context, id string) {
 
 ////////*******************FindOne 一条
 func FindOne(ctx context.Context, filter map[string]interface{}) {
-  var collection = zgo.Mgo.GetCollection("profiles", "bj", label_bj)
+  var collection = zgo.Mongo.GetCollection("profiles", "bj", label_bj)
 
   sort := make(map[string]interface{})
   sort["_id"] = -1 //-1降序，1升序
@@ -66,7 +66,7 @@ func FindOne(ctx context.Context, filter map[string]interface{}) {
     Result: r,      //传入 &User{} ,结果
   }
 
-  c, err := zgo.Mgo.FindOne(ctx, collection, args)
+  c, err := zgo.Mongo.FindOne(ctx, collection, args)
   if err != nil {
     fmt.Println("错误", err)
     return
@@ -78,7 +78,7 @@ func FindOne(ctx context.Context, filter map[string]interface{}) {
 
 ////////*******************Find  多条
 func Find(ctx context.Context, username string) {
-  var collection = zgo.Mgo.GetCollection("profiles", "bj", label_bj)
+  var collection = zgo.Mongo.GetCollection("profiles", "bj", label_bj)
 
   filter := make(map[string]interface{}) //查询username是且age >= 30的
   filter["username"] = username
@@ -104,7 +104,7 @@ func Find(ctx context.Context, username string) {
     Skip:   0,      //从哪一条开始跳过 开区间，不包括skip的值
   }
 
-  results, err := zgo.Mgo.Find(ctx, collection, args)
+  results, err := zgo.Mongo.Find(ctx, collection, args)
   if err != nil {
     fmt.Println("错误", err)
     return
@@ -127,7 +127,7 @@ func Find(ctx context.Context, username string) {
 
 ////////*******************Count  数量
 func Count(ctx context.Context, username string) {
-  var collection = zgo.Mgo.GetCollection("profiles", "bj", label_bj)
+  var collection = zgo.Mongo.GetCollection("profiles", "bj", label_bj)
 
   filter := make(map[string]interface{}) //查询username是且age >= 30的
   filter["username"] = username
@@ -142,7 +142,7 @@ func Count(ctx context.Context, username string) {
     Skip:   0,      //从哪一条开始跳过 开区间，不包括skip的值 可选
   }
 
-  results, err := zgo.Mgo.Count(ctx, collection, args)
+  results, err := zgo.Mongo.Count(ctx, collection, args)
   if err != nil {
     fmt.Println("错误", err)
     return
@@ -154,7 +154,7 @@ func Count(ctx context.Context, username string) {
 
 ////////*******************Insert  保存
 func Insert(ctx context.Context) {
-  var collection = zgo.Mgo.GetCollection("profiles", "bj", label_bj)
+  var collection = zgo.Mongo.GetCollection("profiles", "bj", label_bj)
 
   document := &User{
     Username: "zhangsan",
@@ -162,7 +162,7 @@ func Insert(ctx context.Context) {
     Address:  "上海",
   }
 
-  result, err := zgo.Mgo.Insert(ctx, collection, document)
+  result, err := zgo.Mongo.Insert(ctx, collection, document)
   if err != nil {
     fmt.Println("错误", err)
     return
@@ -173,7 +173,7 @@ func Insert(ctx context.Context) {
 
 ////////*******************InsertMany  保存多条
 func InsertMany(ctx context.Context) {
-  var collection = zgo.Mgo.GetCollection("profiles", "bj", label_bj)
+  var collection = zgo.Mongo.GetCollection("profiles", "bj", label_bj)
 
   document1 := &User{
     Username: "zhangsan",
@@ -190,7 +190,7 @@ func InsertMany(ctx context.Context) {
   users = append(users, document1)
   users = append(users, document2)
 
-  results, err := zgo.Mgo.InsertMany(ctx, collection, users)
+  results, err := zgo.Mongo.InsertMany(ctx, collection, users)
   if err != nil {
     fmt.Println("错误", err)
     return
@@ -201,7 +201,7 @@ func InsertMany(ctx context.Context) {
 
 ////////*******************UpdateById  通过Id更新一条
 func UpdateById(ctx context.Context, id string) {
-  var collection = zgo.Mgo.GetCollection("profiles", "bj", label_bj)
+  var collection = zgo.Mongo.GetCollection("profiles", "bj", label_bj)
 
   update := make(map[string]interface{})
   update["$set"] = map[string]interface{}{
@@ -213,7 +213,7 @@ func UpdateById(ctx context.Context, id string) {
     //可以有多个字段k,v
   }
 
-  byId, err := zgo.Mgo.UpdateById(ctx, collection, update, id)
+  byId, err := zgo.Mongo.UpdateById(ctx, collection, update, id)
   if err != nil {
     fmt.Println("错误", err)
     return
@@ -225,7 +225,7 @@ func UpdateById(ctx context.Context, id string) {
 
 ////////*******************UpdateOne  更新一条
 func UpdateOne(ctx context.Context, filter map[string]interface{}) {
-  var collection = zgo.Mgo.GetCollection("profiles", "bj", label_bj)
+  var collection = zgo.Mongo.GetCollection("profiles", "bj", label_bj)
 
   //filter := make(map[string]interface{}) //查询username是且age >= 25的
   //filter["username"] = username
@@ -250,7 +250,7 @@ func UpdateOne(ctx context.Context, filter map[string]interface{}) {
     Upsert: true,   //查询不到时，是否插入
   }
 
-  u, i, s, err := zgo.Mgo.UpdateOne(ctx, collection, args)
+  u, i, s, err := zgo.Mongo.UpdateOne(ctx, collection, args)
   if err != nil {
     fmt.Println("错误", err)
     return
@@ -262,7 +262,7 @@ func UpdateOne(ctx context.Context, filter map[string]interface{}) {
 
 ////////*******************ReplaceOne  替换一条
 func ReplaceOne(ctx context.Context, username string) {
-  var collection = zgo.Mgo.GetCollection("profiles", "bj", label_bj)
+  var collection = zgo.Mongo.GetCollection("profiles", "bj", label_bj)
 
   filter := make(map[string]interface{}) //查询username是且age >= 25的
   filter["username"] = username
@@ -278,7 +278,7 @@ func ReplaceOne(ctx context.Context, username string) {
     Upsert: true,   //查询不到时，是否插入
   }
 
-  u, i, s, err := zgo.Mgo.ReplaceOne(ctx, collection, args)
+  u, i, s, err := zgo.Mongo.ReplaceOne(ctx, collection, args)
   if err != nil {
     fmt.Println("错误", err)
     return
@@ -290,7 +290,7 @@ func ReplaceOne(ctx context.Context, username string) {
 
 ////////*******************UpdateMany  更新多条
 func UpdateMany(ctx context.Context, username string) {
-  var collection = zgo.Mgo.GetCollection("profiles", "bj", label_bj)
+  var collection = zgo.Mongo.GetCollection("profiles", "bj", label_bj)
 
   filter := make(map[string]interface{}) //查询username是且age >= 25的
   filter["username"] = username
@@ -315,7 +315,7 @@ func UpdateMany(ctx context.Context, username string) {
     Upsert: true,   //查询不到时，是否插入
   }
 
-  u, i, i2, err := zgo.Mgo.UpdateMany(ctx, collection, args)
+  u, i, i2, err := zgo.Mongo.UpdateMany(ctx, collection, args)
   if err != nil {
     fmt.Println("错误", err)
     return
@@ -327,9 +327,9 @@ func UpdateMany(ctx context.Context, username string) {
 
 ////////*******************DeleteById  删除多条
 func DeleteById(ctx context.Context, id string) {
-  var collection = zgo.Mgo.GetCollection("profiles", "bj", label_bj)
+  var collection = zgo.Mongo.GetCollection("profiles", "bj", label_bj)
 
-  deleteById, err := zgo.Mgo.DeleteById(ctx, collection, id)
+  deleteById, err := zgo.Mongo.DeleteById(ctx, collection, id)
   if err != nil {
     fmt.Println("错误", err)
     return
@@ -341,7 +341,7 @@ func DeleteById(ctx context.Context, id string) {
 
 ////////*******************DeleteOne  删除多条
 func DeleteOne(ctx context.Context, username string) {
-  var collection = zgo.Mgo.GetCollection("profiles", "bj", label_bj)
+  var collection = zgo.Mongo.GetCollection("profiles", "bj", label_bj)
 
   filter := make(map[string]interface{}) //查询username是且age >= 29的
   filter["username"] = username
@@ -354,7 +354,7 @@ func DeleteOne(ctx context.Context, username string) {
     Filter: filter, //查询条件
   }
 
-  deleteOne, err := zgo.Mgo.DeleteOne(ctx, collection, args)
+  deleteOne, err := zgo.Mongo.DeleteOne(ctx, collection, args)
   if err != nil {
     fmt.Println("错误", err)
     return
@@ -366,7 +366,7 @@ func DeleteOne(ctx context.Context, username string) {
 
 ////////*******************DeleteMany  删除多条
 func DeleteMany(ctx context.Context, username string) {
-  var collection = zgo.Mgo.GetCollection("profiles", "bj", label_bj)
+  var collection = zgo.Mongo.GetCollection("profiles", "bj", label_bj)
 
   filter := make(map[string]interface{}) //查询username是且age >= 25的
   filter["username"] = username
@@ -379,7 +379,7 @@ func DeleteMany(ctx context.Context, username string) {
     Filter: filter, //查询条件
   }
 
-  deleteMany, err := zgo.Mgo.DeleteMany(ctx, collection, args)
+  deleteMany, err := zgo.Mongo.DeleteMany(ctx, collection, args)
   if err != nil {
     fmt.Println("错误", err)
     return
@@ -391,7 +391,7 @@ func DeleteMany(ctx context.Context, username string) {
 
 ////////*******************FindOneAndUpdate 一条
 func FindOneAndUpdate(ctx context.Context, filter, update map[string]interface{}, arrayFilters []map[string]interface{}) {
-  var collection = zgo.Mgo.GetCollection("profiles", "bj", label_bj)
+  var collection = zgo.Mongo.GetCollection("profiles", "bj", label_bj)
 
   sort := make(map[string]interface{})
   sort["_id"] = -1 //-1降序，1升序
@@ -415,7 +415,7 @@ func FindOneAndUpdate(ctx context.Context, filter, update map[string]interface{}
     Upsert:       true,   //查询不到时，是否插入
   }
 
-  err := zgo.Mgo.FindOneAndUpdate(ctx, collection, args)
+  err := zgo.Mongo.FindOneAndUpdate(ctx, collection, args)
   if err != nil {
     fmt.Println("错误", err)
     return
@@ -425,7 +425,7 @@ func FindOneAndUpdate(ctx context.Context, filter, update map[string]interface{}
 
 ////////*******************FindOneAndReplace 一条
 func FindOneAndReplace(ctx context.Context, filter map[string]interface{}) {
-  var collection = zgo.Mgo.GetCollection("profiles", "bj", label_bj)
+  var collection = zgo.Mongo.GetCollection("profiles", "bj", label_bj)
 
   sort := make(map[string]interface{})
   sort["_id"] = 1 //-1降序，1升序
@@ -451,7 +451,7 @@ func FindOneAndReplace(ctx context.Context, filter map[string]interface{}) {
     Upsert: true,   //查询不到时，是否插入
   }
 
-  err := zgo.Mgo.FindOneAndReplace(ctx, collection, args)
+  err := zgo.Mongo.FindOneAndReplace(ctx, collection, args)
   if err != nil {
     fmt.Println("错误", err)
     return
@@ -461,7 +461,7 @@ func FindOneAndReplace(ctx context.Context, filter map[string]interface{}) {
 
 ////////*******************FindOneAndDelete 一条
 func FindOneAndDelete(ctx context.Context, username string) {
-  var collection = zgo.Mgo.GetCollection("profiles", "bj", label_bj)
+  var collection = zgo.Mongo.GetCollection("profiles", "bj", label_bj)
 
   filter := make(map[string]interface{})
   filter["username"] = username
@@ -485,7 +485,7 @@ func FindOneAndDelete(ctx context.Context, username string) {
     Result: r,      //传入 &User{} ,结果
   }
 
-  err := zgo.Mgo.FindOneAndDelete(ctx, collection, args)
+  err := zgo.Mongo.FindOneAndDelete(ctx, collection, args)
   if err != nil {
     fmt.Println("错误", err)
     return
@@ -495,7 +495,7 @@ func FindOneAndDelete(ctx context.Context, username string) {
 
 ////////*******************BulkWrite并行多条操作
 func BulkWrite(ctx context.Context) {
-  var collection = zgo.Mgo.GetCollection("profiles", "bj", label_bj)
+  var collection = zgo.Mongo.GetCollection("profiles", "bj", label_bj)
 
   var bulkWrites []*zgo.MgoBulkWriteOperation
 
@@ -635,7 +635,7 @@ func BulkWrite(ctx context.Context) {
   bulkWrites = append(bulkWrites, bwDeleteMany)
   */
 
-  bulkWriteResult, err := zgo.Mgo.BulkWrite(ctx, collection, bulkWrites, true)
+  bulkWriteResult, err := zgo.Mongo.BulkWrite(ctx, collection, bulkWrites, true)
   if err != nil {
     fmt.Println(err)
     return
@@ -646,7 +646,7 @@ func BulkWrite(ctx context.Context) {
 
 ////////*******************Aggregate 聚合查询
 func Aggregate(ctx context.Context) {
-  var collection = zgo.Mgo.GetCollection("profiles", "bj", label_bj)
+  var collection = zgo.Mongo.GetCollection("profiles", "bj", label_bj)
 
   var pipeline []interface{}
 
@@ -680,7 +680,7 @@ func Aggregate(ctx context.Context) {
   pipeline = append(pipeline, sort)
   pipeline = append(pipeline, limit)
 
-  results, err := zgo.Mgo.Aggregate(ctx, collection, pipeline)
+  results, err := zgo.Mongo.Aggregate(ctx, collection, pipeline)
   if err != nil {
     fmt.Println("错误", err)
     return
@@ -707,7 +707,7 @@ func Aggregate(ctx context.Context) {
 
 ////////*******************Distinct 去重查询
 func Distinct(ctx context.Context) {
-  var collection = zgo.Mgo.GetCollection("profiles", "bj", label_bj)
+  var collection = zgo.Mongo.GetCollection("profiles", "bj", label_bj)
 
   filter := make(map[string]interface{})
   //filter["age"] = map[string]interface{}{
@@ -715,7 +715,7 @@ func Distinct(ctx context.Context) {
   //}
   filter["username"] = "朱大仙儿"
 
-  results, err := zgo.Mgo.Distinct(ctx, collection, "age", filter)
+  results, err := zgo.Mongo.Distinct(ctx, collection, "age", filter)
   if err != nil {
     fmt.Println("错误", err)
     return
@@ -729,7 +729,7 @@ func Distinct(ctx context.Context) {
 
 ////////*******************Watch 监听
 func Watch(ctx context.Context) {
-  var collection = zgo.Mgo.GetCollection("profiles", "bj", label_bj)
+  var collection = zgo.Mongo.GetCollection("profiles", "bj", label_bj)
 
   var pipeline []interface{}
   match := make(map[string]interface{})
@@ -739,7 +739,7 @@ func Watch(ctx context.Context) {
 
   pipeline = append(pipeline, match)
 
-  changeStream, err := zgo.Mgo.Watch(ctx, collection, pipeline)
+  changeStream, err := zgo.Mongo.Watch(ctx, collection, pipeline)
   if err != nil {
     fmt.Println("错误", err)
     return
