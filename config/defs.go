@@ -7,7 +7,6 @@ import (
   "io/ioutil"
   "path/filepath"
   "runtime"
-  "strconv"
 )
 
 //从.json文件中加载配置项
@@ -39,7 +38,7 @@ type allConfig struct {
   Loglevel      string `json:"loglevel"`
   IrisMod       bool   `json:"irisMod"`
   RpcHost       string `json:"rpcHost"`
-  RpcPort       string `json:"rpcPort"`
+  RpcPort       int `json:"rpcPort"`
   PprofPort     int    `json:"pprofPort"`
   HttpPort      int    `json:"httpPort"`
   UsePreAbsPath int    `json:"usePreAbsPath"`
@@ -50,11 +49,11 @@ type allConfig struct {
   DemoHostForPayCanChangeAnyName string `json:"demo_host_for_pay_can_change_any_name"`
 }
 
-func InitConfig(cpath, env, project, etcdAddress, port, rpcPort string) {
+func InitConfig(cpath, env, project, etcdAddress string, port, rpcPort int) {
   initConfig(cpath, env, project, etcdAddress, port, rpcPort)
 }
 
-func initConfig(cpath, env, project, etcdAddress, port, rpcPort string) {
+func initConfig(cpath, env, project, etcdAddress string, port, rpcPort int) {
   if env == "local" {
     _, f, _, ok := runtime.Caller(1)
     if !ok {
@@ -87,16 +86,10 @@ func initConfig(cpath, env, project, etcdAddress, port, rpcPort string) {
   if len(etcdAddress) != 0 {
     Conf.EtcdAddress = etcdAddress
   }
-  if port != "" {
-    portInt, err := strconv.Atoi(port)
-    if err != nil {
-      zgo.Log.Error(err)
-    } else {
-      Conf.HttpPort = portInt
-    }
-
+  if port != 0 {
+    Conf.HttpPort = port
   }
-  if rpcPort != "" {
+  if rpcPort != 0 {
     Conf.RpcPort = rpcPort
   }
 
@@ -114,7 +107,7 @@ func WatchHttpConfigByService(ch chan string) {
 
       switch value {
       case "timer.bffp": //自己做为客户端连接自己的服务端测试
-        Conf.DemoHostForPayCanChangeAnyName = fmt.Sprintf("%s:%s", lbRes.SvcHost, lbRes.SvcHttpPort)
+        Conf.DemoHostForPayCanChangeAnyName = fmt.Sprintf("%s:%d", lbRes.SvcHost, lbRes.SvcHttpPort)
         //其它变量如果已经存在，可以在不改变原代码前提下，对config.Conf.***中的变量再次赋值
 
       case "other":

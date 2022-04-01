@@ -15,7 +15,7 @@ import (
 */
 
 func CallLimiter() {
-  config.InitConfig("","local", "", "", "", "")
+  config.InitConfig("","local", "", "", 0, 0)
 
   err := zgo.Engine(&zgo.Options{
     Env:      config.Conf.Env,
@@ -89,7 +89,7 @@ func CallLimiter() {
 }
 
 func CallLimiter2() {
-  config.InitConfig("","local", "", "", "", "")
+  config.InitConfig("","local", "", "", 0, 0)
 
   err := zgo.Engine(&zgo.Options{
     Env:      config.Conf.Env,
@@ -135,7 +135,7 @@ func CallLimiter2() {
 }
 
 func CallLimiter3() {
-  config.InitConfig("","local", "", "", "", "")
+  config.InitConfig("","local", "", "", 0, 0)
 
   err := zgo.Engine(&zgo.Options{
     Env:      config.Conf.Env,

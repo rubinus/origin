@@ -6,7 +6,6 @@ import (
   "github.com/gitcpu-io/origin/services"
   "github.com/gitcpu-io/zgo"
   "log"
-  "time"
 )
 
 // WeatherServer 可以起名为你的 xxxxServer
@@ -16,11 +15,8 @@ type WeatherServer struct{}
 func (s *WeatherServer) List(ctx context.Context, request *pb_weather.ListRequest) (*pb_weather.ListResponse, error) {
   log.Printf("Received: Name %v", request.City)
 
-  // 第一：定义返回变量，请求上下文
+  // 第一：定义返回变量
   var response = &pb_weather.ListResponse{}
-
-  ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second) //you can change this time number
-  defer cancel()
 
   //第二：准备输入参数
   city := request.City

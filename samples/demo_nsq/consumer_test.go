@@ -10,7 +10,7 @@ import (
 )
 
 func TestConsumer(t *testing.T) {
-  config.InitConfig("","local", "", "", "", "")
+  config.InitConfig("","local", "", "", 0, 0)
 
   err := zgo.Engine(&zgo.Options{
     Project: config.Conf.Project,

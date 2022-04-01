@@ -5,7 +5,7 @@ go 1.16
 require (
 	github.com/0x19/goesl v0.0.0-20191107044804-3efcc2f41ccb
 	github.com/fiorix/go-eventsocket v0.0.0-20180331081222-a4a0ee7bd315
-	github.com/gitcpu-io/zgo v1.1.1
+	github.com/gitcpu-io/zgo v1.1.2
 	github.com/gogo/protobuf v1.3.2
 	github.com/golang/protobuf v1.5.2
 	github.com/kataras/iris/v12 v12.1.8

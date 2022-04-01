@@ -162,12 +162,8 @@ github.com/fsnotify/fsnotify v1.4.9/go.mod h1:znqG4EE+3YCdAaPaxE2ZRY/06pZUdp0tY4
 github.com/gavv/httpexpect v2.0.0+incompatible h1:1X9kcRshkSKEjNJJxX9Y9mQ5BRfbxU5kORdjhlA1yX8=
 github.com/gavv/httpexpect v2.0.0+incompatible/go.mod h1:x+9tiU1YnrOvnB725RkpoLv1M62hOWzwo5OXotisrKc=
 github.com/ghodss/yaml v1.0.0/go.mod h1:4dBDuWmgqj2HViK6kFavaiC9ZROes6MMH2rRYeMEF04=
-github.com/gitcpu-io/zgo v1.0.9 h1:UDwVWxQbRcr6kH+ou5et67YwBN7M7Ef6DK5UbUoa2P4=
-github.com/gitcpu-io/zgo v1.0.9/go.mod h1:zgQMJfagDRbUnT8Rg+Am0P2LTWdc+cYzmOt25sV3WBA=
-github.com/gitcpu-io/zgo v1.1.0 h1:kRXnZwLmMX7rTsIOT1xb7vaZeZrh+ppbXn/Kgor23RA=
-github.com/gitcpu-io/zgo v1.1.0/go.mod h1:zgQMJfagDRbUnT8Rg+Am0P2LTWdc+cYzmOt25sV3WBA=
-github.com/gitcpu-io/zgo v1.1.1 h1:Jeyfwt7GhSJoWtf6rOZNWAohl6aHeNoKHzh6Jg/Vd28=
-github.com/gitcpu-io/zgo v1.1.1/go.mod h1:zgQMJfagDRbUnT8Rg+Am0P2LTWdc+cYzmOt25sV3WBA=
+github.com/gitcpu-io/zgo v1.1.2 h1:4ZBDpS4T5yFXNv3100QrqTBMJ2eeQCAd72d0ZDjEl3g=
+github.com/gitcpu-io/zgo v1.1.2/go.mod h1:zgQMJfagDRbUnT8Rg+Am0P2LTWdc+cYzmOt25sV3WBA=
 github.com/globalsign/mgo v0.0.0-20181015135952-eeefdecb41b8/go.mod h1:xkRDCp4j0OGD1HRkm4kmhM+pmpv3AKq5SU7GMg4oO/Q=
 github.com/go-check/check v0.0.0-20180628173108-788fd7840127 h1:0gkP6mzaMqkmpcJYCFOLkIBwI7xFExG03bbkOkCvUPI=
 github.com/go-check/check v0.0.0-20180628173108-788fd7840127/go.mod h1:9ES+weclKsC9YodN5RgxqK/VD9HM9JsCSh7rNhMZE98=
