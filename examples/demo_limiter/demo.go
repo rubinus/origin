@@ -2,7 +2,7 @@ package demo_limiter
 
 import (
   "fmt"
-  "github.com/gitcpu-io/origin/config"
+	"github.com/gitcpu-io/origin/configs"
   "github.com/gitcpu-io/zgo"
   "time"
 )
@@ -15,12 +15,12 @@ import (
 */
 
 func CallLimiter() {
-  config.InitConfig("","local", "", "", 0, 0)
+  configs.InitConfig("","local", "", "", 0, 0)
 
   err := zgo.Engine(&zgo.Options{
-    Env:      config.Conf.Env,
-    Project:  config.Conf.Project,
-    Loglevel: config.Conf.Loglevel,
+    Env:      configs.Conf.Env,
+    Project:  configs.Conf.Project,
+    Loglevel: configs.Conf.Loglevel,
   })
 
   if err != nil {
@@ -89,12 +89,12 @@ func CallLimiter() {
 }
 
 func CallLimiter2() {
-  config.InitConfig("","local", "", "", 0, 0)
+  configs.InitConfig("","local", "", "", 0, 0)
 
   err := zgo.Engine(&zgo.Options{
-    Env:      config.Conf.Env,
-    Project:  config.Conf.Project,
-    Loglevel: config.Conf.Loglevel,
+    Env:      configs.Conf.Env,
+    Project:  configs.Conf.Project,
+    Loglevel: configs.Conf.Loglevel,
   })
 
   if err != nil {
@@ -135,12 +135,12 @@ func CallLimiter2() {
 }
 
 func CallLimiter3() {
-  config.InitConfig("","local", "", "", 0, 0)
+  configs.InitConfig("","local", "", "", 0, 0)
 
   err := zgo.Engine(&zgo.Options{
-    Env:      config.Conf.Env,
-    Project:  config.Conf.Project,
-    Loglevel: config.Conf.Loglevel,
+    Env:      configs.Conf.Env,
+    Project:  configs.Conf.Project,
+    Loglevel: configs.Conf.Loglevel,
   })
 
   if err != nil {

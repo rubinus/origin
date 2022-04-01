@@ -3,7 +3,7 @@ package main
 import (
   "context"
   "fmt"
-  "github.com/gitcpu-io/origin/config"
+  "github.com/gitcpu-io/origin/configs"
   "github.com/gitcpu-io/origin/grpcclients"
   pb_weather "github.com/gitcpu-io/origin/pb/weather"
   "github.com/gitcpu-io/zgo"
@@ -11,13 +11,13 @@ import (
 )
 
 func main() {
-  config.InitConfig("", "local", "", "", 0, 0)
+  configs.InitConfig("", "local", "", "", 0, 0)
 
   err := zgo.Engine(&zgo.Options{
-    CPath:    config.Conf.CPath,
-    Env:      config.Conf.Env,
-    Loglevel: config.Conf.Loglevel,
-    Project:  config.Conf.Project,
+    CPath:    configs.Conf.CPath,
+    Env:      configs.Conf.Env,
+    Loglevel: configs.Conf.Loglevel,
+    Project:  configs.Conf.Project,
   })
   if err != nil {
     zgo.Log.Error(err)

@@ -1,18 +1,18 @@
 package engine
 
 import (
-  "github.com/gitcpu-io/origin/config"
+	"github.com/gitcpu-io/origin/configs"
   "github.com/gitcpu-io/zgo"
   "time"
 )
 
 func Run() error {
   err := zgo.Engine(&zgo.Options{
-    CPath:     config.Conf.CPath,
-    Env:       config.Conf.Env,
-    Loglevel:  config.Conf.Loglevel,
-    Project:   config.Conf.Project,
-    EtcdHosts: config.Conf.EtcdAddress,
+    CPath:     configs.Conf.CPath,
+    Env:       configs.Conf.Env,
+    Loglevel:  configs.Conf.Loglevel,
+    Project:   configs.Conf.Project,
+    EtcdHosts: configs.Conf.EtcdAddress,
 
     /**
     注意local.json方式

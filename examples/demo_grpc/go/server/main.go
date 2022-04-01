@@ -11,19 +11,19 @@ package main
 import (
   "context"
   "fmt"
-  "github.com/gitcpu-io/origin/config"
+	"github.com/gitcpu-io/origin/configs"
   "github.com/gitcpu-io/origin/examples/demo_grpc/go/handler"
   pb "github.com/gitcpu-io/origin/examples/demo_grpc/go/pb"
   "github.com/gitcpu-io/zgo"
 )
 
 func main() {
-  config.InitConfig("","local", "", "", 0, 0)
+  configs.InitConfig("","local", "", "", 0, 0)
 
   err := zgo.Engine(&zgo.Options{
-    Env:      config.Conf.Env,
-    Loglevel: config.Conf.Loglevel,
-    Project:  config.Conf.Project,
+    Env:      configs.Conf.Env,
+    Loglevel: configs.Conf.Loglevel,
+    Project:  configs.Conf.Project,
   })
   if err != nil {
     panic(err)

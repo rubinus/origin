@@ -2,7 +2,7 @@ package handlers
 
 import (
   "fmt"
-  "github.com/gitcpu-io/origin/config"
+	"github.com/gitcpu-io/origin/configs"
   "github.com/gitcpu-io/zgo"
   "github.com/kataras/iris/v12"
   "os"
@@ -38,12 +38,12 @@ type indexPage struct {
 }
 
 func IndexPage(ctx iris.Context) {
-  project := config.Conf.Project
+  project := configs.Conf.Project
   hostName, _ := os.Hostname()
   ctx.ViewData("", indexPage{
     Title:    project,
     Message:  fmt.Sprintf("%s welcome by zgo engine %s ...", project, zgo.Version),
-    Version:  config.Conf.Version,
+    Version:  configs.Conf.Version,
     HostName: hostName,
     IP:       zgo.Utils.GetIntranetIP(),
     Commit: commit,
@@ -57,12 +57,12 @@ func IndexPage(ctx iris.Context) {
 }
 
 func FourZeroFourPage(ctx iris.Context) {
-  project := config.Conf.Project
+  project := configs.Conf.Project
   hostName, _ := os.Hostname()
   ctx.ViewData("", indexPage{
     Title:    project,
     Message:  fmt.Sprintf("%d -- %s by zgo engine %s ...", 404, project, zgo.Version),
-    Version:  config.Conf.Version,
+    Version:  configs.Conf.Version,
     HostName: hostName,
     IP:       zgo.Utils.GetIntranetIP(),
     Commit: commit,
@@ -76,12 +76,12 @@ func FourZeroFourPage(ctx iris.Context) {
 }
 
 func FiveZeroZeroPage(ctx iris.Context) {
-  project := config.Conf.Project
+  project := configs.Conf.Project
   hostName, _ := os.Hostname()
   ctx.ViewData("", indexPage{
     Title:    project,
     Message:  fmt.Sprintf("%d -- %s by zgo engine %s ...", 500, project, zgo.Version),
-    Version:  config.Conf.Version,
+    Version:  configs.Conf.Version,
     HostName: hostName,
     IP:       zgo.Utils.GetIntranetIP(),
     Commit: commit,

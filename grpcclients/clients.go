@@ -3,7 +3,7 @@ package grpcclients
 import (
   "context"
   "fmt"
-  "github.com/gitcpu-io/origin/config"
+  "github.com/gitcpu-io/origin/configs"
   "github.com/gitcpu-io/origin/pb/helloworld"
   pb_weather "github.com/gitcpu-io/origin/pb/weather"
   "github.com/gitcpu-io/zgo"
@@ -29,8 +29,8 @@ var WeatherClient pb_weather.WeatherServiceClient
 func RPCClientsRun(ch chan string) {
   ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
   defer cancel()
-  if config.Conf.StartService &&
-    config.Conf.StartServiceDiscover { //使用服务发现模式
+  if configs.Conf.StartService &&
+    configs.Conf.StartServiceDiscover { //使用服务发现模式
     go func() {
       for value := range ch {
         lbRes, err := zgo.Service.LB(value) //变化的服务
@@ -55,9 +55,9 @@ func RPCClientsRun(ch chan string) {
 
   } else {
     //正常模式
-    go helloWorldClient(ctx, config.Conf.RpcHost, config.Conf.RpcPort)
+    go helloWorldClient(ctx, configs.Conf.RpcHost, configs.Conf.RpcPort)
 
-    go weatherClient(ctx, config.Conf.RpcHost, config.Conf.RpcPort)
+    go weatherClient(ctx, configs.Conf.RpcHost, configs.Conf.RpcPort)
 
     //go yourClient(ctx, "your call rpc host", "your call rpc port")
     //请在下面逐个添加你的proto生成的pb的client

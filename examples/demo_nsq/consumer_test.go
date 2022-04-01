@@ -2,7 +2,7 @@ package demo_nsq
 
 import (
   "fmt"
-  "github.com/gitcpu-io/origin/config"
+	"github.com/gitcpu-io/origin/configs"
   "github.com/gitcpu-io/zgo"
   "net/url"
   "testing"
@@ -10,11 +10,11 @@ import (
 )
 
 func TestConsumer(t *testing.T) {
-  config.InitConfig("","local", "", "", 0, 0)
+  configs.InitConfig("","local", "", "", 0, 0)
 
   err := zgo.Engine(&zgo.Options{
-    Project: config.Conf.Project,
-    Env:     config.Conf.Env,
+    Project: configs.Conf.Project,
+    Env:     configs.Conf.Env,
     Nsq: []string{
       label_bj,
       label_sh,

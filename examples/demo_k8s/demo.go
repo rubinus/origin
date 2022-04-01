@@ -3,7 +3,7 @@ package demo_limiter
 import (
   "context"
   "fmt"
-  "github.com/gitcpu-io/origin/config"
+	"github.com/gitcpu-io/origin/configs"
   "github.com/gitcpu-io/zgo"
 )
 
@@ -15,12 +15,12 @@ import (
 */
 
 func CallK8s() {
-  config.InitConfig("","local", "", "", 0, 0)
+  configs.InitConfig("","local", "", "", 0, 0)
   err := zgo.Engine(&zgo.Options{
-    CPath:    config.Conf.CPath,
-    Env:      config.Conf.Env,
-    Project:  config.Conf.Project,
-    Loglevel: config.Conf.Loglevel,
+    CPath:    configs.Conf.CPath,
+    Env:      configs.Conf.Env,
+    Project:  configs.Conf.Project,
+    Loglevel: configs.Conf.Loglevel,
   })
 
   if err != nil {
@@ -63,11 +63,11 @@ func CallK8s() {
   }
 
   //4. 打印config
-  fmt.Println("config: ",zgo.K8s.GetContext(config.Host))
+  fmt.Println("config: ",zgo.K8s.GetContext(configs.Host))
   fmt.Println("config-1: ",zgo.K8s.GetContext(config_1.Host))
 
   //5.生成clientset
-  _, err = zgo.K8s.Builder().BuildClientSet(config.Host,config)
+  _, err = zgo.K8s.Builder().BuildClientSet(configs.Host,config)
   if err != nil {
     return
   }
@@ -79,11 +79,11 @@ func CallK8s() {
   }
 
   //6.打印clientset
-  fmt.Println("clientset: ",zgo.K8s.GetClientSet(config.Host))
+  fmt.Println("clientset: ",zgo.K8s.GetClientSet(configs.Host))
   fmt.Println("clientset-1: ",zgo.K8s.GetClientSet(config_1.Host))
 
   //7. 打印version
-  info, err := zgo.K8s.ServerVersion(config.Host)
+  info, err := zgo.K8s.ServerVersion(configs.Host)
   if err != nil {
    fmt.Println("==ServerVersion==err: ",err)
    return
@@ -100,7 +100,7 @@ func CallK8s() {
   zgo.Log.Infof("%s,%s", info_1.Platform,info_1.GitVersion)
 
   //8.
-  zgo.K8s.UseContext(config.Host) //使用指定的config.host的context
+  zgo.K8s.UseContext(configs.Host) //使用指定的configs.host的context
   dlist, err := zgo.K8s.Deployment().List(context.TODO(),"default","","",-1,false)
   if err != nil {
     fmt.Println(err)

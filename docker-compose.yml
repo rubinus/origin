@@ -397,7 +397,7 @@ services:
 #    volumes:
 #      - ./prometheus.yml:/etc/prometheus/prometheus.yml
 #    environment:
-#      - config.file=/etc/prometheus/prometheus.yml
+#      - configs.file=/etc/prometheus/prometheus.yml
 #
 #  # 服务器监控by prometheus node-exporter
 #  node-exporter:

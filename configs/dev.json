@@ -1,9 +1,9 @@
 {
-  "version": "1.1.3",
-  "env": "pro",
+  "version": "1.1.4",
+  "env": "dev",
   "project": "origin",
-  "loglevel": "error",
-  "irisMode": false,
+  "loglevel": "info",
+  "irisMode": true,
   "etcdAddress": "localhost:2379",
   "rpcHost": "localhost",
   "rpcPort": 50051,
@@ -12,7 +12,7 @@
   "usePreAbsPath": 0,
   "demo_host_for_pay_can_change_any_name": "",
   "是否开启服务注册与服务发现": "全局控制兼容旧模式，部分服务可能会只提供服务注册，或只提供服务发现，使用下面二级开关",
-  "start_service": true,
+  "start_service": false,
   "是否开启服务注册": "当前服务提供给其它外部服务使用",
   "start_service_registry": true,
   "service信息是做为服务注册与发现时": "指定被其它外部服务访问的name,host,http_port,grpc_port，用Docker时要注意",
@@ -29,6 +29,6 @@
   "start_service_discover": true,
   "other_services": [
     "添加其它要使用的服务的名字(本条要删除) 服务名.命名空间",
-    "origin.bffp"
+    "timer.bffp"
   ]
 }

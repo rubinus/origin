@@ -1,4 +1,4 @@
-package config
+package configs
 
 import (
   "errors"
@@ -108,7 +108,7 @@ func WatchHttpConfigByService(ch chan string) {
       switch value {
       case "timer.bffp": //自己做为客户端连接自己的服务端测试
         Conf.DemoHostForPayCanChangeAnyName = fmt.Sprintf("%s:%d", lbRes.SvcHost, lbRes.SvcHttpPort)
-        //其它变量如果已经存在，可以在不改变原代码前提下，对config.Conf.***中的变量再次赋值
+        //其它变量如果已经存在，可以在不改变原代码前提下，对configs.Conf.***中的变量再次赋值
 
       case "other":
         //继续通过服务名，来再次初始化host port

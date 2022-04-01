@@ -3,7 +3,7 @@ package grpcserver
 import (
   "context"
   "fmt"
-  "github.com/gitcpu-io/origin/config"
+  "github.com/gitcpu-io/origin/configs"
   "github.com/gitcpu-io/origin/grpchandlers"
   "github.com/gitcpu-io/origin/pb/helloworld"
   pb_weather "github.com/gitcpu-io/origin/pb/weather"
@@ -34,8 +34,8 @@ func Start() {
   pb_weather.RegisterWeatherServiceServer(server, &grpchandlers.WeatherServer{})
 
 
-  fmt.Printf("Now listening GRPC Server on: %d\n", config.Conf.RpcPort)
-  _, err = zgo.Grpc.Run(context.TODO(), server, config.Conf.RpcPort)
+  fmt.Printf("Now listening GRPC Server on: %d\n", configs.Conf.RpcPort)
+  _, err = zgo.Grpc.Run(context.TODO(), server, configs.Conf.RpcPort)
   if err != nil {
     fmt.Println("Grpc server is error :", err)
     return

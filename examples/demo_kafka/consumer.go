@@ -2,7 +2,7 @@ package demo_kafka
 
 import (
   "fmt"
-  "github.com/gitcpu-io/origin/config"
+	"github.com/gitcpu-io/origin/configs"
   "github.com/gitcpu-io/zgo"
 )
 
@@ -53,8 +53,8 @@ func (c *chat) Consumer(label string) {
 
 func Consumer() {
   c := chat{
-    Topic:   config.Conf.Project,
-    GroupId: config.Conf.Project,
+    Topic:   configs.Conf.Project,
+    GroupId: configs.Conf.Project,
   }
   go c.Consumer("")
 }

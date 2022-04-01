@@ -2,7 +2,7 @@ package demo_nsq
 
 import (
   "fmt"
-  "github.com/gitcpu-io/origin/config"
+	"github.com/gitcpu-io/origin/configs"
   "github.com/gitcpu-io/zgo"
 )
 
@@ -36,8 +36,8 @@ func Consumer() {
 
   go func() {
     c := chat{
-      Topic:   config.Conf.Project,
-      Channel: config.Conf.Project,
+      Topic:   configs.Conf.Project,
+      Channel: configs.Conf.Project,
     }
     c.Consumer()
   }()

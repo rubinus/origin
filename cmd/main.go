@@ -4,7 +4,7 @@ import (
   "context"
   goflag "flag"
   "fmt"
-  "github.com/gitcpu-io/origin/config"
+  "github.com/gitcpu-io/origin/configs"
   "github.com/gitcpu-io/origin/engine"
   "github.com/gitcpu-io/origin/grpcclients"
   "github.com/gitcpu-io/origin/grpcserver"
@@ -100,84 +100,84 @@ func init() {
       cpath = fmt.Sprintf("%s/%s", pwd, "config")
     }
   }
-  config.InitConfig(cpath, env, project, etcdAddress, port, rpcPort)
+  configs.InitConfig(cpath, env, project, etcdAddress, port, rpcPort)
 
   if os.Getenv("PROJECT") != "" {
-    config.Conf.Project = os.Getenv("PROJECT") //从os的env取得PROJECT，用来在yaml文件中的配置
+    configs.Conf.Project = os.Getenv("PROJECT") //从os的env取得PROJECT，用来在yaml文件中的配置
   }
   if os.Getenv("ETCDADDRESS") != "" {
-    config.Conf.EtcdAddress = os.Getenv("ETCDADDRESS") //从os的env取得ETCDADDRESS，用来在yaml文件中的配置
+    configs.Conf.EtcdAddress = os.Getenv("ETCDADDRESS") //从os的env取得ETCDADDRESS，用来在yaml文件中的配置
   }
   if os.Getenv("PORT") != "" {
     port, _ := strconv.Atoi(os.Getenv("PORT"))
-    config.Conf.HttpPort = port //从os的env取得PORT，用来在yaml文件中的配置
+    configs.Conf.HttpPort = port //从os的env取得PORT，用来在yaml文件中的配置
   }
   if os.Getenv("RPCPORT") != "" {
     atoi, err := strconv.Atoi(os.Getenv("RPCPORT"))
     if err != nil {
       atoi = DefaultGrpcPort
     }
-    config.Conf.RpcPort = atoi //从os的env取得RPCPORT，用来在yaml文件中的配置
+    configs.Conf.RpcPort = atoi //从os的env取得RPCPORT，用来在yaml文件中的配置
   }
 
   //用docker配置覆盖服务注册与发现的配置
   if os.Getenv("SVC_NAME") != "" {
-    config.Conf.ServiceInfo.SvcName = os.Getenv("SVC_NAME") //来os的env，用来在yaml文件中的配置
+    configs.Conf.ServiceInfo.SvcName = os.Getenv("SVC_NAME") //来os的env，用来在yaml文件中的配置
   }
   if os.Getenv("SVC_HOST") != "" {
-    config.Conf.ServiceInfo.SvcHost = os.Getenv("SVC_HOST") //来os的env，用来在yaml文件中的配置
+    configs.Conf.ServiceInfo.SvcHost = os.Getenv("SVC_HOST") //来os的env，用来在yaml文件中的配置
   }
   if os.Getenv("SVC_HTTP_PORT") != "" {
-    config.Conf.ServiceInfo.SvcHttpPort = os.Getenv("SVC_HTTP_PORT") //来os的env，用来在yaml文件中的配置
+    configs.Conf.ServiceInfo.SvcHttpPort = os.Getenv("SVC_HTTP_PORT") //来os的env，用来在yaml文件中的配置
   }
   if os.Getenv("SVC_GRPC_PORT") != "" {
-    config.Conf.ServiceInfo.SvcGrpcPort = os.Getenv("SVC_GRPC_PORT") //来os的env，用来在yaml文件中的配置
+    configs.Conf.ServiceInfo.SvcGrpcPort = os.Getenv("SVC_GRPC_PORT") //来os的env，用来在yaml文件中的配置
   }
   if os.Getenv("SVC_ETCD_ADDRESS") != "" {
-    config.Conf.ServiceInfo.SvcEtcdAddress = os.Getenv("SVC_ETCD_ADDRESS") //来os的env，用来在yaml文件中的配置
+    configs.Conf.ServiceInfo.SvcEtcdAddress = os.Getenv("SVC_ETCD_ADDRESS") //来os的env，用来在yaml文件中的配置
   }
 
   //Args输入会覆盖ENV及配置中的xxxx.json中的变量
   if project != "" {
-    config.Conf.Project = project
+    configs.Conf.Project = project
   }
   if etcdAddress != "" {
-    config.Conf.EtcdAddress = etcdAddress
+    configs.Conf.EtcdAddress = etcdAddress
   }
   if port != 0 {
-    config.Conf.HttpPort = port
+    configs.Conf.HttpPort = port
   }
   if rpcPort != 0 {
-    config.Conf.RpcPort = rpcPort
+    configs.Conf.RpcPort = rpcPort
   }
   if project != "" {
-    config.Conf.Project = project
+    configs.Conf.Project = project
   }
   if svcName != "" {
-    config.Conf.ServiceInfo.SvcName = svcName
+    configs.Conf.ServiceInfo.SvcName = svcName
   }
   if svcHost != "" {
-    config.Conf.ServiceInfo.SvcHost = svcHost
+    configs.Conf.ServiceInfo.SvcHost = svcHost
   }
   if svcHttpPort != "" {
-    config.Conf.ServiceInfo.SvcHttpPort = svcHttpPort
+    configs.Conf.ServiceInfo.SvcHttpPort = svcHttpPort
   }
   if svcGrpcPort != "" {
-    config.Conf.ServiceInfo.SvcGrpcPort = svcGrpcPort
+    configs.Conf.ServiceInfo.SvcGrpcPort = svcGrpcPort
   }
   if svcEtcdAddress != "" {
-    config.Conf.ServiceInfo.SvcEtcdAddress = svcEtcdAddress
+    configs.Conf.ServiceInfo.SvcEtcdAddress = svcEtcdAddress
   }
 
-  if config.Conf.ServiceInfo.SvcHttpPort == "" {
-    config.Conf.ServiceInfo.SvcHttpPort = fmt.Sprintf("%d", config.Conf.HttpPort)
+  if configs.Conf.ServiceInfo.SvcHttpPort == "" {
+    configs.Conf.ServiceInfo.SvcHttpPort = fmt.Sprintf("%d", configs.Conf.HttpPort)
   }
-  if config.Conf.ServiceInfo.SvcGrpcPort == "" {
-    config.Conf.ServiceInfo.SvcGrpcPort = fmt.Sprintf("%d", config.Conf.RpcPort)
+  if configs.Conf.ServiceInfo.SvcGrpcPort == "" {
+    configs.Conf.ServiceInfo.SvcGrpcPort = fmt.Sprintf("%d", configs.Conf.RpcPort)
   }
 
   fmt.Println()
-  structToMap := zgo.Utils.StructToMap(&config.Conf)
+  structToMap := zgo.Utils.StructToMap(&configs.Conf)
   fmt.Printf("应用到进程的配置项总共: %d 个\n", len(structToMap))
   for idx, val := range structToMap {
     fmt.Println(idx, ": ", val)
@@ -193,10 +193,10 @@ func main() {
   }
 
   app := iris.New() //start web http server
-  app.Logger().SetLevel(config.Conf.Loglevel)
+  app.Logger().SetLevel(configs.Conf.Loglevel)
 
   var pre string
-  if config.Conf.UsePreAbsPath == 1 {
+  if configs.Conf.UsePreAbsPath == 1 {
     prefix, _ := filepath.Abs(filepath.Dir(os.Args[0]) + "/")
     pre = prefix + "/web"
   } else {
@@ -205,7 +205,7 @@ func main() {
 
   app.HandleDir("/", "./web/static") //static
 
-  app.RegisterView(iris.HTML(pre, ".html").Reload(config.Conf.IrisMod)) // select the html engine to serve templates
+  app.RegisterView(iris.HTML(pre, ".html").Reload(configs.Conf.IrisMod)) // select the html engine to serve templates
 
   //集中调用路由
   routes.Index(app)
@@ -223,15 +223,15 @@ func main() {
 
   //用于pprof server分析性能
   go func() {
-    fmt.Printf("Now listening pprof Server on: http://%s:%d/debug/pprof\n", zgo.Utils.GetIntranetIP(), config.Conf.PprofPort)
-    err := http.ListenAndServe(fmt.Sprintf("0.0.0.0:%v", config.Conf.PprofPort), nil)
+    fmt.Printf("Now listening pprof Server on: http://%s:%d/debug/pprof\n", zgo.Utils.GetIntranetIP(), configs.Conf.PprofPort)
+    err := http.ListenAndServe(fmt.Sprintf("0.0.0.0:%v", configs.Conf.PprofPort), nil)
     if err != nil {
       zgo.Log.Error(err)
       return
     }
   }()
 
-  if !config.Conf.StartService {
+  if !configs.Conf.StartService {
     //正常启动服务，不使用服务注册与发现，标准模式
     normalStart(app)
   } else {
@@ -256,10 +256,10 @@ func normalStart(app *iris.Application) {
     fmt.Println("######origin, this grpcserver is normal shutdown by Iris, you can do something from here ...######")
     fmt.Println()
     // 关闭所有主机
-    config.Goodbye()
+    configs.Goodbye()
     _ = app.Shutdown(ctx)
   })
-  _ = app.Run(iris.Addr(":"+strconv.Itoa(config.Conf.HttpPort), func(h *iris.Supervisor) {
+  _ = app.Run(iris.Addr(":"+strconv.Itoa(configs.Conf.HttpPort), func(h *iris.Supervisor) {
     h.RegisterOnShutdown(func() {
 
     })
@@ -273,7 +273,7 @@ func useServiceRegistryDiscover(app *iris.Application) {
   //第一步 必须
   //***********************************************************
   registryAndDiscover, err := zgo.Service.New(6,
-    config.Conf.ServiceInfo.SvcEtcdAddress)
+    configs.Conf.ServiceInfo.SvcEtcdAddress)
   if err != nil {
     zgo.Log.Errorf("创建微服务实例化失败 %v", err)
     return
@@ -283,22 +283,22 @@ func useServiceRegistryDiscover(app *iris.Application) {
   //第二步 配置文件决定是否开启使用，这一步很重要，一定要注册外部可以访问当前服务的，尤其用docker时要注意
   //***********************************************************
   //todo 请确认下面三项 host httpport grpcport 使其它服务可访问到
-  if config.Conf.StartServiceRegistry {
+  if configs.Conf.StartServiceRegistry {
     var host string
-    if config.Conf.ServiceInfo.SvcHost == "" { //默认为空使用宿主机内部IP
+    if configs.Conf.ServiceInfo.SvcHost == "" { //默认为空使用宿主机内部IP
       host = zgo.Utils.GetIntranetIP()
     } else {
-      host = config.Conf.ServiceInfo.SvcHost
+      host = configs.Conf.ServiceInfo.SvcHost
     }
-    shport, err := strconv.Atoi(config.Conf.ServiceInfo.SvcHttpPort)
+    shport, err := strconv.Atoi(configs.Conf.ServiceInfo.SvcHttpPort)
     if err != nil {
-      shport = config.Conf.HttpPort
+      shport = configs.Conf.HttpPort
     }
-    sgport, err := strconv.Atoi(config.Conf.ServiceInfo.SvcGrpcPort)
+    sgport, err := strconv.Atoi(configs.Conf.ServiceInfo.SvcGrpcPort)
     if err != nil {
-      sgport = config.Conf.RpcPort
+      sgport = configs.Conf.RpcPort
     }
-    err = registryAndDiscover.Registry(config.Conf.ServiceInfo.SvcName, host,
+    err = registryAndDiscover.Registry(configs.Conf.ServiceInfo.SvcName, host,
       shport, sgport)
     //注册当前服务(自己)到注册中心
     if err != nil {
@@ -310,14 +310,14 @@ func useServiceRegistryDiscover(app *iris.Application) {
   //***********************************************************
   //第三步 配置文件决定是否开启使用，这是服务发现的监听，必须与第四步同时使用
   //***********************************************************
-  if config.Conf.StartServiceDiscover {
+  if configs.Conf.StartServiceDiscover {
     watch := zgo.Service.Watch()
     httpChan := make(chan string, 1000)
     grpcChan := make(chan string, 1000)
     go func() {
       for value := range watch {
         go func(value string) {
-          config.WatchHttpConfigByService(httpChan) //http再次初始化负载的host,port
+          configs.WatchHttpConfigByService(httpChan) //http再次初始化负载的host,port
           httpChan <- value
         }(value)
 
@@ -336,7 +336,7 @@ func useServiceRegistryDiscover(app *iris.Application) {
     //第四步 通过服务发现要使用的其它服务，并自动watch其状态的改变，先初始化
     //这是服务发现，必须与第三步同时使用
     //***********************************************************
-    otherService := config.Conf.OtherServices
+    otherService := configs.Conf.OtherServices
     err = registryAndDiscover.Discovery(otherService) //err=nil表示并发执行服务发现成功并监听ing...
     for _, value := range otherService {              //初始化
       watch <- value
@@ -360,10 +360,10 @@ func useServiceRegistryDiscover(app *iris.Application) {
     fmt.Println("######origin, this grpcserver use the register/discover shutdown by Iris, you can do something from here ...######")
     fmt.Println()
     // 关闭所有主机
-    config.Goodbye()
+    configs.Goodbye()
     _ = app.Shutdown(ctx)
   })
-  _ = app.Run(iris.Addr(":"+strconv.Itoa(config.Conf.HttpPort), func(h *iris.Supervisor) {
+  _ = app.Run(iris.Addr(":"+strconv.Itoa(configs.Conf.HttpPort), func(h *iris.Supervisor) {
     h.RegisterOnShutdown(func() {
       //注销掉当前服务 unregistry
       err = registryAndDiscover.UnRegistry()

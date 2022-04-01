@@ -3,7 +3,7 @@ package demo_cache
 import (
   "context"
   "fmt"
-  "github.com/gitcpu-io/origin/config"
+	"github.com/gitcpu-io/origin/configs"
   "github.com/gitcpu-io/zgo"
   "time"
 )
@@ -12,7 +12,7 @@ type CacheDemo struct {
 }
 
 func init() {
-  config.InitConfig("","local", "", "", 0, 0)
+  configs.InitConfig("","local", "", "", 0, 0)
 }
 
 //QueryMysql 测试读取Mysqldb数据，wait for sdk init connection
@@ -22,9 +22,9 @@ func (m CacheDemo) run() {
 
   //查询参数
   err := zgo.Engine(&zgo.Options{
-    CPath:   config.Conf.CPath,
-    Env:     config.Conf.Env,
-    Project: config.Conf.Project,
+    CPath:   configs.Conf.CPath,
+    Env:     configs.Conf.Env,
+    Project: configs.Conf.Project,
     Pika: []string{
       "pika_label_rw", // 需要一个pika的配置
     },
