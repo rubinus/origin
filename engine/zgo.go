@@ -12,7 +12,7 @@ func Run() error {
     Env:       config.Conf.Env,
     Loglevel:  config.Conf.Loglevel,
     Project:   config.Conf.Project,
-    EtcdHosts: config.Conf.EtcdHosts,
+    EtcdHosts: config.Conf.EtcdAddress,
 
     /**
     注意local.json方式

@@ -1,4 +1,4 @@
-# origin
+# origin v1.1.1
 
 # 本地运行docker-compose 启动中间件db/cache/queue等
 
@@ -49,25 +49,33 @@ cd origin/_init
 go run main.go
 ```
 
-其中_init目录下 local.json 只有redis和mongodb
+- 其中_init目录下 local.json 只有redis和mongodb
 
-如果使用docker运行，要确保local.json中的 中间件 host为可访问到的地址，不能使用localhost
+- 如果使用docker运行，要确保_init/local.json中的 中间件 host为可访问到的地址，不能使用localhost
+
+- _init/local.json这个配置文件会直接作用到zgo engine的配置上
 
 ### all_db_local_back.json 可以复制内容到 local.json 中，有全量的中间件可以使用，具体要看docker-compose运行了多少个
 
-## config目录中的local.json与container.json
+## config目录中的配置文件如何使用？
 
-> local.json适合本地调试开发 8081端口，仍然使用原生的方式来连接各种db，部署以配置文件的方式在ECS机器上，在此以redis为例
+> local.json适合本地调试开发 8081端口，仍然使用原生的方式来连接各种db，以配置文件的方式在ECS机器上，在此以redis和mongodb为例
 
-> 如果使用 dev.json/qa.json/pro.json就会使用etcd做为库 默认80端口，其中的数据存储格式就是_init/local.json中部分的实例，
+- 当使用local.json本地开发时，还需要在 engine/zgo.go中指定使用的中间件的key, 你可能使用一个或多个中间件
 
-> 当然真实的 etcd中还存有其它mysql/mongo/kafka等等的配置文件
+> 如果使用 dev.json/qa.json/pro.json/k8s.json就会使用etcd做为配置库 默认80端口，其中的数据存储格式就是_init/local.json中部分的实例，
 
-> 当使用local.json本地开发时，还需要在 engine/zgo.go中指定使用的中间件的key, 你可能使用一个或多个中间件
+- 当然真实的 etcd中还存有其它mysql/mongo/kafka等等的配置文件
 
-> container.json打包测试image时 默认是80端口
+> container.json仅供打包测试image时 默认是80端口
 
-> 如果不使用etcd做为配置中心，最好的方式是使用container.json进行相应的参数变更
+- 如果不使用etcd做为配置中心，又要docker build，那么最好的方式是使用container.json进行相应的参数变更，仅供测试image
+
+- 最佳实践，如果部署到不同的k8s环境，可以使用dev/qa/pro/k8s相应的配置并修改
+
+- 如果使用etcdAddress参数，支持etcd集群，多节点用,隔开(ip:port,ip:port,ip:port); args参数中的etcdAddress会覆盖dev/qa/pro/k8s.json中的etcdAddress
+
+> local.json 和 container.json 经过zgo engine时不会读取配置中心etcd中的值，仅使用.json中的配置，意味着你可以把 中间件的信息放置在这2个配置文件中，模拟存储在etcd中的配置信息
 
 # 安装gogo proto
 go get github.com/gogo/protobuf/protoc-gen-gofast
@@ -80,15 +88,25 @@ go get github.com/gogo/protobuf/protoc-gen-gofast
 make image
 ```
 
+# 关于运行origin
+
 ## 在本地执行打包好的镜像origin
 
 docker run --rm -p 8081:80 -p 8181:8181 -p 50051:50051 -d --name origin rubinus/origin:v1.0
 
-## 如果使用了etcd为配置中心，需要带上参数 etcdHosts，同时env的取值需要是dev级别以上，不能再用local，如下所示
+## 如果使用了etcd为配置中心，需要带上参数 etcdAddress，同时env的取值需要是dev级别以上，不能再用local，如下所示
 
-go run main.go --env dev --etcdHosts localhost:3379
+- 本机开发
 
-# 访问
+go run main.go --env dev --etcdAddress localhost:3379
+
+- 本机开发最佳实践，直接修改config/local.json中 env=dev 和 etcdAddress的值
+
+- Docker运行时指定 env=dev etcdAddress参数为配置中心etcd的地址host:port（容器可访问到的IP）
+
+docker run --rm -p 8081:80 -p 8181:8181 -p 50051:50051 --name origin rubinus/origin:v1.0 --env=dev --etcdAddress=192.168.110.173:3379
+
+# 访问origin
 
 ## Post保存天气信息
 ```shell
@@ -102,6 +120,10 @@ curl -l -H "Content-type: application/json" -X POST -d '{"query":"深圳市"}' "
 curl -l "http://localhost:8081/v1/weather/list?city=深圳市"
 
 ```
+
+## 通过grpc来查询天气列表，当启动origin后，在另外一个terminal中执行
+go run grpcclient-test/weather/main.go
+
 
 # How to use the zgo engine
 
