@@ -8,6 +8,8 @@ import (
   "github.com/gitcpu-io/origin/pb/helloworld"
   pb_weather "github.com/gitcpu-io/origin/pb/weather"
   "github.com/gitcpu-io/zgo"
+  "math"
+  "time"
 )
 
 /*
@@ -18,7 +20,8 @@ import (
 */
 
 func Start() {
-  server, err := zgo.Grpc.Server(context.TODO())
+  ka := time.Duration(math.MaxInt64)
+  server, err := zgo.Grpc.Server(context.TODO(),zgo.Grpc.WithKeepalive(ka,ka,ka, 5 * time.Second,20 * time.Second))
   if err != nil {
     fmt.Println("Grpc server is error :", err)
     return
@@ -31,7 +34,7 @@ func Start() {
   pb_weather.RegisterWeatherServiceServer(server, &grpchandlers.WeatherServer{})
 
 
-  fmt.Printf("Now listening GRPC Serv on: %s\n", config.Conf.RpcPort)
+  fmt.Printf("Now listening GRPC Server on: %d\n", config.Conf.RpcPort)
   _, err = zgo.Grpc.Run(context.TODO(), server, config.Conf.RpcPort)
   if err != nil {
     fmt.Println("Grpc server is error :", err)

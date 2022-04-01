@@ -14,7 +14,7 @@ var st = &struct {
 }
 
 func CallFun() {
-  config.InitConfig("", "local", "", "", "", "")
+  config.InitConfig("", "local", "", "", 0, 0)
 
   err := zgo.Engine(&zgo.Options{
     CPath:    config.Conf.CPath,

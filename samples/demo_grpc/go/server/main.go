@@ -18,7 +18,7 @@ import (
 )
 
 func main() {
-  config.InitConfig("","local", "", "", "", "")
+  config.InitConfig("","local", "", "", 0, 0)
 
   err := zgo.Engine(&zgo.Options{
     Env:      config.Conf.Env,
@@ -33,7 +33,7 @@ func main() {
 
   pb.RegisterGreeterServer(server, &handler.Server{})
 
-  msg, _ := zgo.Grpc.Run(context.TODO(), server, "")
+  msg, _ := zgo.Grpc.Run(context.TODO(), server, 50051)
 
   fmt.Println(msg)
 }

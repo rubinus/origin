@@ -57,7 +57,7 @@ func RPCClientsRun(ch chan string) {
     //正常模式
     go helloWorldClient(ctx, config.Conf.RpcHost, config.Conf.RpcPort)
 
-    go weatherClient(ctx,config.Conf.RpcHost,config.Conf.RpcPort)
+    go weatherClient(ctx, config.Conf.RpcHost, config.Conf.RpcPort)
 
     //go yourClient(ctx, "your call rpc host", "your call rpc port")
     //请在下面逐个添加你的proto生成的pb的client
@@ -66,10 +66,10 @@ func RPCClientsRun(ch chan string) {
 }
 
 // helloWorldClient 客户端封装
-func helloWorldClient(ctx context.Context, address, port string) {
-  conn, err := zgo.Grpc.Client(ctx, address, port, zgo.Grpc.WithInsecure())
+func helloWorldClient(ctx context.Context, address string, port int) {
+  conn, err := zgo.Grpc.Client(ctx, address, port, zgo.Grpc.WithInsecure(),zgo.Grpc.WithCallOptions(1024 * 1024 * 16))
   if err != nil {
-    errStr := fmt.Sprintf("helloWorldClient timeout, Host: %s, Port: %s", address, port)
+    errStr := fmt.Sprintf("helloWorldClient timeout, Host: %s, Port: %d", address, port)
     zgo.Log.Error(errStr)
     return
   }
@@ -79,7 +79,7 @@ func helloWorldClient(ctx context.Context, address, port string) {
 
 // yourClient 自己改名
 //func yourClient(ctx context.Context, address, port string) {
-//	conn, err := zgo.Grpc.Client(ctx, address, port, zgo.Grpc.WithInsecure())
+//	conn, err := zgo.Grpc.Client(ctx, address, port, zgo.Grpc.WithInsecure(),zgo.Grpc.WithCallOptions(1024 * 1024 * 16))
 //	if err != nil {
 //		errStr := fmt.Sprintf("yourClient timeout, Host: %s, Port: %s", address, port)
 //		zgo.Log.Error(errStr)
@@ -90,10 +90,10 @@ func helloWorldClient(ctx context.Context, address, port string) {
 //}
 
 // weatherClient 客户端封装
-func weatherClient(ctx context.Context, address, port string) {
-  conn, err := zgo.Grpc.Client(ctx, address, port, zgo.Grpc.WithInsecure())
+func weatherClient(ctx context.Context, address string, port int) {
+  conn, err := zgo.Grpc.Client(ctx, address, port, zgo.Grpc.WithInsecure(),zgo.Grpc.WithCallOptions(1024 * 1024 * 16))
   if err != nil {
-    errStr := fmt.Sprintf("weatherClient timeout, Host: %s, Port: %s", address, port)
+    errStr := fmt.Sprintf("weatherClient timeout, Host: %s, Port: %d", address, port)
     zgo.Log.Error(errStr)
     return
   }

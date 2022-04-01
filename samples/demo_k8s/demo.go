@@ -15,7 +15,7 @@ import (
 */
 
 func CallK8s() {
-  config.InitConfig("","local", "", "", "", "")
+  config.InitConfig("","local", "", "", 0, 0)
   err := zgo.Engine(&zgo.Options{
     CPath:    config.Conf.CPath,
     Env:      config.Conf.Env,

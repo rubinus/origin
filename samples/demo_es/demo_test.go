@@ -14,7 +14,7 @@ const (
 )
 
 func TestGet(t *testing.T) {
-  config.InitConfig("","local", "", "", "", "")
+  config.InitConfig("","local", "", "", 0, 0)
 
   err := zgo.Engine(&zgo.Options{
     Env:      config.Conf.Env,

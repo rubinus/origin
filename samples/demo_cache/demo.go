@@ -12,7 +12,7 @@ type CacheDemo struct {
 }
 
 func init() {
-  config.InitConfig("","local", "", "", "", "")
+  config.InitConfig("","local", "", "", 0, 0)
 }
 
 //QueryMysql 测试读取Mysqldb数据，wait for sdk init connection

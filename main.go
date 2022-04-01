@@ -22,17 +22,21 @@ import (
   "time"
 )
 
+const (
+  DefaultGrpcPort int = 50051
+)
+
 var (
-  cpath        string
-  env          string
-  project      string
+  cpath          string
+  env            string
+  project        string
   etcdAddress    string
-  port         string
-  rpcPort      string
-  svcName      string
-  svcHost      string
-  svcHttpPort  string
-  svcGrpcPort  string
+  port           int
+  rpcPort        int
+  svcName        string
+  svcHost        string
+  svcHttpPort    string
+  svcGrpcPort    string
   svcEtcdAddress string
 )
 
@@ -45,9 +49,9 @@ func init() {
 
   flag.StringVar(&etcdAddress, "etcdAddress", "", "输入IP:PORT,IP:PORT指定配置中心etcd的host")
 
-  flag.StringVar(&port, "port", "", "http port")
+  flag.IntVar(&port, "port", 0, "http port")
 
-  flag.StringVar(&rpcPort, "rpcPort", "", "grpc port")
+  flag.IntVar(&rpcPort, "rpcPort", DefaultGrpcPort, "grpc port")
 
   //暴露服务信息
   flag.StringVar(&svcName, "svc_name", "", "让服务对外可访问的名称")
@@ -93,7 +97,7 @@ func init() {
   if cpath == "" {
     pwd, err := os.Getwd()
     if err == nil {
-      cpath = fmt.Sprintf("%s/%s",pwd,"config")
+      cpath = fmt.Sprintf("%s/%s", pwd, "config")
     }
   }
   config.InitConfig(cpath, env, project, etcdAddress, port, rpcPort)
@@ -109,7 +113,11 @@ func init() {
     config.Conf.HttpPort = port //从os的env取得PORT，用来在yaml文件中的配置
   }
   if os.Getenv("RPCPORT") != "" {
-    config.Conf.RpcPort = os.Getenv("RPCPORT") //从os的env取得RPCPORT，用来在yaml文件中的配置
+    atoi, err := strconv.Atoi(os.Getenv("RPCPORT"))
+    if err != nil {
+      atoi = DefaultGrpcPort
+    }
+    config.Conf.RpcPort = atoi //从os的env取得RPCPORT，用来在yaml文件中的配置
   }
 
   //用docker配置覆盖服务注册与发现的配置
@@ -130,6 +138,21 @@ func init() {
   }
 
   //Args输入会覆盖ENV及配置中的xxxx.json中的变量
+  if project != "" {
+    config.Conf.Project = project
+  }
+  if etcdAddress != "" {
+    config.Conf.EtcdAddress = etcdAddress
+  }
+  if port != 0 {
+    config.Conf.HttpPort = port
+  }
+  if rpcPort != 0 {
+    config.Conf.RpcPort = rpcPort
+  }
+  if project != "" {
+    config.Conf.Project = project
+  }
   if svcName != "" {
     config.Conf.ServiceInfo.SvcName = svcName
   }
@@ -150,14 +173,14 @@ func init() {
     config.Conf.ServiceInfo.SvcHttpPort = fmt.Sprintf("%d", config.Conf.HttpPort)
   }
   if config.Conf.ServiceInfo.SvcGrpcPort == "" {
-    config.Conf.ServiceInfo.SvcGrpcPort = config.Conf.RpcPort
+    config.Conf.ServiceInfo.SvcGrpcPort = fmt.Sprintf("%d", config.Conf.RpcPort)
   }
 
   fmt.Println()
   structToMap := zgo.Utils.StructToMap(&config.Conf)
   fmt.Printf("应用到进程的配置项总共: %d 个\n", len(structToMap))
   for idx, val := range structToMap {
-    fmt.Println(idx,": ", val)
+    fmt.Println(idx, ": ", val)
   }
   fmt.Println()
   fmt.Println()
@@ -267,8 +290,16 @@ func useServiceRegistryDiscover(app *iris.Application) {
     } else {
       host = config.Conf.ServiceInfo.SvcHost
     }
+    shport, err := strconv.Atoi(config.Conf.ServiceInfo.SvcHttpPort)
+    if err != nil {
+      shport = config.Conf.HttpPort
+    }
+    sgport, err := strconv.Atoi(config.Conf.ServiceInfo.SvcGrpcPort)
+    if err != nil {
+      sgport = config.Conf.RpcPort
+    }
     err = registryAndDiscover.Registry(config.Conf.ServiceInfo.SvcName, host,
-      config.Conf.ServiceInfo.SvcHttpPort, config.Conf.ServiceInfo.SvcGrpcPort)
+      shport, sgport)
     //注册当前服务(自己)到注册中心
     if err != nil {
       zgo.Log.Errorf("%s 注册微服务失败 %v", "test", err)

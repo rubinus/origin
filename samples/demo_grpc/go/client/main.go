@@ -23,7 +23,7 @@ const (
 )
 
 func main() {
-  config.InitConfig("","local", "", "", "", "")
+  config.InitConfig("","local", "", "", 0,0)
 
   err := zgo.Engine(&zgo.Options{
     Env:      config.Conf.Env,
@@ -33,7 +33,7 @@ func main() {
   if err != nil {
     panic(err)
   }
-  conn, err := zgo.Grpc.Client(context.TODO(), address, "", zgo.Grpc.WithInsecure())
+  conn, err := zgo.Grpc.Client(context.TODO(), address, 50051, zgo.Grpc.WithInsecure())
   if err != nil {
     log.Fatalf("did not connect: %v", err)
   }
