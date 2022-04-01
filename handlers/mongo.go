@@ -15,7 +15,7 @@ type User struct {
   Address  int             `json:"address" bson:"address"`
 }
 
-// MongoGet MongoGet接口四板斧，这仅仅是一个例子
+// MongoGet 接口四板斧，这仅仅是一个例子
 func MongoGet(ctx iris.Context) {
   // 第一：定义错误返回变量，请求上下文，通过defer来最后响应
   var errStr string
@@ -61,7 +61,7 @@ func MongoGet(ctx iris.Context) {
 
 }
 
-// MongoList MongoGet接口四板斧，这仅仅是一个例子
+// MongoList 接口四板斧，这仅仅是一个例子
 func MongoList(ctx iris.Context) {
   // 第一：定义错误返回变量，请求上下文，通过defer来最后响应
   var errStr string

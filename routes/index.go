@@ -23,24 +23,59 @@ func Index(app *iris.Application) {
   // 不要删除这个路由，这是专门为容器运行在k8s时，提供的探针路由，判断微服务是否健康的
   app.Get("/health", handlers.Health)
 
-  v1 := app.Party("/v1")
+  apis := app.Party("/apis/") //apis接口
   {
-    v1.Get("/trace", handlers.TraceGet)
+    // demo: trace
+    traceV1 := apis.Party("/trace") //资源
+    {
+      v1 := traceV1.Party("/v1")  //版本
+      {
+        v1.Get("/do", handlers.TraceGet)  //REST api
+        //todo add other route
 
-    //这是一个redis get的例子，可以直接copy或是更改
-    v1.Get("/redis/get", handlers.RedisGet)
+      }
+    }
+    // demo: redis
+    redisV1 := apis.Party("/redis") //资源
+    {
+      v1 := redisV1.Party("/v1")  //版本
+      {
+        //这是一个redis get的例子，可以直接copy或是更改
+        v1.Get("/get", handlers.RedisGet) //REST api
+        //todo add other route
 
-    //这是一个mongo get的例子，可以直接copy或是更改
-    v1.Get("/mongo/get", handlers.MongoGet)
+      }
 
-    //这是一个mongo list的例子，可以直接copy或是更改
-    v1.Get("/mongo/list", handlers.MongoList)
+    }
+    // demo: mongo
+    mongoV1 := apis.Party("/mongo") //资源
+    {
+      v1 := mongoV1.Party("/v1")  //版本
+      {
+        //这是一个mongo get的例子，可以直接copy或是更改
+        v1.Get("/get", handlers.MongoGet) //REST api
+        //这是一个mongo list的例子，可以直接copy或是更改
+        v1.Get("/list", handlers.MongoList) //REST api
+        //todo add other route
 
-    //这是一个典型的 MVC 模式的Post例子，请严格按照结构，更改结构体与请求参数（route->handler->service->models）
-    v1.Post("/weather/put", handlers.SaveWeather)
+      }
 
-    //这是一个典型的 MVC 模式的Get 列表的例子
-    v1.Get("/weather/list", handlers.ListWeather)
+    }
+
+    // weather
+    weatherV1 := apis.Party("/weather") //资源
+    {
+      v1 := weatherV1.Party("/v1")  //版本
+      {
+        //这是一个典型的 MVC 模式的Post例子，请严格按照结构，更改结构体与请求参数（route->handler->service->models）
+        v1.Post("/put", handlers.SaveWeather) //REST api
+
+        //这是一个典型的 MVC 模式的Get 列表的例子
+        v1.Get("/list", handlers.ListWeather) //REST api
+        //todo add other route
+
+      }
+    }
 
   }
 

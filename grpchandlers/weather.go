@@ -21,7 +21,7 @@ func (s *WeatherServer) List(ctx context.Context, request *pb_weather.ListReques
   //第二：准备输入参数
   city := request.City
 
-  // 第三：调用zgo engine来处理业务逻辑
+  // 第三：通过MVC模式调用zgo engine来处理业务逻辑
   wea := services.NewWeather()
   res, err := wea.List(ctx, city)
   if err != nil {

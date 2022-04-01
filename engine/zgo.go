@@ -39,6 +39,6 @@ func Run() error {
     },
   })
 
-  time.Sleep(1 * time.Second) //wait 1 second for zgo engine start and _init connection
+  time.Sleep(1 * time.Second) //wait 1 second for zgo engine start and init connection
   return err
 }

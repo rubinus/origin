@@ -8,7 +8,7 @@ import (
   "time"
 )
 
-// RedisGet RedisGet接口四板斧，这仅仅是一个例子
+// RedisGet 接口四板斧，这仅仅是一个例子
 func RedisGet(ctx iris.Context) {
   // 第一：定义错误返回变量，请求上下文，通过defer来最后响应
   var errStr string

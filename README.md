@@ -1,8 +1,9 @@
-# origin v1.1.2
+# origin v1.1.3
 
-# 本地运行docker-compose 启动中间件db/cache/queue等
+# 准备系统外的中间件: 本地运行docker-compose 启动中间件db/cache/queue等
+cd origin
 
-执行 docker-compose up 或 docker-compose up -d
+docker-compose up -d
 
 docker-compose ps
 
@@ -29,9 +30,10 @@ db.createUser(
 db.auth('admin','admin')
 
 ### 创建天气的db，准备测试
+
 use weather
 
-### 插入测试数据
+### 插入接口测试数据，准备测试
 
 use profile
 
@@ -40,22 +42,22 @@ for(var i=100;i<=200;i++){ db.bj.insert({ username: 'zhangsan', age:Math.round(M
 Math.random() * 100), }); }
 ```
 
-# 关于配置文件 _init/xxxx.json 和 config/xxxx.json 的说明
+# 关于配置文件 init/xxxx.json 和 config/xxxx.json 的说明
 
-## _init目录，项目初始化（如果使用etcd作为配置中心的话运行下面的，如果是用本地配置文件的方式就不用）
+## init目录，项目初始化（如果使用etcd作为配置中心的话运行下面的，如果是用本地配置文件的方式就不用）
 ```shell
-cd origin/_init
+cd origin/init
 
 go run main.go
 ```
 
-- 其中_init目录下 local.json 只有redis和mongodb
+- 其中init目录下 local.json 只有redis和mongodb
 
-- 如果使用docker运行，要确保_init/local.json中的 中间件 host为可访问到的地址，不能使用localhost
+- 如果使用docker运行，要确保init/local.json中的 中间件 host为可访问到的地址，不能使用localhost
 
-- _init/local.json这个配置文件会直接作用到zgo engine的配置上
+- init/local.json这个配置文件会直接作用到zgo engine的配置上
 
-### all_db_local_back.json 可以复制内容到 local.json 中，有全量的中间件可以使用，具体要看docker-compose运行了多少个
+- init/all_db_local_back.json 可以复制内容到 local.json 中，有全量的中间件可以使用，具体要看docker-compose运行了多少个
 
 ## config目录中的配置文件如何使用？
 
@@ -63,7 +65,7 @@ go run main.go
 
 - 当使用local.json本地开发时，还需要在 engine/zgo.go中指定使用的中间件的key, 你可能使用一个或多个中间件
 
-> 如果使用 dev.json/qa.json/pro.json/k8s.json就会使用etcd做为配置库 默认80端口，其中的数据存储格式就是_init/local.json中部分的实例，
+> 如果使用 dev.json/qa.json/pro.json/k8s.json就会使用etcd做为配置库 默认80端口，其中的数据存储格式就是init/local.json中部分的实例，
 
 - 当然真实的 etcd中还存有其它mysql/mongo/kafka等等的配置文件
 
@@ -71,7 +73,7 @@ go run main.go
 
 - 如果不使用etcd做为配置中心，又要docker build，那么最好的方式是使用container.json进行相应的参数变更，仅供测试image
 
-- 最佳实践，如果部署到不同的k8s环境，可以使用dev/qa/pro/k8s相应的配置并修改
+> 最佳实践，如果部署到不同的k8s环境，可以使用dev/qa/pro/k8s相应的配置并修改
 
 - 如果使用etcdAddress参数，支持etcd集群，多节点用,隔开(ip:port,ip:port,ip:port); args参数中的etcdAddress会覆盖dev/qa/pro/k8s.json中的etcdAddress
 
@@ -110,16 +112,19 @@ docker run --rm -p 8081:80 -p 8181:8181 -p 50051:50051 --name origin rubinus/ori
 
 ## Post保存天气信息
 ```shell
-curl -l -H "Content-type: application/json" -X POST -d '{"query":"深圳市"}' "http://localhost:8081/v1/weather/put"
+curl -l -H "Content-type: application/json" -X POST -d '{"query":"深圳市"}' "http://localhost:8081/apis/weather/v1/put"
 
 ```
 
 ## 查询天气列表
 
 ```shell
-curl -l "http://localhost:8081/v1/weather/list?city=深圳市"
+curl -l "http://localhost:8081/apis/weather/v1/list?city=深圳市"
 
 ```
+
+## 测试grpc是否开启
+go run grpcclient-test/helloworld/main.go
 
 ## 通过grpc来查询天气列表，当启动origin后，在另外一个terminal中执行
 go run grpcclient-test/weather/main.go
@@ -137,9 +142,9 @@ go run grpcclient-test/weather/main.go
 
 grpcserver是grpc服务端实现与启动
 
-grpchandlers是类似与 handler的处理grpc的handler，服务端的实现
+grpchandlers是类似与 handler 的处理grpc的handler，服务端的实现
 
-grpcclients是grp客户端的连接与封装
+grpcclients是grpc客户端的连接与封装
 
 grpcclient-test是grpc模拟发送客户端
 
@@ -147,7 +152,7 @@ queue_push 是队列生产端
 
 queue_pop 是队列消费端
 
-git 复制这个项目后，改名成自己开发的项目名字（全局替换：origin），这是一个模板，内含有samples目录
+git clone这个项目后，改名成自己开发的项目名字（全局替换：origin），这是一个模板，内含有examples目录
 
 安装docker,在本地一次性跑起redis,mongodb,mysql,nsq,kafka
 

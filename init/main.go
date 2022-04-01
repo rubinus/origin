@@ -35,7 +35,7 @@ func main() {
     panic(err)
   }
   err = zgo.Engine(&zgo.Options{
-    CPath: fmt.Sprintf("%s/%s",getwd,"_init"),
+    CPath: fmt.Sprintf("%s/%s",getwd,"init"),
     Env:     "local",
     Project: "origin",
   })

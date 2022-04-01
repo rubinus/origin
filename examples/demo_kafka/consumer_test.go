@@ -23,7 +23,7 @@ func TestConsumer(t *testing.T) {
     panic(err)
   }
 
-  //测试读取kafka数据，wait for sdk _init connection
+  //测试读取kafka数据，wait for sdk init connection
   time.Sleep(3 * time.Second)
 
   c := chat{

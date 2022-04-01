@@ -10,13 +10,12 @@ LABEL VERSION=$BUILD
 WORKDIR /opt/origin/
 
 #添加可执行文件
-COPY _output/origin-linux-amd64 /opt/origin/
+COPY build/origin-linux-amd64 /opt/origin/
 COPY entrypoint.sh /opt/origin/
 
 #添加配置及html等
 COPY config /opt/origin/config
-COPY views /opt/origin/views
-COPY public /opt/origin/public
+COPY web /opt/origin/web
 
 RUN ["chmod", "+x", "origin-linux-amd64"]
 RUN ["chmod", "+x", "entrypoint.sh"]
