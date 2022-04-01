@@ -51,6 +51,8 @@ go run main.go
 
 其中_init目录下 local.json 只有redis和mongodb
 
+如果使用docker运行，要确保local.json中的 中间件 host为可访问到的地址，不能使用localhost
+
 ### all_db_local_back.json 可以复制内容到 local.json 中，有全量的中间件可以使用，具体要看docker-compose运行了多少个
 
 ## config目录中的local.json与container.json
