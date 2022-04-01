@@ -3,7 +3,7 @@ package demo_es
 import (
   "context"
   "fmt"
-  "github.com/gitcpu-io/origin/config"
+	"github.com/gitcpu-io/origin/configs"
   "github.com/gitcpu-io/zgo"
   "testing"
   "time"
@@ -14,12 +14,12 @@ const (
 )
 
 func TestGet(t *testing.T) {
-  config.InitConfig("","local", "", "", 0, 0)
+  configs.InitConfig("","local", "", "", 0, 0)
 
   err := zgo.Engine(&zgo.Options{
-    Env:      config.Conf.Env,
-    Loglevel: config.Conf.Loglevel,
-    Project:  config.Conf.Project,
+    Env:      configs.Conf.Env,
+    Loglevel: configs.Conf.Loglevel,
+    Project:  configs.Conf.Project,
     Es: []string{
       new_write,
     },

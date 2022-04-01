@@ -43,7 +43,7 @@ func main() {
     panic(err)
   }
 
-  for _, v := range config.Conf.Nsq {
+  for _, v := range configs.Conf.Nsq {
     k := v.Key
     value := v.Values
     key := "zgo/project/origin/nsq/" + k
@@ -55,7 +55,7 @@ func main() {
     fmt.Println(res)
   }
 
-  for _, v := range config.Conf.Mongo {
+  for _, v := range configs.Conf.Mongo {
     k := v.Key
     value := v.Values
     key := "zgo/project/origin/mongo/" + k
@@ -66,7 +66,7 @@ func main() {
     }
   }
 
-  for _, v := range config.Conf.Es {
+  for _, v := range configs.Conf.Es {
     k := v.Key
     value := v.Values
     key := "zgo/project/origin/es/" + k
@@ -76,7 +76,7 @@ func main() {
       fmt.Println(err)
     }
   }
-  for _, v := range config.Conf.Mysql {
+  for _, v := range configs.Conf.Mysql {
     k := v.Key
     value := v.Values
     key := "zgo/project/origin/mysql/" + k
@@ -86,7 +86,7 @@ func main() {
       fmt.Println(err)
     }
   }
-  for _, v := range config.Conf.Etcd {
+  for _, v := range configs.Conf.Etcd {
     k := v.Key
     value := v.Values
     key := "zgo/project/origin/etcd/" + k
@@ -97,7 +97,7 @@ func main() {
     }
   }
 
-  for _, v := range config.Conf.Kafka {
+  for _, v := range configs.Conf.Kafka {
     k := v.Key
     value := v.Values
     key := "zgo/project/origin/kafka/" + k
@@ -108,7 +108,7 @@ func main() {
     }
   }
 
-  for _, v := range config.Conf.Redis {
+  for _, v := range configs.Conf.Redis {
     k := v.Key
     value := v.Values
     key := "zgo/project/origin/redis/" + k
@@ -119,7 +119,7 @@ func main() {
     }
   }
 
-  for _, v := range config.Conf.Postgres {
+  for _, v := range configs.Conf.Postgres {
     k := v.Key
     value := v.Values
     key := "zgo/project/origin/postgres/" + k
@@ -131,14 +131,14 @@ func main() {
   }
 
   key := "zgo/project/origin/cache"
-  val, _ := json.Marshal(config.Conf.Cache)
+  val, _ := json.Marshal(configs.Conf.Cache)
   _, err = cli.KV.Put(context.TODO(), key, string(val))
   if err != nil {
     fmt.Println(err)
   }
 
   key_log := "zgo/project/origin/log"
-  val_log, _ := json.Marshal(config.Conf.Log)
+  val_log, _ := json.Marshal(configs.Conf.Log)
   //val_log := "{\"c\": \"日志存储\",\"start\": 1,\"dbType\": \"nsq\",\"label\":\"nsq_label_bj\"}"
   res, err := cli.KV.Put(context.TODO(), key_log, string(val_log))
   fmt.Println(res, err)

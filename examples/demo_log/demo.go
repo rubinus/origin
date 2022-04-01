@@ -1,7 +1,7 @@
 package demo_log
 
 import (
-  "github.com/gitcpu-io/origin/config"
+	"github.com/gitcpu-io/origin/configs"
   "github.com/gitcpu-io/origin/engine"
   "github.com/gitcpu-io/zgo"
 )
@@ -14,7 +14,7 @@ const (
 )
 
 func init() {
-  config.InitConfig("","dev", "1553240759", "", 0, 0)
+  configs.InitConfig("","dev", "1553240759", "", 0, 0)
 }
 
 func Call() {

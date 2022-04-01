@@ -3,7 +3,7 @@ package demo_mysql
 import (
   "context"
   "fmt"
-  "github.com/gitcpu-io/origin/config"
+	"github.com/gitcpu-io/origin/configs"
   "github.com/gitcpu-io/zgo"
   "github.com/gitcpu-io/zgo/zgomysql"
   "time"
@@ -14,7 +14,7 @@ type MysqlDemo struct {
 
 func init() {
 
-  config.InitConfig("","local", "", "", 0, 0)
+  configs.InitConfig("","local", "", "", 0, 0)
 
 }
 
@@ -69,7 +69,7 @@ func (m MysqlDemo) Get(id uint32) (*House, error) {
   //查询参数
   err := zgo.Engine(&zgo.Options{
     Env:     "dev",
-    Project: config.Conf.Project,
+    Project: configs.Conf.Project,
     Mysql: []string{
       "1730737039440", // 默认为 第一个label
       //"mysql_sell_2",
@@ -108,8 +108,8 @@ func (m MysqlDemo) Create(name string) (*House, error) {
 
   //查询参数
   err := zgo.Engine(&zgo.Options{
-    Env:     config.Conf.Env,
-    Project: config.Conf.Project,
+    Env:     configs.Conf.Env,
+    Project: configs.Conf.Project,
     Mysql: []string{
       //"mysql_sell_1", // 默认为 第一个label
       "mysql_sell_2",
@@ -154,8 +154,8 @@ func (m MysqlDemo) List() (*[]House, error) {
 
   //查询参数
   err := zgo.Engine(&zgo.Options{
-    Env:     config.Conf.Env,
-    Project: config.Conf.Project,
+    Env:     configs.Conf.Env,
+    Project: configs.Conf.Project,
     Mysql: []string{
       //"mysql_sell_1", // 默认为 第一个label
       "mysql_sell_2",
@@ -200,8 +200,8 @@ func (m MysqlDemo) Count() (int, error) {
 
   //查询参数
   err := zgo.Engine(&zgo.Options{
-    Env:     config.Conf.Env,
-    Project: config.Conf.Project,
+    Env:     configs.Conf.Env,
+    Project: configs.Conf.Project,
     Mysql: []string{
       //"mysql_sell_1", // 默认为 第一个label
       "mysql_sell_2",
@@ -244,8 +244,8 @@ func (m MysqlDemo) UpdateOne(id uint32, name string) (int, error) {
 
   //查询参数
   err := zgo.Engine(&zgo.Options{
-    Env:     config.Conf.Env,
-    Project: config.Conf.Project,
+    Env:     configs.Conf.Env,
+    Project: configs.Conf.Project,
     Mysql: []string{
       //"mysql_sell_1", // 默认为 第一个label
       "mysql_sell_2",
@@ -281,8 +281,8 @@ func (m MysqlDemo) UpdateByData(id uint32, name string) (int, error) {
 
   //查询参数
   err := zgo.Engine(&zgo.Options{
-    Env:     config.Conf.Env,
-    Project: config.Conf.Project,
+    Env:     configs.Conf.Env,
+    Project: configs.Conf.Project,
     Mysql: []string{
       //"mysql_sell_1", // 默认为 第一个label
       "mysql_sell_2",
@@ -318,8 +318,8 @@ func (m MysqlDemo) UpdateByObj(id uint32, name string) (int, error) {
 
   //查询参数
   err := zgo.Engine(&zgo.Options{
-    Env:     config.Conf.Env,
-    Project: config.Conf.Project,
+    Env:     configs.Conf.Env,
+    Project: configs.Conf.Project,
     Mysql: []string{
       //"mysql_sell_1", // 默认为 第一个label
       "mysql_sell_2",
@@ -353,8 +353,8 @@ func (m MysqlDemo) DeleteOne(id uint32) (int64, error) {
 
   //查询参数
   err := zgo.Engine(&zgo.Options{
-    Env:     config.Conf.Env,
-    Project: config.Conf.Project,
+    Env:     configs.Conf.Env,
+    Project: configs.Conf.Project,
     Mysql: []string{
       //"mysql_sell_1", // 默认为 第一个label
       "mysql_sell_2",

@@ -3,7 +3,7 @@ package demo_file
 import (
   "bufio"
   "fmt"
-  "github.com/gitcpu-io/origin/config"
+	"github.com/gitcpu-io/origin/configs"
   "github.com/gitcpu-io/zgo"
   "os"
   "strconv"
@@ -19,12 +19,12 @@ import (
 */
 
 func TestF(t *testing.T) {
-  config.InitConfig("","local", "", "", 0, 0)
+  configs.InitConfig("","local", "", "", 0, 0)
 
   err := zgo.Engine(&zgo.Options{
-    Env:      config.Conf.Env,
-    Project:  config.Conf.Project,
-    Loglevel: config.Conf.Loglevel,
+    Env:      configs.Conf.Env,
+    Project:  configs.Conf.Project,
+    Loglevel: configs.Conf.Loglevel,
   })
 
   if err != nil {

@@ -41,7 +41,7 @@ func (c *Msg) Consumer(label string) {
 
 // 从main.go中调用
 func RabbitmqConsumer() { //kafka topic 名字不能带有-
-  //topic := fmt.Sprintf("%s_%s_%s", config.MidPlatform, config.Conf.Project, config.Conf.KafkaTopics["noread"])
+  //topic := fmt.Sprintf("%s_%s_%s", configs.MidPlatform, configs.Conf.Project, configs.Conf.KafkaTopics["noread"])
   zgo.Log.Info("---------------启动消费Rabbitmq---------------")
   c := Msg{
     ExchangeName: "exchangeName",
