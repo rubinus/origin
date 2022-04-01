@@ -1,10 +1,10 @@
 package demo_utils
 
 import (
-  "testing"
+	"testing"
 )
 
 func TestCallFun(t *testing.T) {
 
-  CallFun()
+	CallFun()
 }

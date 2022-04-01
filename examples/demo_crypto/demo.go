@@ -1,11 +1,11 @@
 package demo_crypto
 
 import (
-  "encoding/base64"
-  "encoding/hex"
-  "fmt"
+	"encoding/base64"
+	"encoding/hex"
+	"fmt"
 	"github.com/gitcpu-io/origin/configs"
-  "github.com/gitcpu-io/zgo"
+	"github.com/gitcpu-io/zgo"
 )
 
 /*
@@ -16,48 +16,48 @@ import (
 */
 
 var (
-  bt  = []byte("http://www.baidu.com")
-  key = []byte("ZhugeAd")
-  str = "zgo engine is niubility"
+	bt  = []byte("http://www.baidu.com")
+	key = []byte("ZhugeAd")
+	str = "zgo engine is niubility"
 )
 
 func Demo() {
-  configs.InitConfig("","local", "", "", 0, 0)
+	configs.InitConfig("", "local", "", "", 0, 0)
 
-  err := zgo.Engine(&zgo.Options{
-    CPath: configs.Conf.CPath,
-    Env:      configs.Conf.Env,
-    Project:  configs.Conf.Project,
-    Loglevel: configs.Conf.Loglevel,
-  })
+	err := zgo.Engine(&zgo.Options{
+		CPath:    configs.Conf.CPath,
+		Env:      configs.Conf.Env,
+		Project:  configs.Conf.Project,
+		Loglevel: configs.Conf.Loglevel,
+	})
 
-  if err != nil {
-    panic(err)
-  }
+	if err != nil {
+		panic(err)
+	}
 
-  md5 := zgo.Crypto.Md5(str)
-  fmt.Printf("val:%s Md5:%s\n", str, md5)
+	md5 := zgo.Crypto.Md5(str)
+	fmt.Printf("val:%s Md5:%s\n", str, md5)
 
-  sha1 := zgo.Crypto.SHA1(str)
-  fmt.Printf("val:%s SHA1:%s\n", str, sha1)
+	sha1 := zgo.Crypto.SHA1(str)
+	fmt.Printf("val:%s SHA1:%s\n", str, sha1)
 
-  sha256 := zgo.Crypto.SHA256String(str)
-  fmt.Printf("val:%s SHA256String:%s\n", str, sha256)
+	sha256 := zgo.Crypto.SHA256String(str)
+	fmt.Printf("val:%s SHA256String:%s\n", str, sha256)
 
-  b, _ := zgo.Crypto.AESCFBEncrypt(bt, key)
-  fmt.Printf("val:%s AESCFBEncrypt:%s\n", string(bt), hex.EncodeToString(b))
+	b, _ := zgo.Crypto.AESCFBEncrypt(bt, key)
+	fmt.Printf("val:%s AESCFBEncrypt:%s\n", string(bt), hex.EncodeToString(b))
 
-  b, _ = zgo.Crypto.AESCBCEncrypt(bt, key)
-  fmt.Printf("val:%s AESCBCEncrypt:%s\n\n", string(bt), hex.EncodeToString(b))
+	b, _ = zgo.Crypto.AESCBCEncrypt(bt, key)
+	fmt.Printf("val:%s AESCBCEncrypt:%s\n\n", string(bt), hex.EncodeToString(b))
 
-  bs := zgo.Crypto.AesEncrypt(string(bt), "9871267812345mn812345xyz")
-  fmt.Printf("val:%s AesEncrypt加密:%s\n", string(bt), bs)
+	bs := zgo.Crypto.AesEncrypt(string(bt), "9871267812345mn812345xyz")
+	fmt.Printf("val:%s AesEncrypt加密:%s\n", string(bt), bs)
 
-  decryptCode := zgo.Crypto.AesDecrypt(bs, "9871267812345mn812345xyz")
-  fmt.Println("AesEncrypt解密结果：", decryptCode)
+	decryptCode := zgo.Crypto.AesDecrypt(bs, "9871267812345mn812345xyz")
+	fmt.Println("AesEncrypt解密结果：", decryptCode)
 
-  //====================
-  var publicKey = []byte(`
+	//====================
+	var publicKey = []byte(`
 -----BEGIN PUBLIC KEY-----
 MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDfw1/P15GQzGGYvNwVmXIGGxea
 8Pb2wJcF7ZW7tmFdLSjOItn9kvUsbQgS5yxx+f2sAv1ocxbPTsFdRc6yUTJdeQol
@@ -65,7 +65,7 @@ DOkEzNP0B8XKm+Lxy4giwwR5LJQTANkqe4w/d9u129bRhTu/SUzSUIr65zZ/s6TU
 GQD6QzKY1Y8xS+FoQQIDAQAB
 -----END PUBLIC KEY-----
 `)
-  var privateKey = []byte(`
+	var privateKey = []byte(`
 -----BEGIN RSA PRIVATE KEY-----
 MIICXQIBAAKBgQDfw1/P15GQzGGYvNwVmXIGGxea8Pb2wJcF7ZW7tmFdLSjOItn9
 kvUsbQgS5yxx+f2sAv1ocxbPTsFdRc6yUTJdeQolDOkEzNP0B8XKm+Lxy4giwwR5
@@ -82,11 +82,11 @@ pxdOT2M9BM45GJjxyPJ+qBuOTGU391Mq1pRpCKlZe4QtPHioyTGAAMd4Z/FX2MKb
 y2DQpGmUic2zqCxl6qXMpBGtFEhrUbKhOiVOJbRNGvWW
 -----END RSA PRIVATE KEY-----
 `)
-  data, _ := zgo.Crypto.RsaEncrypt([]byte(str), publicKey)
-  fmt.Println()
-  fmt.Println()
-  fmt.Println("RsaEncrypt加密:", base64.StdEncoding.EncodeToString(data))
-  origData, _ := zgo.Crypto.RsaDecrypt(data, privateKey)
-  fmt.Println("RsaDecrypt解密:", string(origData))
+	data, _ := zgo.Crypto.RsaEncrypt([]byte(str), publicKey)
+	fmt.Println()
+	fmt.Println()
+	fmt.Println("RsaEncrypt加密:", base64.StdEncoding.EncodeToString(data))
+	origData, _ := zgo.Crypto.RsaDecrypt(data, privateKey)
+	fmt.Println("RsaDecrypt解密:", string(origData))
 
 }

@@ -1,7 +1,7 @@
 package demo_pay
 
 import (
-  "testing"
+	"testing"
 )
 
 /*
@@ -12,28 +12,28 @@ import (
 */
 
 func TestWechat(t *testing.T) {
-  //WechatTradeOrder()	//统一下单，生成pre order id
-  //WechatMicropay()
-  WechatTradeQuery()
+	//WechatTradeOrder()	//统一下单，生成pre order id
+	//WechatMicropay()
+	WechatTradeQuery()
 
-  //AliPayOrderPay()
-  //ZhimaCreditScoreGet()
-  //AliPayTradePrecreate()
-  //fmt.Println("------")
-  //AliPayTradeCreate()
-  //fmt.Println("------")
-  //AliPayTradeAppPay()
-  //fmt.Println("------")
+	//AliPayOrderPay()
+	//ZhimaCreditScoreGet()
+	//AliPayTradePrecreate()
+	//fmt.Println("------")
+	//AliPayTradeCreate()
+	//fmt.Println("------")
+	//AliPayTradeAppPay()
+	//fmt.Println("------")
 
-  AliPayTradeQuery()
-  //AliPayTradeWapPay()
-  //AliPayTradePagePay()
-  //AliPayTradeAppPay()
-  //AliPayOpenAuthTokenApp()
-  //
-  //AliPayFundTransToaccountTransfer()
-  //AliPayFundTransOrderQuery()
-  //AliPayFundAccountQuery()
+	AliPayTradeQuery()
+	//AliPayTradeWapPay()
+	//AliPayTradePagePay()
+	//AliPayTradeAppPay()
+	//AliPayOpenAuthTokenApp()
+	//
+	//AliPayFundTransToaccountTransfer()
+	//AliPayFundTransOrderQuery()
+	//AliPayFundAccountQuery()
 
-  //AliPaySystemOauthToken()
+	//AliPaySystemOauthToken()
 }

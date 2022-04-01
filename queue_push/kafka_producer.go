@@ -1,9 +1,9 @@
 package queue_push
 
 import (
-  "context"
-  "github.com/gitcpu-io/zgo"
-  "time"
+	"context"
+	"github.com/gitcpu-io/zgo"
+	"time"
 )
 
 /*
@@ -15,25 +15,25 @@ import (
 
 func KafkaProducer(topic string, body interface{}) chan uint8 {
 
-  out := make(chan uint8, 1)
+	out := make(chan uint8, 1)
 
-  bytes, err := zgo.Utils.Marshal(body)
-  if err != nil {
-    zgo.Log.Error(err)
-    out <- 0
-    return out
-  }
-  //zgo.Log.Info(string(bytes))
+	bytes, err := zgo.Utils.Marshal(body)
+	if err != nil {
+		zgo.Log.Error(err)
+		out <- 0
+		return out
+	}
+	//zgo.Log.Info(string(bytes))
 
-  ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-  defer cancel()
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
 
-  out, err = zgo.Kafka.Producer(ctx, topic, bytes)
+	out, err = zgo.Kafka.Producer(ctx, topic, bytes)
 
-  if err != nil {
-    zgo.Log.Error(err)
-    out <- 0
-    return out
-  }
-  return out
+	if err != nil {
+		zgo.Log.Error(err)
+		out <- 0
+		return out
+	}
+	return out
 }

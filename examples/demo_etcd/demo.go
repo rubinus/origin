@@ -1,8 +1,8 @@
 package demo_etcd
 
 import (
-  "context"
-  "github.com/gitcpu-io/zgo"
+	"context"
+	"github.com/gitcpu-io/zgo"
 )
 
 /*
@@ -19,10 +19,10 @@ var project1 = "1553240759"
 var label = "1446177640400"
 
 func Get(cli *zgo.EtcdClientV3) (*zgo.EtcdGetResponse, error) {
-  key := "zgo/project/" + project1 + "/etcd/" + label
-  res, err := cli.KV.Get(context.TODO(), key)
-  if err != nil {
-    return nil, err
-  }
-  return res, nil
+	key := "zgo/project/" + project1 + "/etcd/" + label
+	res, err := cli.KV.Get(context.TODO(), key)
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
 }
