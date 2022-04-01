@@ -10,5 +10,5 @@ import "testing"
 */
 
 func TestK8s(t *testing.T) {
-  CallK8s()
+	CallK8s()
 }

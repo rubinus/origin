@@ -10,7 +10,7 @@ import "testing"
 */
 
 func TestCallLimiter(t *testing.T) {
-  //CallLimiter()
-  CallLimiter2()
-  //CallLimiter3()
+	//CallLimiter()
+	CallLimiter2()
+	//CallLimiter3()
 }

@@ -8,8 +8,8 @@ package models
 */
 
 type WeatherRequest struct {
-  Appid     string `json:"appid"`
-  Appsecret string `json:"appsecret"`
-  Version   string `json:"version"`
-  Query     string `json:"query"`
+	Appid     string `json:"appid"`
+	Appsecret string `json:"appsecret"`
+	Version   string `json:"version"`
+	Query     string `json:"query"`
 }

@@ -1,8 +1,8 @@
 package configs
 
 import (
-  "fmt"
-  "github.com/gitcpu-io/zgo"
+	"fmt"
+	"github.com/gitcpu-io/zgo"
 )
 
 /*
@@ -15,11 +15,11 @@ import (
 //从这里定义整个项目使用的公共变量
 
 var (
-  ComMap = zgo.Map.New()
+	ComMap = zgo.Map.New()
 )
 
 func Goodbye() {
-  goodbye := `
+	goodbye := `
                 ##### | #####
 Oh we finish ? # _ _ #|# _ _ #
                #      |      #
@@ -40,5 +40,5 @@ Oh we finish ? # _ _ #|# _ _ #
                     #####
 `
 
-  fmt.Println(goodbye)
+	fmt.Println(goodbye)
 }

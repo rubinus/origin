@@ -10,6 +10,6 @@ import "testing"
 */
 
 func TestDemo(t *testing.T) {
-  //DemoGet()
-  DemoPostJson()
+	//DemoGet()
+	DemoPostJson()
 }

@@ -1,4 +1,4 @@
-# origin v1.1.5
+# origin v1.1.6
 
 # 准备系统外的中间件: 本地运行docker-compose 启动中间件db/cache/queue等
 cd origin
@@ -134,9 +134,9 @@ go run grpcclient-test/weather/main.go
 
 ## Http
 
-//前端ajax-->main.go(Run)-->routes-->(实际业务处理handler)-->services-->zgo.组件(mysql/mongo/redis)-->models(库)
+//前端ajax-->main.go(Run)-->routes-->(实际业务处理handler)-->services(MVC)-->zgo.组件(mysql/mongo/redis)-->models(库)
 
-请参照：routes对应的handlers中的regis.go来写接口
+请参照：routes对应的handlers中的 weather.go 来写接口
 
 ## Grpc
 
@@ -144,7 +144,7 @@ grpcserver是grpc服务端实现与启动
 
 grpchandlers是类似与 handler 的处理grpc的handler，服务端的实现
 
-grpcclients是grpc客户端的连接与封装
+grpcclient是grpc客户端的连接与封装
 
 grpcclient-test是grpc模拟发送客户端
 

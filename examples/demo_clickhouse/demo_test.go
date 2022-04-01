@@ -1,9 +1,9 @@
 package demo_clickhouse
 
 import (
-  "github.com/gitcpu-io/zgo"
-  "testing"
-  "time"
+	"github.com/gitcpu-io/zgo"
+	"testing"
+	"time"
 )
 
 /*
@@ -14,19 +14,19 @@ import (
 */
 
 func TestGet(t *testing.T) {
-  err := zgo.Engine(&zgo.Options{
-    Env:     "dev",
-    Project: "1553240759",
-    ClickHouse: []string{
-      label_bj,
-    },
-  })
-  //测试时表示使用clickhouse，在origin中使用一次
-  if err != nil {
-    panic(err)
-  }
-  time.Sleep(1 * time.Second)
+	err := zgo.Engine(&zgo.Options{
+		Env:     "dev",
+		Project: "1553240759",
+		ClickHouse: []string{
+			label_bj,
+		},
+	})
+	//测试时表示使用clickhouse，在origin中使用一次
+	if err != nil {
+		panic(err)
+	}
+	time.Sleep(1 * time.Second)
 
-  Get()
+	Get()
 
 }
