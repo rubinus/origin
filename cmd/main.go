@@ -93,11 +93,11 @@ func init() {
     fmt.Println(string(output))
   }
 
-  //load config from dev/qa/pro
+  //load configs from dev/qa/pro
   if cpath == "" {
     pwd, err := os.Getwd()
     if err == nil {
-      cpath = fmt.Sprintf("%s/%s", pwd, "config")
+      cpath = fmt.Sprintf("%s/%s", pwd, "configs")
     }
   }
   configs.InitConfig(cpath, env, project, etcdAddress, port, rpcPort)
