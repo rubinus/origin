@@ -20,7 +20,7 @@ type ServiceInfo struct {
   SvcHost      string `json:"svc_host"`
   SvcHttpPort  string `json:"svc_http_port"`
   SvcGrpcPort  string `json:"svc_grpc_port"`
-  SvcEtcdHosts string `json:"svc_etcd_hosts"`
+  SvcEtcdAddress string `json:"svc_etcd_hosts"`
 }
 type Service struct {
   StartService         bool        `json:"start_service"`          //开启使用服务注册与服务发现
@@ -35,7 +35,7 @@ type allConfig struct {
   Env           string `json:"env"`
   Version       string `json:"version"`
   Project       string `json:"project"`
-  EtcdHosts     string `json:"etcdHosts"`
+  EtcdAddress     string `json:"etcdAddress"`
   Loglevel      string `json:"loglevel"`
   IrisMod       bool   `json:"irisMod"`
   RpcHost       string `json:"rpcHost"`
@@ -50,11 +50,11 @@ type allConfig struct {
   DemoHostForPayCanChangeAnyName string `json:"demo_host_for_pay_can_change_any_name"`
 }
 
-func InitConfig(cpath, env, project, etcdHosts, port, rpcPort string) {
-  initConfig(cpath, env, project, etcdHosts, port, rpcPort)
+func InitConfig(cpath, env, project, etcdAddress, port, rpcPort string) {
+  initConfig(cpath, env, project, etcdAddress, port, rpcPort)
 }
 
-func initConfig(cpath, env, project, etcdHosts, port, rpcPort string) {
+func initConfig(cpath, env, project, etcdAddress, port, rpcPort string) {
   if env == "local" {
     _, f, _, ok := runtime.Caller(1)
     if !ok {
@@ -73,6 +73,7 @@ func initConfig(cpath, env, project, etcdHosts, port, rpcPort string) {
   //使用zgo.Utils中的反序列化
   err = zgo.Utils.Unmarshal(bf, &Conf)
   if err != nil {
+    fmt.Println("反序列化: ",cf)
     panic(err)
   }
 
@@ -83,8 +84,8 @@ func initConfig(cpath, env, project, etcdHosts, port, rpcPort string) {
   if project != "" {
     Conf.Project = project
   }
-  if etcdHosts != "" {
-    Conf.EtcdHosts = etcdHosts
+  if len(etcdAddress) != 0 {
+    Conf.EtcdAddress = etcdAddress
   }
   if port != "" {
     portInt, err := strconv.Atoi(port)

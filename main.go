@@ -26,14 +26,14 @@ var (
   cpath        string
   env          string
   project      string
-  etcdHosts    string
+  etcdAddress    string
   port         string
   rpcPort      string
   svcName      string
   svcHost      string
   svcHttpPort  string
   svcGrpcPort  string
-  svcEtcdHosts string
+  svcEtcdAddress string
 )
 
 func init() {
@@ -43,7 +43,7 @@ func init() {
 
   flag.StringVar(&project, "project", "", "create project id by zgo engine admin")
 
-  flag.StringVar(&etcdHosts, "etcdHosts", "", "输入IP:PORT,IP:PORT指定配置中心etcd的host")
+  flag.StringVar(&etcdAddress, "etcdAddress", "", "输入IP:PORT,IP:PORT指定配置中心etcd的host")
 
   flag.StringVar(&port, "port", "", "http port")
 
@@ -58,7 +58,7 @@ func init() {
 
   flag.StringVar(&svcGrpcPort, "svc_grpc_port", "", "让服务grpc对外可访问的端口号，默认是50051")
 
-  flag.StringVar(&svcEtcdHosts, "svc_etcd_hosts", "", "让服务可以用外部的注册中心地址，默认与zgo engine相同")
+  flag.StringVar(&svcEtcdAddress, "svc_etcd_address", "", "让服务可以用外部的注册中心地址，默认与zgo engine相同")
 
   //====解析入参，并打印出来====
   flag.CommandLine.AddGoFlagSet(goflag.CommandLine)
@@ -96,13 +96,13 @@ func init() {
       cpath = fmt.Sprintf("%s/%s",pwd,"config")
     }
   }
-  config.InitConfig(cpath, env, project, etcdHosts, port, rpcPort)
+  config.InitConfig(cpath, env, project, etcdAddress, port, rpcPort)
 
   if os.Getenv("PROJECT") != "" {
     config.Conf.Project = os.Getenv("PROJECT") //从os的env取得PROJECT，用来在yaml文件中的配置
   }
-  if os.Getenv("ETCDHOSTS") != "" {
-    config.Conf.EtcdHosts = os.Getenv("ETCDHOSTS") //从os的env取得ETCDHOSTS，用来在yaml文件中的配置
+  if os.Getenv("ETCDADDRESS") != "" {
+    config.Conf.EtcdAddress = os.Getenv("ETCDADDRESS") //从os的env取得ETCDADDRESS，用来在yaml文件中的配置
   }
   if os.Getenv("PORT") != "" {
     port, _ := strconv.Atoi(os.Getenv("PORT"))
@@ -125,8 +125,8 @@ func init() {
   if os.Getenv("SVC_GRPC_PORT") != "" {
     config.Conf.ServiceInfo.SvcGrpcPort = os.Getenv("SVC_GRPC_PORT") //来os的env，用来在yaml文件中的配置
   }
-  if os.Getenv("SVC_ETCD_HOSTS") != "" {
-    config.Conf.ServiceInfo.SvcEtcdHosts = os.Getenv("SVC_ETCD_HOSTS") //来os的env，用来在yaml文件中的配置
+  if os.Getenv("SVC_ETCD_ADDRESS") != "" {
+    config.Conf.ServiceInfo.SvcEtcdAddress = os.Getenv("SVC_ETCD_ADDRESS") //来os的env，用来在yaml文件中的配置
   }
 
   //Args输入会覆盖ENV及配置中的xxxx.json中的变量
@@ -142,8 +142,8 @@ func init() {
   if svcGrpcPort != "" {
     config.Conf.ServiceInfo.SvcGrpcPort = svcGrpcPort
   }
-  if svcEtcdHosts != "" {
-    config.Conf.ServiceInfo.SvcEtcdHosts = svcEtcdHosts
+  if svcEtcdAddress != "" {
+    config.Conf.ServiceInfo.SvcEtcdAddress = svcEtcdAddress
   }
 
   if config.Conf.ServiceInfo.SvcHttpPort == "" {
@@ -250,7 +250,7 @@ func useServiceRegistryDiscover(app *iris.Application) {
   //第一步 必须
   //***********************************************************
   registryAndDiscover, err := zgo.Service.New(6,
-    config.Conf.ServiceInfo.SvcEtcdHosts)
+    config.Conf.ServiceInfo.SvcEtcdAddress)
   if err != nil {
     zgo.Log.Errorf("创建微服务实例化失败 %v", err)
     return
