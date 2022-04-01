@@ -7,19 +7,14 @@ import (
   "github.com/gitcpu-io/origin/grpcclients"
   "github.com/gitcpu-io/origin/pb/helloworld"
   "github.com/gitcpu-io/zgo"
-  "os"
   "time"
 )
 
 func main() {
-  config.InitConfig("local", "", "", "", "")
+  config.InitConfig("","local", "", "", "", "")
 
-  getwd, err := os.Getwd()
-  if err != nil {
-    panic(err)
-  }
-  err = zgo.Engine(&zgo.Options{
-    CPath: fmt.Sprintf("%s/%s",getwd,"config"),
+  err := zgo.Engine(&zgo.Options{
+    CPath:    config.Conf.CPath,
     Env:      config.Conf.Env,
     Loglevel: config.Conf.Loglevel,
     Project:  config.Conf.Project,

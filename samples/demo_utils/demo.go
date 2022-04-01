@@ -5,7 +5,6 @@ import (
   "github.com/gitcpu-io/origin/config"
   "github.com/gitcpu-io/zgo"
   "net"
-  "os"
 )
 
 var st = &struct {
@@ -15,14 +14,10 @@ var st = &struct {
 }
 
 func CallFun() {
-  config.InitConfig("","local", "", "", "", "")
+  config.InitConfig("", "local", "", "", "", "")
 
-  getwd, err := os.Getwd()
-  if err != nil {
-    panic(err)
-  }
-  err = zgo.Engine(&zgo.Options{
-    CPath: fmt.Sprintf("%s/%s",getwd,"config"),
+  err := zgo.Engine(&zgo.Options{
+    CPath:    config.Conf.CPath,
     Env:      config.Conf.Env,
     Project:  config.Conf.Project,
     Loglevel: config.Conf.Loglevel,
@@ -112,10 +107,10 @@ func CallFun() {
     fmt.Println(err)
     return
   }
-  fmt.Println("byInterface:",byInterface)
+  fmt.Println("byInterface:", byInterface)
 
   duration := zgo.Utils.NextDayDuration()
-  fmt.Println("duration: ",duration)
+  fmt.Println("duration: ", duration)
 }
 func GetIPv4ByInterface(name string) (string, error) {
   var ips string

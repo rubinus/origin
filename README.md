@@ -46,7 +46,7 @@ Math.random() * 100), }); }
 ```shell
 cd origin/_init
 
-go run main.go
+go run hellworld.go
 ```
 
 其中_init目录下 local.json 只有redis和mongodb
@@ -66,6 +66,9 @@ go run main.go
 > container.json打包测试image时 默认是80端口
 
 > 如果不使用etcd做为配置中心，最好的方式是使用container.json进行相应的参数变更
+
+# 安装gogo proto
+go get github.com/gogo/protobuf/protoc-gen-gofast
 
 # auto build image 将会使用container模式
 

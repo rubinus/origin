@@ -1,11 +1,11 @@
 /*
 @Time : 2019-03-02 11:40
 @Author : zhangjianguo
-@File : main
+@File : hellworld
 @Software: GoLand
 */
 
-// Package main implements a grpcserver for Greeter service.
+// Package hellworld implements a grpcserver for Greeter service.
 package main
 
 import (
