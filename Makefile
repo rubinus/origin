@@ -6,7 +6,7 @@ TARGETARCH_ARM64 = arm64
 TARGETMOD = debug
 
 VERSION_TAG = 1.0.0
-MILESTONE_TAG = 08.2021
+MILESTONE_TAG = 04.2022
 REGISTRY = rubinus
 
 # auto-generated
@@ -62,26 +62,6 @@ linux-arm64:
 	@GOOS=$(TARGETOS_LINUX) GOARCH=$(TARGETARCH_ARM64) CGO_ENABLED=0 go build -p 8 -o $(OUTPUT)/origin-$(TARGETOS_LINUX)-$(TARGETARCH_ARM64) $(MAIN_SRC_FILE)
 	@echo "Build image $(REGISTRY)/origin-$(TARGETOS_LINUX)-$(TARGETARCH_ARM64):$(VERSION)"
 	@docker build -f $(PROJECT_ROOT)/Dockerfile --build-arg BUILD=$(BUILD) -t $(REGISTRY)/origin-$(TARGETOS_LINUX)-$(TARGETARCH_ARM64):$(VERSION) . >/dev/null
-	@echo "Done"
-
-release:rele-linux-amd64
-
-release-all: rele-linux-amd64 rele-linux-arm64
-
-rele-linux-amd64:
-	@echo "Build image of version $(GIT_TAG)"
-	@echo "Build origin $(TARGETOS_LINUX) $(TARGETARCH_AMD64)"
-	@GOOS=$(TARGETOS_LINUX) GOARCH=$(TARGETARCH_AMD64) CGO_ENABLED=0 go build -p 8 -o $(OUTPUT)/origin-$(TARGETOS_LINUX)-$(TARGETARCH_AMD64) $(MAIN_SRC_FILE)
-	@echo "Build image $(REGISTRY)/origin-$(TARGETOS_LINUX)-$(TARGETARCH_AMD64):$(GIT_TAG)"
-	@docker build -f $(PROJECT_ROOT)/Dockerfile --build-arg BUILD=$(BUILD) -t $(REGISTRY)/origin-$(TARGETOS_LINUX)-$(TARGETARCH_AMD64):$(GIT_TAG) . >/dev/null
-	@echo "Done"
-
-rele-linux-arm64:
-	@echo "Build image of version $(GIT_TAG)"
-	@echo "Build origin $(TARGETOS_LINUX) $(TARGETARCH_ARM64)"
-	@GOOS=$(TARGETOS_LINUX) GOARCH=$(TARGETARCH_ARM64) CGO_ENABLED=0 go build -p 8 -o $(OUTPUT)/origin-$(TARGETOS_LINUX)-$(TARGETARCH_ARM64) $(MAIN_SRC_FILE)
-	@echo "Build image $(REGISTRY)/origin-$(TARGETOS_LINUX)-$(TARGETARCH_ARM64):$(GIT_TAG)"
-	@docker build -f $(PROJECT_ROOT)/Dockerfile --build-arg BUILD=$(BUILD) -t $(REGISTRY)/origin-$(TARGETOS_LINUX)-$(TARGETARCH_ARM64):$(GIT_TAG) . >/dev/null
 	@echo "Done"
 
 proto:

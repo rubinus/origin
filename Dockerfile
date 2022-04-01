@@ -14,7 +14,7 @@ COPY build/origin-linux-amd64 /opt/origin/
 COPY entrypoint.sh /opt/origin/
 
 #添加配置及html等
-COPY config /opt/origin/config
+COPY configs /opt/origin/configs
 COPY web /opt/origin/web
 
 RUN ["chmod", "+x", "origin-linux-amd64"]
