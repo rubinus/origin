@@ -154,7 +154,11 @@ func init() {
   }
 
   fmt.Println()
-  fmt.Printf("Apply config: %#v", zgo.Utils.StructToMap(&config.Conf))
+  structToMap := zgo.Utils.StructToMap(&config.Conf)
+  fmt.Printf("应用到进程的配置项总共: %d 个\n", len(structToMap))
+  for idx, val := range structToMap {
+    fmt.Println(idx,": ", val)
+  }
   fmt.Println()
   fmt.Println()
 }

@@ -46,7 +46,7 @@ Math.random() * 100), }); }
 ```shell
 cd origin/_init
 
-go run hellworld.go
+go run main.go
 ```
 
 其中_init目录下 local.json 只有redis和mongodb
