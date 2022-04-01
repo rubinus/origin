@@ -6,6 +6,7 @@ import (
   "github.com/gitcpu-io/origin/config"
   "github.com/gitcpu-io/origin/grpchandlers"
   "github.com/gitcpu-io/origin/pb/helloworld"
+  pb_weather "github.com/gitcpu-io/origin/pb/weather"
   "github.com/gitcpu-io/zgo"
 )
 
@@ -19,7 +20,7 @@ import (
 func Start() {
   server, err := zgo.Grpc.Server(context.TODO())
   if err != nil {
-    fmt.Println("-----grpc grpcserver is error :", err)
+    fmt.Println("Grpc server is error :", err)
     return
   }
 
@@ -27,11 +28,13 @@ func Start() {
 
   //在这里继续添加你的rpc服务
   // todo add your rpc service
+  pb_weather.RegisterWeatherServiceServer(server, &grpchandlers.WeatherServer{})
+
 
   fmt.Printf("Now listening GRPC Serv on: %s\n", config.Conf.RpcPort)
   _, err = zgo.Grpc.Run(context.TODO(), server, config.Conf.RpcPort)
   if err != nil {
-    fmt.Println("=====grpc grpcserver is error :", err)
+    fmt.Println("Grpc server is error :", err)
     return
   }
 }

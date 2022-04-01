@@ -67,6 +67,9 @@ go run main.go
 
 > 如果不使用etcd做为配置中心，最好的方式是使用container.json进行相应的参数变更
 
+# 安装gogo proto
+go get github.com/gogo/protobuf/protoc-gen-gofast
+
 # auto build image 将会使用container模式
 
 通过makefile，运行dockerfile，制作包含git版本的image

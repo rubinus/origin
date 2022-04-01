@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+package pb.weather;  //可以改名为你的 pb.XXXXX
+option go_package = "pb.weather"; //指定go中使用的包  可以改名为你的 pb.XXXXX
+
+import "gogo.proto"; //导入gogo protobuf
+
+// WeatherService 可以改名为你的 XXXXXService
+service WeatherService {
+  rpc List (ListRequest) returns (ListResponse) {}
+
+}
+
+// ListRequest 起名技巧请带上Request后缀
+message ListRequest {
+  string city = 1;
+}
+
+// Day 内嵌struct
+message Day {
+  string phrase = 1;
+  string narrative = 2;
+  string temperature = 3;
+  string temperatureMaxSince7am = 4;
+  string windDirCompass = 5;
+}
+
+// gogoproto.jsontag 当序列化为json时，如果是默认的值，同时返回这个字段
+
+message ListData {
+  string id = 1;
+  string city = 2;
+  string country = 3;
+  string latitude = 4;
+  string longitude = 5;
+  string timeZone = 6;
+  int64 createTime = 7 [(gogoproto.jsontag) = "message"];
+  Day day = 8;
+}
+
+// ListResponse 起名技巧请带上Response后缀
+message ListResponse {
+  repeated ListData Data = 1; //自定义数组[]
+}

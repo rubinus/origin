@@ -5,6 +5,7 @@ import (
   "fmt"
   "github.com/gitcpu-io/origin/config"
   "github.com/gitcpu-io/origin/pb/helloworld"
+  pb_weather "github.com/gitcpu-io/origin/pb/weather"
   "github.com/gitcpu-io/zgo"
   "time"
 )
@@ -16,11 +17,14 @@ import (
 @project: origin
 */
 
-// HelloworldClient 可以起名为你的 xxxxClient
-var HelloworldClient pb_helloworld.HelloWorldServiceClient
+// HelloWorldClient 可以起名为你的 xxxxClient
+var HelloWorldClient pb_helloworld.HelloWorldServiceClient
 
-// you are client
+// YourClient here
 //var YourClient pb_your.YourServiceClient
+
+// WeatherClient 可以起名为你的WeatherClient
+var WeatherClient pb_weather.WeatherServiceClient
 
 func RPCClientsRun(ch chan string) {
   ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
@@ -50,14 +54,18 @@ func RPCClientsRun(ch chan string) {
     }()
 
   } else {
-
+    //正常模式
     go helloWorldClient(ctx, config.Conf.RpcHost, config.Conf.RpcPort)
 
-  }
+    go weatherClient(ctx,config.Conf.RpcHost,config.Conf.RpcPort)
 
-  //go yourClient(ctx, "your call rpc host", "your call rpc port")
+    //go yourClient(ctx, "your call rpc host", "your call rpc port")
+    //请在下面逐个添加你的proto生成的pb的client
+
+  }
 }
 
+// helloWorldClient 客户端封装
 func helloWorldClient(ctx context.Context, address, port string) {
   conn, err := zgo.Grpc.Client(ctx, address, port, zgo.Grpc.WithInsecure())
   if err != nil {
@@ -66,7 +74,7 @@ func helloWorldClient(ctx context.Context, address, port string) {
     return
   }
   client := pb_helloworld.NewHelloWorldServiceClient(conn)
-  HelloworldClient = client
+  HelloWorldClient = client
 }
 
 // yourClient 自己改名
@@ -80,3 +88,15 @@ func helloWorldClient(ctx context.Context, address, port string) {
 //	client := pb_your.NewYourServiceClient(conn)
 //	YourClient = client
 //}
+
+// weatherClient 客户端封装
+func weatherClient(ctx context.Context, address, port string) {
+  conn, err := zgo.Grpc.Client(ctx, address, port, zgo.Grpc.WithInsecure())
+  if err != nil {
+    errStr := fmt.Sprintf("weatherClient timeout, Host: %s, Port: %s", address, port)
+    zgo.Log.Error(errStr)
+    return
+  }
+  client := pb_weather.NewWeatherServiceClient(conn)
+  WeatherClient = client
+}

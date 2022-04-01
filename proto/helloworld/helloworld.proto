@@ -14,14 +14,16 @@ option (gogoproto.sizer_all) = true;
 option (gogoproto.populate_all) = true;
 option (gogoproto.goproto_getters_all) = false;
 
-service HelloWorldService {//HellWorldService 可以改名为你的 XXXXXService
+// HellWorldService 可以改名为你的 XXXXXService
+service HelloWorldService {
   //HelloRequest 改名为你的 XXXXXRequest
   //HelloResponse 改名为你的 XXXXXResponse
   rpc SayHello (HelloRequest) returns (HelloResponse) {}
 
 }
 
-message HelloRequest {//起名技巧请带上Request后缀
+// HelloRequest 起名技巧请带上Request后缀
+message HelloRequest {
   string name = 1;
   uint32 age = 2;
 
@@ -40,7 +42,8 @@ message Info {
 
 // gogoproto.jsontag 当序列化为json时，如果是默认的值，同时返回这个字段
 
-message HelloResponse {//起名技巧请带上Response后缀
+// HelloResponse 起名技巧请带上Response后缀
+message HelloResponse {
   string message = 1  [(gogoproto.jsontag) = "message"];
   repeated Info Infos = 2; //自定义数组[]
   repeated string ans = 3; //string类型数组

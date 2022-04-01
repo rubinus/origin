@@ -1,9 +1,12 @@
 package config
 
 import (
+  "errors"
   "fmt"
   "github.com/gitcpu-io/zgo"
   "io/ioutil"
+  "path/filepath"
+  "runtime"
   "strconv"
 )
 
@@ -48,14 +51,22 @@ type allConfig struct {
 }
 
 func InitConfig(cpath, env, project, etcdHosts, port, rpcPort string) {
-  initConfig(cpath,env, project, etcdHosts, port, rpcPort)
+  initConfig(cpath, env, project, etcdHosts, port, rpcPort)
 }
 
-func initConfig(cpath,env, project, etcdHosts, port, rpcPort string) {
+func initConfig(cpath, env, project, etcdHosts, port, rpcPort string) {
+  if env == "local" {
+    _, f, _, ok := runtime.Caller(1)
+    if !ok {
+      panic(errors.New("Can not get current file info"))
+    }
+    cpath = filepath.Dir(f)
+  }
+
   var cf = fmt.Sprintf("%s/%s.json", cpath, env)
   bf, err := ioutil.ReadFile(cf)
   if err != nil {
-    fmt.Println("报错: ",cf)
+    fmt.Println("报错: ", cf)
     panic(err)
   }
 
@@ -65,10 +76,10 @@ func initConfig(cpath,env, project, etcdHosts, port, rpcPort string) {
     panic(err)
   }
 
-  if Conf.CPath == "" { //cpath没有，就用默认的项目所在路径
+  if Conf.CPath == "" && cpath != "" { //cpath没有，就用默认的项目所在路径
     Conf.CPath = cpath
   }
-
+  fmt.Println("配置文件地址config:",cf)
   if project != "" {
     Conf.Project = project
   }

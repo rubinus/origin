@@ -17,11 +17,11 @@ func RpcHelloWorld(ctx context.Context, request *pb_helloworld.HelloRequest) (*p
   out := make(chan *pb_helloworld.HelloResponse)
   errCh := make(chan error)
   go func() {
-    if HelloworldClient == nil {
-      errCh <- errors.New("HelloworldClient not ready")
+    if HelloWorldClient == nil {
+      errCh <- errors.New("HelloWorldClient not ready")
       return
     }
-    response, err := HelloworldClient.SayHello(ctx, request)
+    response, err := HelloWorldClient.SayHello(ctx, request)
     if err != nil {
       errCh <- err
       return
