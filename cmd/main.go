@@ -198,12 +198,12 @@ func main() {
   var pre string
   if config.Conf.UsePreAbsPath == 1 {
     prefix, _ := filepath.Abs(filepath.Dir(os.Args[0]) + "/")
-    pre = prefix + "/views"
+    pre = prefix + "/web"
   } else {
-    pre = "./views"
+    pre = "./web"
   }
 
-  app.HandleDir("/", "./public") //static
+  app.HandleDir("/", "./web/static") //static
 
   app.RegisterView(iris.HTML(pre, ".html").Reload(config.Conf.IrisMod)) // select the html engine to serve templates
 

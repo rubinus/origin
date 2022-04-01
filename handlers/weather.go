@@ -63,7 +63,7 @@ func SaveWeather(ctx iris.Context) {
     return
   }
 
-  // 第三：调用zgo engine来处理业务逻辑
+  // 第三：通过MVC模式调用zgo engine来处理业务逻辑
   wea := services.NewWeather()
   res, err := wea.Insert(cotx, request)
   if err != nil {

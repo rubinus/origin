@@ -12,8 +12,8 @@ import (
   "context"
   "fmt"
   "github.com/gitcpu-io/origin/config"
-  "github.com/gitcpu-io/origin/samples/demo_grpc/go/handler"
-  pb "github.com/gitcpu-io/origin/samples/demo_grpc/go/pb"
+  "github.com/gitcpu-io/origin/examples/demo_grpc/go/handler"
+  pb "github.com/gitcpu-io/origin/examples/demo_grpc/go/pb"
   "github.com/gitcpu-io/zgo"
 )
 
