@@ -46,9 +46,9 @@ Math.random() * 100), }); }
 
 ## init目录，项目初始化（如果使用etcd作为配置中心的话运行下面的，如果是用本地配置文件的方式就不用）
 ```shell
-cd origin/init
+cd origin
 
-go run main.go
+go run init/main.go
 ```
 
 - 其中init目录下 local.json 只有redis和mongodb
