@@ -142,7 +142,7 @@ go run grpcclient-test/weather/main.go
 
 ## Http
 
-//前端ajax-->main.go(Run)-->routes-->(实际业务处理handler)-->services(MVC)-->zgo.组件(mysql/mongo/redis)-->models(库)
+//前端请求接口-->main.go(Run)-->routes(视图 V 层)-->handlers(控制 C 层)-->services(逻辑 L 层)-->models(库 M 层)-->zgo.engine组件(mysql/mongo/redis/kafka)
 
 请参照：routes对应的handlers中的 weather.go 来写接口
 
