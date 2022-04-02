@@ -1,11 +1,11 @@
 package grpchandlers
 
 import (
-	"context"
-	pb_weather "github.com/gitcpu-io/origin/pb/weather"
-	"github.com/gitcpu-io/origin/services"
-	"github.com/gitcpu-io/zgo"
-	"log"
+  "context"
+  "fmt"
+  pb_weather "github.com/gitcpu-io/origin/pb/weather"
+  "github.com/gitcpu-io/origin/services"
+  "github.com/gitcpu-io/zgo"
 )
 
 // WeatherServer 可以起名为你的 xxxxServer
@@ -13,13 +13,16 @@ type WeatherServer struct{}
 
 // List implements func
 func (s *WeatherServer) List(ctx context.Context, request *pb_weather.ListRequest) (*pb_weather.ListResponse, error) {
-	log.Printf("Received: Name %v", request.City)
+	fmt.Printf("Received: City = %v\n", request.City)
 
 	// 第一：定义返回变量
 	var response = &pb_weather.ListResponse{}
 
 	//第二：准备输入参数
 	city := request.City
+  if city == "" {
+    return response,nil
+  }
 
 	// 第三：通过MVC模式调用zgo engine来处理业务逻辑
 	wea := services.NewWeather()
