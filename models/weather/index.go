@@ -67,13 +67,6 @@ func (repo *Weather) Insert(ctx context.Context, wea *Weather) (result string, e
 
 // List 查询列表
 func (repo *Weather) List(ctx context.Context, city string) (weathers []*Weather, err error) {
-	//取db连接
-	var collection = zgo.Mongo.GetCollection("weather", "weather", "mongo_label_bj")
-	if collection == nil {
-		err = errors.New("没有这个db或document")
-		return
-	}
-
 	filter := make(map[string]interface{}) //查询query
 	if city != "all" {
     filter["city"] = city
@@ -94,9 +87,14 @@ func (repo *Weather) List(ctx context.Context, city string) (weathers []*Weather
 		Skip:  0,    //从哪一条开始跳过 开区间，不包括skip的值
 	}
 
+  //取db连接
+  var collection = zgo.Mongo.GetCollection("weather", "weather", "mongo_label_bj")
+  if collection == nil {
+    err = errors.New("没有这个db或document")
+    return
+  }
 	results, err := zgo.Mongo.Find(ctx, collection, args)
 	if err != nil {
-		fmt.Println("错误", err)
 		return
 	}
 
