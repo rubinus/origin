@@ -12,7 +12,7 @@ import (
 	"github.com/kataras/iris/v12"
 )
 
-//前端ajax-->main.go(Run)-->routes-->(实际业务处理handler)-->services(MVC)-->zgo.组件(mysql/mongo/redis/pika)-->models(库)
+//前端请求接口-->main.go(Run)-->routes(视图 V 层)-->handlers(控制 C 层)-->services(逻辑 L 层)-->models(库 M 层)-->zgo.engine组件(mysql/mongo/redis/kafka)
 
 func Index(app *iris.Application) {
 	app.OnErrorCode(iris.StatusNotFound, handlers.FourZeroFourPage)
