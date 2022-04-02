@@ -75,7 +75,9 @@ func (repo *Weather) List(ctx context.Context, city string) (weathers []*Weather
 	}
 
 	filter := make(map[string]interface{}) //查询query
-	filter["city"] = city
+	if city != "all" {
+    filter["city"] = city
+  }
 
 	sort := make(map[string]interface{})
 	sort["createTime"] = -1
