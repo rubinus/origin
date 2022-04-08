@@ -1,13 +1,13 @@
 package handlers
 
 import (
-	"context"
-	"github.com/gitcpu-io/origin/models"
-	"github.com/gitcpu-io/origin/services"
-	"github.com/gitcpu-io/zgo"
-	"github.com/kataras/iris/v12"
-	"strings"
-	"time"
+  "context"
+  "github.com/gitcpu-io/origin/models/ioparams"
+  "github.com/gitcpu-io/origin/services"
+  "github.com/gitcpu-io/zgo"
+  "github.com/kataras/iris/v12"
+  "strings"
+  "time"
 )
 
 /*
@@ -36,7 +36,7 @@ func SaveWeather(ctx iris.Context) {
 	}()
 
 	//第二步：解析请求参数
-	request := &models.WeatherRequest{}
+	request := &ioparams.WeatherRequest{}
 	if strings.Contains(ctx.GetContentTypeRequested(), "json") {
 		if err := ctx.ReadJSON(request); err != nil {
 			_, err := zgo.Http.JsonpErr(ctx, "json body is error，"+err.Error())
