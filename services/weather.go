@@ -1,11 +1,11 @@
 package services
 
 import (
-	"context"
-	"fmt"
-	"github.com/gitcpu-io/origin/models"
-	"github.com/gitcpu-io/origin/models/weather"
-	"github.com/gitcpu-io/zgo"
+  "context"
+  "fmt"
+  "github.com/gitcpu-io/origin/models/ioparams"
+  "github.com/gitcpu-io/origin/models/weather"
+  "github.com/gitcpu-io/zgo"
 )
 
 /*
@@ -16,7 +16,7 @@ import (
 */
 
 type Weatherer interface {
-	Insert(ctx context.Context, req *models.WeatherRequest) (*weather.Weather, error)
+	Insert(ctx context.Context, req *ioparams.WeatherRequest) (*weather.Weather, error)
 	// 请在此处添加其它方法
 	List(ctx context.Context, city string) (weathers []*weather.Weather, err error)
 }
@@ -42,7 +42,7 @@ func (svc *svc) List(ctx context.Context, city string) (weathers []*weather.Weat
 }
 
 // Insert 保存方法
-func (svc *svc) Insert(ctx context.Context, req *models.WeatherRequest) (*weather.Weather, error) {
+func (svc *svc) Insert(ctx context.Context, req *ioparams.WeatherRequest) (*weather.Weather, error) {
 
 	//todo something
 
@@ -67,7 +67,7 @@ func (svc *svc) Insert(ctx context.Context, req *models.WeatherRequest) (*weathe
 	return wea, nil
 }
 
-func (svc *svc) dealRequestWeather(ctx context.Context, req *models.WeatherRequest) ([]byte, error) {
+func (svc *svc) dealRequestWeather(ctx context.Context, req *ioparams.WeatherRequest) ([]byte, error) {
 	// 天气公共接口 "https://v0.tianqiapi.com/?version=today&query=深圳&appid=43656176&appsecret=I42og6Lm"
 
 	//补充完appid和appsecret
