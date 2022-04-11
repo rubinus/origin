@@ -4,14 +4,26 @@ import (
 	"context"
 	"fmt"
 	"github.com/gitcpu-io/zgo"
-	"sync"
+  "os"
+  "strings"
+  "sync"
 	"testing"
 	"time"
 )
 
 func TestGet(t *testing.T) {
-
+  // 准备cpath
+  var cpath string
+  if cpath == "" {
+    pwd, err := os.Getwd()
+    if err == nil {
+      arr := strings.Split(pwd,"/")
+      cp := strings.Join(arr[:len(arr) - 2],"/")
+      cpath = fmt.Sprintf("%s/%s", cp, "configs")
+    }
+  }
 	err := zgo.Engine(&zgo.Options{
+	  CPath: cpath,
 		Env:     "dev",
 		Project: "1553240759",
 	})

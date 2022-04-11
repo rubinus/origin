@@ -1,11 +1,13 @@
 package demo_mgo
 
 import (
-	"context"
-	"fmt"
-	"github.com/gitcpu-io/zgo"
-	"testing"
-	"time"
+  "context"
+  "fmt"
+  "github.com/gitcpu-io/zgo"
+  "os"
+  "strings"
+  "testing"
+  "time"
 )
 
 /*
@@ -16,10 +18,23 @@ import (
 */
 
 func TestGet(t *testing.T) {
+  // 准备cpath
+  var cpath string
+  if cpath == "" {
+    pwd, err := os.Getwd()
+    if err == nil {
+      arr := strings.Split(pwd,"/")
+      cp := strings.Join(arr[:len(arr) - 2],"/")
+      cpath = fmt.Sprintf("%s/%s", cp, "configs")
+    }
+  }
+
+  //调用zgo
 	err := zgo.Engine(&zgo.Options{
-		Env:     "dev",
-		Project: "1553240759",
-		Mgo: []string{
+	  CPath: cpath,
+		Env:     "local",
+		Project: "origin",
+		Mongo: []string{
 			label_bj,
 			label_sh,
 		},
@@ -138,7 +153,7 @@ func TestGet(t *testing.T) {
 		"post":    "100002", //更新某字段
 		//"houses.$[element]": 411001, //如果houses是纯数组:[xx,xx,xx]
 		//子文档的$[element] 其中这个element可以自定义名字
-		"grades.$[elem].mean": 100, //如果grades是对象数组:[{k:v,mean:v},{k:v,mean:v}]
+		//"grades.$[elem].mean": 100, //如果grades是对象数组:[{k:v,mean:v},{k:v,mean:v}]
 		//子文档$[elem]
 		//可以有多个字段k,v;但只能有一个顶级字段，意味着$[element]和$[ele]二选一
 	}

@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"github.com/gitcpu-io/origin/configs"
 	"github.com/gitcpu-io/zgo"
+  "os"
+  "strings"
 )
 
 /*
@@ -15,7 +17,17 @@ import (
 */
 
 func CallK8s() {
-	configs.InitConfig("", "local", "", "", 0, 0)
+  // 准备cpath
+  var cpath string
+  if cpath == "" {
+    pwd, err := os.Getwd()
+    if err == nil {
+      arr := strings.Split(pwd,"/")
+      cp := strings.Join(arr[:len(arr) - 2],"/")
+      cpath = fmt.Sprintf("%s/%s", cp, "configs")
+    }
+  }
+	configs.InitConfig(cpath, "local", "", "", 0, 0)
 	err := zgo.Engine(&zgo.Options{
 		CPath:    configs.Conf.CPath,
 		Env:      configs.Conf.Env,
@@ -51,7 +63,7 @@ func CallK8s() {
 	}
 
 	//3.调用生成config
-	config, err := zgo.K8s.Builder().BuildConfig(kco)
+	config_0, err := zgo.K8s.Builder().BuildConfig(kco)
 	if err != nil {
 		return
 	}
@@ -63,11 +75,11 @@ func CallK8s() {
 	}
 
 	//4. 打印config
-	fmt.Println("config: ", zgo.K8s.GetContext(configs.Host))
+	fmt.Println("config: ", zgo.K8s.GetContext(config_0.Host))
 	fmt.Println("config-1: ", zgo.K8s.GetContext(config_1.Host))
 
 	//5.生成clientset
-	_, err = zgo.K8s.Builder().BuildClientSet(configs.Host, config)
+	_, err = zgo.K8s.Builder().BuildClientSet(config_0.Host, config_0)
 	if err != nil {
 		return
 	}
@@ -79,11 +91,11 @@ func CallK8s() {
 	}
 
 	//6.打印clientset
-	fmt.Println("clientset: ", zgo.K8s.GetClientSet(configs.Host))
+	fmt.Println("clientset: ", zgo.K8s.GetClientSet(config_0.Host))
 	fmt.Println("clientset-1: ", zgo.K8s.GetClientSet(config_1.Host))
 
 	//7. 打印version
-	info, err := zgo.K8s.ServerVersion(configs.Host)
+	info, err := zgo.K8s.ServerVersion(config_0.Host)
 	if err != nil {
 		fmt.Println("==ServerVersion==err: ", err)
 		return
@@ -100,7 +112,7 @@ func CallK8s() {
 	zgo.Log.Infof("%s,%s", info_1.Platform, info_1.GitVersion)
 
 	//8.
-	zgo.K8s.UseContext(configs.Host) //使用指定的configs.host的context
+	zgo.K8s.UseContext(config_0.Host) //使用指定的configs.host的context
 	dlist, err := zgo.K8s.Deployment().List(context.TODO(), "default", "", "", -1, false)
 	if err != nil {
 		fmt.Println(err)

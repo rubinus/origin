@@ -1,4 +1,4 @@
-# origin v1.1.7
+# origin v1.1.8
 
 # 准备系统外的中间件: 本地运行docker-compose 启动中间件db/cache/queue等
 cd origin
@@ -75,7 +75,7 @@ go run init/main.go
 
 > 最佳实践，如果部署到不同的k8s环境，可以使用dev/qa/pro/k8s相应的配置并修改
 
-- 如果使用etcdAddress参数，支持etcd集群，多节点用,隔开(ip:port,ip:port,ip:port); args参数中的etcdAddress会覆盖dev/qa/pro/k8s.json中的etcdAddress
+- 如果使用etcd-address参数，支持etcd集群，多节点用,隔开(ip:port,ip:port,ip:port); args参数中的etcd-address会覆盖dev/qa/pro/k8s.json中的etcdAddress
 
 > local.json 和 container.json 经过zgo engine时不会读取配置中心etcd中的值，仅使用.json中的配置，意味着你可以把 中间件的信息放置在这2个配置文件中，模拟存储在etcd中的配置信息
 
@@ -103,17 +103,17 @@ make image
 
 docker run --rm -p 8081:80 -p 8181:8181 -p 50051:50051 -d --name origin rubinus/origin:v1.0
 
-## 如果使用了etcd为配置中心，需要带上参数 etcdAddress，同时env的取值需要是dev级别以上，不能再用local，如下所示
+## 如果使用了etcd为配置中心，需要带上参数 etcd-address，同时env的取值需要是dev级别以上，不能再用local，如下所示
 
 - 本机开发
 
-go run cmd/main.go --env dev --etcdAddress localhost:3379
+go run cmd/main.go --env dev --etcd-address localhost:3379
 
 - 本机开发最佳实践，直接修改config/local.json中 env=dev 和 etcdAddress的值
 
-- Docker运行时指定 env=dev etcdAddress参数为配置中心etcd的地址host:port（容器可访问到的IP）
+- Docker运行时指定 env=dev etcd-address参数为配置中心etcd的地址host:port（容器可访问到的IP）
 
-docker run --rm -p 8081:80 -p 8181:8181 -p 50051:50051 --name origin rubinus/origin:v1.0 --env=dev --etcdAddress=192.168.110.173:3379
+docker run --rm -p 8081:80 -p 8181:8181 -p 50051:50051 --name origin rubinus/origin:v1.0 --env=dev --etcd-address=192.168.110.173:3379
 
 # 访问origin
 

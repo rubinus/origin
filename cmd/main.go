@@ -41,28 +41,28 @@ var (
 )
 
 func init() {
-	flag.StringVar(&cpath, "cpath", "", "当不使用etcd作为配置中心时，通过配置文件cpath和env=local或env=container一起使用")
+	flag.StringVar(&cpath, "cpath", "", "默认是项目所在目录PWD, 仅当运行xxx_test.go时需要指定配置文件所在目录")
 
 	flag.StringVar(&env, "env", "local", "start local/dev/qa/pro env config，本机开发使用local，打包容器后使用container")
 
 	flag.StringVar(&project, "project", "", "create project id by zgo engine admin")
 
-	flag.StringVar(&etcdAddress, "etcdAddress", "", "输入IP:PORT,IP:PORT指定配置中心etcd的host")
+	flag.StringVar(&etcdAddress, "etcd-address", "", "输入IP:PORT,IP:PORT指定配置中心etcd的host")
 
 	flag.IntVar(&port, "port", 0, "http port")
 
-	flag.IntVar(&rpcPort, "rpcPort", DefaultGrpcPort, "grpc port")
+	flag.IntVar(&rpcPort, "grpc-port", DefaultGrpcPort, "grpc port")
 
 	//暴露服务信息
-	flag.StringVar(&svcName, "svc_name", "", "让服务对外可访问的名称")
+	flag.StringVar(&svcName, "svc-name", "", "让服务对外可访问的名称")
 
-	flag.StringVar(&svcHost, "svc_host", "", "让服务对外可访问的主机地址，默认是宿主机的内网IP")
+	flag.StringVar(&svcHost, "svc-host", "", "让服务对外可访问的主机地址，默认是宿主机的内网IP")
 
-	flag.StringVar(&svcHttpPort, "svc_http_port", "", "让服务http对外可访问的端口号，默认是80")
+	flag.StringVar(&svcHttpPort, "svc-http-port", "", "让服务http对外可访问的端口号，默认是80")
 
-	flag.StringVar(&svcGrpcPort, "svc_grpc_port", "", "让服务grpc对外可访问的端口号，默认是50051")
+	flag.StringVar(&svcGrpcPort, "svc-grpc-port", "", "让服务grpc对外可访问的端口号，默认是50051")
 
-	flag.StringVar(&svcEtcdAddress, "svc_etcd_address", "", "让服务可以用外部的注册中心地址，默认与zgo engine相同")
+	flag.StringVar(&svcEtcdAddress, "svc-etcd-address", "", "让服务可以用外部的注册中心地址，默认与zgo engine相同")
 
 	//====解析入参，并打印出来====
 	flag.CommandLine.AddGoFlagSet(goflag.CommandLine)
