@@ -14,9 +14,8 @@ import (
 */
 
 const (
-	//label_bj = "mgo_label_bj"
-	label_bj = "1934193167338"
-	label_sh = "1049232219283"
+	label_bj = "mongo_label_bj"
+	label_sh = "mongo_label_sh"
 )
 
 type User struct {

@@ -6,15 +6,26 @@ import (
 	"github.com/gitcpu-io/origin/configs"
 	"github.com/gitcpu-io/zgo"
 	"github.com/gitcpu-io/zgo/zgomysql"
-	"time"
+  "os"
+  "strings"
+  "time"
 )
 
 type MysqlDemo struct {
 }
 
 func init() {
-
-	configs.InitConfig("", "local", "", "", 0, 0)
+  // 准备cpath
+  var cpath string
+  if cpath == "" {
+    pwd, err := os.Getwd()
+    if err == nil {
+      arr := strings.Split(pwd,"/")
+      cp := strings.Join(arr[:len(arr) - 2],"/")
+      cpath = fmt.Sprintf("%s/%s", cp, "configs")
+    }
+  }
+	configs.InitConfig(cpath, "local", "", "", 0, 0)
 
 }
 
