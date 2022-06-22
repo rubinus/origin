@@ -164,7 +164,26 @@ git clone 这个项目后，改名成自己开发的项目名字（全局替换�
 
 安装docker,在本地一次性跑起redis,mongodb,mysql,nsq,kafka
 
-# ====origin测试调优====
+# ====origin测试与调优====
+
+## 单元测试
+- 安装ginkgo
+```shell
+go install github.com/onsi/ginkgo/ginkgo
+
+cd services 
+
+ginkgo bootstrap
+
+ginkgo generate weather
+
+```
+- 安装gomock
+```shell
+go install github.com/golang/mock/mockgen@v1.6.0
+
+mockgen -source=weather.go -destination=mocks/weather_mock.go -package=mocks
+```
 
 ## origin测试方法使用：建立xxx_test.go文件，生成相应的.out，并通过go tool pprof查看
 
