@@ -1,4 +1,4 @@
-# origin v1.1.8
+# origin v1.1.9
 
 # 准备系统外的中间件: 本地运行docker-compose 启动中间件db/cache/queue等
 cd origin
@@ -185,33 +185,37 @@ go install github.com/golang/mock/mockgen@v1.6.0
 mockgen -source=weather.go -destination=mocks/weather_mock.go -package=mocks
 ```
 
-## origin测试方法使用：建立xxx_test.go文件，生成相应的.out，并通过go tool pprof查看
+## 单个文件测试：建立xxx_test.go文件，生成相应的.out，并通过go tool pprof查看
 
 ### 查看测试代码覆盖率
 
-go test -coverprofile=c.out
+go test -count 1 -v -cover -coverprofile=c.out ./services/...
 
 go tool cover -html=c.out
 
 ### 查看测试代码trace
 
-go test -trace=t.out
+go test -trace=t.out ./services/.
 
 go tool trace t.out
 
 ### 查看cpu使用
 
-go test -bench . -cpuprofile cpu.out
+go test -bench . -benchtime 3s -cpuprofile cpu.out ./services/.
 
-go tool pprof -http=":8081" cpu.out
+go tool pprof cpu.out
+
+list 函数名
 
 ### 查看内存使用
 
-go test -memprofile mem.out
+go test -bench . -benchtime 3s -memprofile mem.out ./services/.
 
-go tool pprof -http=":8081" mem.out
+go tool pprof mem.out
 
-### 执行pprof后，然后输入web 或是quit 保证下载了svg
+list 函数名
+
+### 执行 pprof 后，然后输入 web 或是quit、q 保证下载了svg
 
 https://graphviz.gitlab.io/_pages/Download/Download_source.html
 
@@ -236,6 +240,12 @@ go tool pprof http://localhost:8181/debug/pprof/goroutine?debug=1
 > 使用pprof查看堆内存分配
 
 go tool pprof http://localhost:8181/debug/pprof/heap
+
+> 使用pprof查看内存分配最多的
+
+go tool pprof http://localhost:8181/debug/pprof/allocs
+
+top 15 -cum
 
 > 使用pprof查看10秒CPU使用
 
